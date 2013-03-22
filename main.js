@@ -68,6 +68,7 @@
             parse: 'libs/parse/js/parse.min',
             propertyParser: 'libs/require/js/propertyParser.min',
             respond: 'libs/respond/js/respond.min',
+            sitefinityapi: 'libs/sitefinity/js/api',
             text: 'libs/require/js/text.min',
             toastr: 'libs/toastr/js/toastr.min',
             underscore: 'libs/underscore/js/underscore-min',
