@@ -109,6 +109,13 @@ Library collection to be used with require.js asynchronous loading:
 * Status: `Fork`
 * Source: [https://github.com/janl/mustache.js](https://github.com/janl/mustache.js)
 
+### /parse
+* Description: Containing both official and 3rd party API calls to Parse.com
+* Version: `0.0.0`
+* Status: `Fork`
+* Source: [https://www.parse.com/docs/js_guide](https://www.parse.com/docs/js_guide)
+* Source: [https://github.com/srhyne/jQuery-Parse](https://github.com/srhyne/jQuery-Parse)
+
 ### /require
 * Description: Require JS & helpers
 * Version: `0.0.0`
@@ -122,10 +129,16 @@ Library collection to be used with require.js asynchronous loading:
 * Source: [https://github.com/scottjehl/Respond](https://github.com/scottjehl/Respond)
 
 ### /sitefinity
-* Description: Less & css version of minimal reset styles.
+* Description: Less & css version of minimal reset styles, and web services API
 * Version: `5.4.4010`
 * Status: `Customized`
 * Source: n/a
+
+### /toastr
+* Description: library for Gnome / Growl type non-blocking notifications
+* Version: `1.2.2`
+* Status: `Fork`
+* Source: [https://github.com/CodeSeven/toastr](https://github.com/CodeSeven/toastr)
 
 ### /underscore
 * Description: utility-belt library that provides a lot of the functional programming support
@@ -137,3 +150,32 @@ Library collection to be used with require.js asynchronous loading:
 ## Support & Copyright
 All data & samples are provided as is and merely aggregated. 
 For licensing & copyright information check the respective links.
+
+## Notes
+Do not change anything in this folder! Updates will overwrite your changes.
+To extend the RequireJS configurations, such as adding path aliases and shims,
+add your script file after "require.js" and "main.js".
+
+Follow this sample for your custom file if needed:
+<pre>
+; (function () {
+    //DETERMINE BASE URL FROM CURRENT SCRIPT PATH
+    var scripts = document.getElementsByTagName('script');
+    var src = scripts[scripts.length - 1].src;
+    var currentUrl = src.substring(src.indexOf(document.location.pathname), src.lastIndexOf('/'));
+
+    //EXTEND REQUIREJS CONFIG
+    require.config({
+        paths: {
+            toastr: currentUrl + '/libs/toastr/toastr.min'
+        },
+        shim: {
+            toastr: {
+                deps: ['jquery'],
+                exports: 'toastr'
+            }
+        }
+    });
+})(); 
+</pre>
+--------------------------------------------------
