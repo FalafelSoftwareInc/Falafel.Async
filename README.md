@@ -1,7 +1,7 @@
 # [Falafel.Async]
 ==================
 
-Repository containing a set of shared &amp; commonly used js libraries &amp; style files for use with Sitefinity development.
+Repository containing a set of shared &amp; commonly used js libraries &amp; style files for use with development.
 All files are minified for production use, excluding Bootstrap, Kendo & Sitefinity .LESS files.
 
 ## Async/libs
