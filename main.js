@@ -111,7 +111,10 @@
             parse: {
                 exports: 'Parse'
             },
-            toastr: ['jquery'],
+            toastr: {
+                deps: ['jquery'],
+                exports: 'toastr'
+            },
             underscore: {
                 deps: ['underscore.string'],
                 exports: '_',
