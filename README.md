@@ -1,4 +1,4 @@
-# [Falafel.Sitefinity]
+# [Falafel.Async]
 ==================
 
 Repository containing a set of shared &amp; commonly used js libraries &amp; style files for use with Sitefinity development.
