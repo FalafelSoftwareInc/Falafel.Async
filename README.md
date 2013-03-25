@@ -1,5 +1,6 @@
 # [Falafel.Async]
 ==================
+https://github.com/FalafelSoftwareInc/Falafel.Async
 
 Repository containing a set of shared &amp; commonly used js libraries &amp; style files for use with development.
 All files are minified for production use, excluding Bootstrap, Kendo & Sitefinity .LESS files.
@@ -152,9 +153,9 @@ All data & samples are provided as is and merely aggregated.
 For licensing & copyright information check the respective links.
 
 ## Notes
-Do not change anything in this folder! Updates will overwrite your changes.
-To extend the RequireJS configurations, such as adding path aliases and shims,
-add your script file after "require.js" and "main.js".
+Do not change anything in the ~/Async folder! Updates will overwrite your changes.
+To initialize your app or extend the RequireJS configurations, add your script file
+after "require.js" and "main.js" on the page.
 
 Follow this sample for your custom file if needed:
 <pre>
@@ -166,15 +167,37 @@ Follow this sample for your custom file if needed:
 
     //EXTEND REQUIREJS CONFIG
     require.config({
+        //Require.js allows us to configure shortcut alias
         paths: {
-            toastr: currentUrl + '/libs/toastr/toastr.min'
+            toastr: [
+                'https://raw.github.com/CodeSeven/toastr/master/toastr.min.js',
+                //If the CDN location fails, load from this location
+                currentUrl + '/libs/toastr/toastr.min'
+            ]
         },
+        //The shim config allows us to configure dependencies for
+    	//scripts that do not call define() to register a module
         shim: {
             toastr: {
                 deps: ['jquery'],
                 exports: 'toastr'
             }
         }
+    });
+    
+    //INITIALIZE MY APP
+    require([
+        'jquery',
+        'bootstrap' //LETS TWITTER BOOTSTRAP DO ITS THING
+    ], function ($) {
+        //DO WHAT YOU LIKE TO INIT YOUR APP ON EVERY PAGE, SUCH AS:
+        
+		//DISABLE CACHING FOR IE9 AND BELOW SINCE IT OVERLY CACHES
+		//WHICH IS NOT GOOD FOR REAL TIME APPLICATIONS
+		if ($.browser.msie && parseInt($.browser.version, 10) < 10)
+			$.ajaxSetup({ cache: false });
+            
+        //ETC.
     });
 })(); 
 </pre>
