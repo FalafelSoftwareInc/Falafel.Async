@@ -4,10 +4,10 @@
 define([
 	'jquery',
 	'underscore',
-    'moment',
+	'moment',
 	'baseurl',
-    'basescriptsurl',
-    'baseservicesurl'
+	'basescriptsurl',
+	'baseservicesurl'
 ], function ($, _, moment, baseUrl, baseScriptsUrl, baseServicesUrl) {
 
 	return {
@@ -38,17 +38,21 @@ define([
 
 	    toUrl: function (url) {
 	        if (url && url.indexOf('~/') === 0)
-	            url = baseUrl + url.substring(2);
+	            url =  this.combinePaths(baseUrl, url);
 
 	        return url;
 	    },
 
 	    toServicesUrl: function (url) {
-	        return this.toUrl(baseServicesUrl + url);
+	        return this.toUrl(this.combinePaths(baseServicesUrl, url));
 	    },
 
 	    toScriptsUrl: function (url) {
-	        return this.toUrl(baseScriptsUrl + '/' + url);
+	        return this.toUrl(this.combinePaths(baseScriptsUrl, url));
+	    },
+	    
+	    combinePaths: function (path1, path2) {
+	    	return _.rtrim(path1, '/') + '/' + _.ltrim(path2, '~/');
 	    },
 
 	    getCurrentPage: function () {
