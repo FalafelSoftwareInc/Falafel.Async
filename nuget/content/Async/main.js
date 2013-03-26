@@ -40,6 +40,7 @@
         paths: {
             alert: 'libs/require/js/alert.min',
             async: 'libs/require/js/async.min',
+            blockui: 'libs/blockui/js/jquery.blockUI',
             bootstrap: 'libs/bootstrap/js/bootstrap.min',
             bxslider: 'libs/bxslider/js/jquery.bxslider.min',
             domReady: 'libs/require/js/domReady.min',
@@ -77,6 +78,7 @@
         // The shim config allows us to configure dependencies for
         // scripts that do not call define() to register a module
         shim: {
+            blockui: ['jquery'],
             bootstrap: ['jquery'],
             bxslider: ['jquery'],
             innerfade: ['jquery'],
