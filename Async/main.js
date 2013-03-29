@@ -54,11 +54,11 @@
             jqueryui: 'libs/jquery-ui/js/jquery-ui.min',
             json2: 'libs/require/js/json2.min',
             jsurl: 'libs/js-url/js/js-url.min',
-            kendoall: 'libs/kendoui/all/js/kendo.all.min',
-            kendodataviz: 'libs/kendoui/dataviz/js/kendo.dataviz.min',
-            kendomobile: 'libs/kendoui/mobile/js/kendo.mobile.min',
-            kendomvc: 'libs/kendoui/mvc/js/kendo.aspnetmvc.min',
-            kendoweb: 'libs/kendoui/web/js/kendo.web.min',
+            kendoall: 'libs/kendoui/js/kendo.all.min',
+            kendodataviz: 'libs/kendoui/js/kendo.dataviz.min',
+            kendomobile: 'libs/kendoui/js/kendo.mobile.min',
+            kendoweb: 'libs/kendoui/js/kendo.web.min',
+            kendoui: 'libs/kendoui/js', //FOR AMD USE
             mediaelement: 'libs/mediaelement/js/mediaelement.min',
             mediaelementplayer: 'libs/mediaelement/js/mediaelementplayer.min',
             modernizr: 'libs/modernizr/js/modernizr.min',
@@ -88,7 +88,7 @@
                 deps: ['jquery'],
                 exports: 'kendo'
             },
-            kendoweb: {
+            kendodataviz: {
                 deps: ['jquery'],
                 exports: 'kendo'
             },
@@ -96,10 +96,11 @@
                 deps: ['jquery'],
                 exports: 'kendo'
             },
-            kendodataviz: {
+            kendoweb: {
                 deps: ['jquery'],
                 exports: 'kendo'
             },
+            kendoui: ['jquery'],
             modernizr: {
                 exports: 'Modernizr'
             },
