@@ -45,6 +45,7 @@
             bxslider: 'libs/bxslider/js/jquery.bxslider.min',
             domReady: 'libs/require/js/domReady.min',
             font: 'libs/require/js/font.min',
+			fullcalendar: 'libs/fullcalendar/js/fullcalendar.min',
             goog: 'libs/require/js/goog.min',
             helpers: 'libs/require/js/helpers.min',
             html5shiv: 'libs/html5shiv/js/html5shiv.min',
@@ -67,6 +68,7 @@
             mdown: 'libs/require/js/mdown.min',
             noext: 'libs/require/js/noext.min',
             parse: 'libs/parse/js/parse.min',
+			photobox: 'libs/photobox/js/photobox.min',
             propertyParser: 'libs/require/js/propertyParser.min',
             respond: 'libs/respond/js/respond.min',
             sitefinityapi: 'libs/sitefinity/js/api',
@@ -81,6 +83,7 @@
             blockui: ['jquery'],
             bootstrap: ['jquery'],
             bxslider: ['jquery'],
+            fullcalendar: ['jquery'],
             innerfade: ['jquery'],
             jqparse: ['jquery'],
 			jsurl: ['jquery'],
@@ -114,6 +117,7 @@
             parse: {
                 exports: 'Parse'
             },
+            photobox: ['jquery'],
             toastr: {
                 deps: ['jquery'],
                 exports: 'toastr'
