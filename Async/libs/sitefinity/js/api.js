@@ -92,6 +92,19 @@ define([
         return $.getJSON(Helpers.toServicesUrl('/events/getbytitle?value=' + value));
     };
 	
+    var getEventsByPast = function () {
+        return $.getJSON(Helpers.toServicesUrl('/events/getpast'));
+    };
+	
+    var getEventsByUpcoming = function () {
+        return $.getJSON(Helpers.toServicesUrl('/events/getupcoming'));
+    };
+	
+    var getEventsByRange = function (start, end) {
+        return $.getJSON(Helpers.toServicesUrl(
+			'/events/getbyrange?start=' + start + '&end=' + end));
+    };
+	
     var getEventsByCategory = function (value) {
         return $.getJSON(Helpers.toServicesUrl('/events/getbycategory?value=' + value));
     };
