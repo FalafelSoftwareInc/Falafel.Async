@@ -51,6 +51,10 @@ define([
             return this.toUrl(this.combinePaths(baseScriptsUrl, url));
         },
 
+        toViewsUrl: function (url) {
+            return this.toScriptsUrl('views/' +_.ltrim(url, '~/'));
+        },
+
         combinePaths: function (path1, path2) {
             return _.rtrim(path1, '/') + '/' + _.ltrim(path2, '~/');
         },
