@@ -68,7 +68,7 @@
             mdown: 'libs/require/js/mdown.min',
             noext: 'libs/require/js/noext.min',
             parse: 'libs/parse/js/parse.min',
-			photobox: 'libs/photobox/js/photobox.min',
+            photobox: 'libs/photobox/js/photobox.min',
             propertyParser: 'libs/require/js/propertyParser.min',
             respond: 'libs/respond/js/respond.min',
             sitefinityapi: 'libs/sitefinity/js/api',
@@ -86,7 +86,10 @@
             fullcalendar: ['jquery'],
             innerfade: ['jquery'],
             jqparse: ['jquery'],
-			jsurl: ['jquery'],
+            jsurl: {
+                deps: ['jquery'],
+                exports: 'url'
+            },
             kendoall: {
                 deps: ['jquery'],
                 exports: 'kendo'
