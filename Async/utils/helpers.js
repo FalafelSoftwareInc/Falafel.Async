@@ -149,13 +149,14 @@ define([
                     var items = [];
                     $(data).find('item').each(function (index) {
                         var this$ = $(this);
+						var description = _.escapeHTML(_.stripTags(this$.find('description').text()));
                         items.push({
                             title: options.maxTitleChars
 								? _.truncate(this$.find('title').text(), options.maxTitleChars)
 								: this$.find('title').text(),
                             description: options.maxDescriptionChars
-								? _.truncate(_.stripTags(this$.find('description').text()), options.maxDescriptionChars)
-								: _.stripTags(this$.find('description').text()),
+								? _.truncate(description, options.maxDescriptionChars)
+								: description,
                             link: this$.find('link').text(),
                             pubDate: moment(this$.find('pubDate').text(), options.parseFormat
 								|| 'ddd, DD, MMM YYYY hh:mm:ss Z')
