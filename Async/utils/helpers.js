@@ -65,6 +65,10 @@ define([
             return n >= 0 ? file.substring(n + 1).toLowerCase() : '';
         },
 
+        getCurrentPageUrl: function () {
+            return window.location.pathname.substring(baseUrl.length);
+        },
+
         scrollTop: function () {
             $('html, body').animate({
                 scrollTop: 0
