@@ -142,7 +142,6 @@
 
                     //OPEN MODAL WINDOW
                     el.on('shown', function () {
-                        me.info('Clicked modal!');
                         //PROCESS SUBMIT CALLBACK FUNCTION IF APPLICABLE
                         if (options.fnSubmit)
                             //SUBSCRIBE SUBMIT CALLBACK TO SUBMIT CLICK EVENT
@@ -153,10 +152,10 @@
                             });
                         
                         //PROCESS LOAD CALLBACK FUNCTION IF APPLICABLE
-                        if (options.fnLoad) options.fnLoad(el);
+                        if (options.fnLoad) options.fnLoad(el, bodyEl);
                     }).on('hide', function () {
                         //PROCESS HIDE CALLBACK FUNCTION IF APPLICABLE
-                        if (options.fnHide) options.fnHide(el);
+                        if (options.fnHide) options.fnHide(el, bodyEl);
                     }).on('hidden', function () {
                         //REMOVE CONTENT AND BINDINGS
                         $(this).unbind().remove();
