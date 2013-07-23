@@ -382,203 +382,199 @@ intellisense.annotate(instance, {
     add: function(model) {
         /// <signature>
         /// <summary>
-        /// Adds a new data item to the DataSource.
+        /// Appends a data item to the data source.
         /// </summary>
-        /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the field values.</param>
-        /// <returns type="kendo.data.Model">The instance which has been added.</returns>
+        /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the data item field values.</param>
+        /// <returns type="kendo.data.Model">the data item which is inserted.</returns>
         /// </signature>
     },
-    aggregate: function(val) {
+    aggregate: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current aggregate descriptors or applies aggregates to the data.
+        /// Gets or sets the aggregate configuration.
         /// </summary>
-        /// <param name="val" type="Object" >Aggregate(s) to be applied to the data.</param>
-        /// <returns type="Array">Current aggregate descriptors</returns>
+        /// <param name="value" type="Object" >The aggregate configuration. Accepts the same values as the aggregate option.</param>
+        /// <returns type="Array">the current aggregate configuration.</returns>
         /// </signature>
     },
     aggregates: function() {
         /// <signature>
         /// <summary>
-        /// Get result of aggregates calculation
+        /// Returns the aggregate results.
         /// </summary>
-        /// <returns type="Array">Aggregates result</returns>
+        /// <returns type="Object">the aggregate results. There is a key for every aggregated field.</returns>
         /// </signature>
     },
     at: function(index) {
         /// <signature>
         /// <summary>
-        /// Returns the data item at the specified index.
+        /// Returns the data item at the specified index. The index is zero-based.
         /// </summary>
         /// <param name="index" type="Number" >The zero-based index of the data item.</param>
-        /// <returns type="kendo.data.ObservableObject | kendo.data.Model">The type depends on the schema.</returns>
+        /// <returns type="kendo.data.ObservableObject">the data item at the specified index. Returns undefined if a data item is not found at the specified index.Returns a kendo.data.Model instance if the schema.model option is set.</returns>
         /// </signature>
     },
     cancelChanges: function(model) {
         /// <signature>
         /// <summary>
-        /// Cancel the changes made to the DataSource after the last sync. Any changes currently existing in the model
-/// will be discarded.
+        /// Cancels any pending changes in the data source. Deleted data items are restored, new data items are removed and updated data items are restored to their initial state.
         /// </summary>
-        /// <param name="model" type="kendo.data.Model" >Optional model instance. If specified only the changes of this model will be discarded. If omitted all changes will be discarded.</param>
+        /// <param name="model" type="kendo.data.Model" >The optional data item (model). If specified only the changes of this data item will be discarded. If omitted all changes will be discarded.</param>
         /// </signature>
     },
     data: function(value) {
         /// <signature>
         /// <summary>
-        /// Gets or sets the data of the DataSource.
+        /// Gets or sets the data items of the data source.If the data source is bound to a remote service (via the transport option) the data method will return the service response.
+/// Every item from the response is wrapped in a kendo.data.ObservableObject or kendo.data.Model (if the schema.model option is set).If the data source is bound to a JavaScript array (via the data option) the data method will return the items of that array.
+/// Every item from the array is wrapped in a kendo.data.ObservableObject or kendo.data.Model (if the schema.model option is set).If the data source is grouped (via the group option or the group method) and the serverGrouping is set to true
+/// the data method will return the group items.
         /// </summary>
-        /// <param name="value" type="Array" >An Array of items to set as the current data of the DataSource. If omitted the current data will be returned.</param>
-        /// <returns type="kendo.data.ObservableArray">the items of the DataSource</returns>
+        /// <param name="value" type="Object" >The data items which will replace the current ones in the data source. If omitted the current data items will be returned.</param>
+        /// <returns type="kendo.data.ObservableArray">the data items of the data source. Returns empty array if the data source hasn't been populated with data items via the read, fetch or query methods.</returns>
         /// </signature>
     },
     fetch: function(callback) {
         /// <signature>
         /// <summary>
-        /// Fetches data using the current filter/sort/group/paging information.
-/// If data is not available and remote operations are enabled data is requested through the transport,
-/// otherwise operations are executed over the available data.
+        /// Reads the data items from a remote service (if the transport option is set) or from a JavaScript array (if the data option is set).
         /// </summary>
-        /// <param name="callback" type="Function" >Optional callback which will be executed when the data is ready.</param>
+        /// <param name="callback" type="Function" >The optional function which is executed when the remote request is finished.  The function context (available via the this keyword) will be set to the data source instance.</param>
         /// </signature>
     },
-    filter: function(filters) {
+    filter: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current filters or filter the data.Supported filter operators/aliases are:
+        /// Gets or sets the filter configuration.
         /// </summary>
-        /// <param name="filters" type="Object" >Filter(s) to be applied to the data.</param>
-        /// <returns type="Array">The current filter descriptors.</returns>
+        /// <param name="value" type="Object" >The filter configuration. Accepts the same values as the filter option.</param>
+        /// <returns type="Object">the current filter configuration.</returns>
         /// </signature>
     },
     get: function(id) {
         /// <signature>
         /// <summary>
-        /// Retrieves a model instance by given id.
+        /// Gets the data item (model) with the specified id.
         /// </summary>
-        /// <param name="id" type="Object" >The id of the model to be retrieved. The id of the model is defined via schema.model.id.</param>
-        /// <returns type="kendo.data.Model">the model instance. If not found undefined is returned.</returns>
+        /// <param name="id" type="Object" >The id of the model to look for.</param>
+        /// <returns type="kendo.data.Model">the model instance. Returns undefined if a model with the specified id is not found.</returns>
         /// </signature>
     },
     getByUid: function(uid) {
         /// <signature>
         /// <summary>
-        /// Retrieves a data item by its uid field.
+        /// Gets the data item (model) with the specified uid.
         /// </summary>
-        /// <param name="uid" type="String" >The uid of the item to be retrieved</param>
-        /// <returns type="kendo.data.ObservableObject">or kendo.data.Model (if schema.model is set). If not found undefined is returned.</returns>
+        /// <param name="uid" type="String" >The uid of the model to look for.</param>
+        /// <returns type="kendo.data.ObservableObject">the model instance. Returns undefined if a model with the specified uid is not found.</returns>
         /// </signature>
     },
-    group: function(groups) {
+    group: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current group descriptors or group the data.
+        /// Gets or sets the grouping configuration.
         /// </summary>
-        /// <param name="groups" type="Object" >Group(s) to be applied to the data.</param>
-        /// <returns type="Array">The current group descriptors.</returns>
+        /// <param name="value" type="Object" >The grouping configuration. Accepts the same values as the group option.</param>
+        /// <returns type="Array">the current grouping configuration.</returns>
         /// </signature>
     },
     hasChanges: function() {
         /// <signature>
         /// <summary>
-        /// Get if DataSource has changes.
+        /// Cheks if the data itams have changed.
         /// </summary>
-        /// <returns type="Boolean">True if DataSource records are modified. Otherwise, false.</returns>
+        /// <returns type="Boolean">returns true if the data items have changed. Otherwise, false.</returns>
         /// </signature>
     },
-    indexOf: function(value) {
+    indexOf: function(dataItem) {
         /// <signature>
         /// <summary>
-        /// Get the index of the specified kendo.data.ObservableObject or kendo.data.Model.
+        /// Gets the index of the specified data item.
         /// </summary>
-        /// <param name="value" type="kendo.data.ObservableObject" ></param>
-        /// <returns type="Number">the index of the specified value.</returns>
+        /// <param name="dataItem" type="kendo.data.ObservableObject" >The target data item.</param>
+        /// <returns type="Number">the index of the specified data item. Returns -1 if the data item is not found.</returns>
         /// </signature>
     },
     insert: function(index,model) {
         /// <signature>
         /// <summary>
-        /// Inserts a new data item in the DataSource.
+        /// Inserts a data item in the data source at the specified index.
         /// </summary>
-        /// <param name="index" type="Number" >The zer-based index at which the data item will be inserted</param>
+        /// <param name="index" type="Number" >The zero-based index at which the data item will be inserted.</param>
         /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the field values.</param>
-        /// <returns type="kendo.data.Model">The instance which has been inserted.</returns>
+        /// <returns type="kendo.data.Model">the data item which is inserted.</returns>
         /// </signature>
     },
     page: function(page) {
         /// <signature>
         /// <summary>
-        /// Get/set the current page index.
+        /// Gets or sets the current page.
         /// </summary>
-        /// <param name="page" type="Number" >The index of the page to be retrieved</param>
-        /// <returns type="Number">Current page index</returns>
+        /// <param name="page" type="Number" >The new page.</param>
+        /// <returns type="Number">the current page.</returns>
         /// </signature>
     },
     pageSize: function(size) {
         /// <signature>
         /// <summary>
-        /// Get/set the current pageSize or request a page with specified number of records.
+        /// Gets or sets the current page size.
         /// </summary>
-        /// <param name="size" type="Number" >The of number of records to be retrieved.</param>
-        /// <returns type="Number">Current page size</returns>
+        /// <param name="size" type="Number" >The new page size.</param>
+        /// <returns type="Number">the current page size.</returns>
         /// </signature>
     },
     query: function(options) {
         /// <signature>
         /// <summary>
-        /// Executes a query over the data. Available operations are paging, sorting, filtering, grouping.
-/// If data is not available or remote operations are enabled, data is requested through the transport.
-/// Otherwise operations are executed over the available data.
+        /// Executes the specified query over the data items. Makes a HTTP request if bound to a remote service.
         /// </summary>
-        /// <param name="options" type="Object" >Contains the settings for the operations.</param>
+        /// <param name="options" type="" >The query options which should be applied.</param>
         /// </signature>
     },
     read: function(data) {
         /// <signature>
         /// <summary>
-        /// Read data into the DataSource using the transport.read setting.
+        /// Reads data items from a remote service (if the transport option is set) or from a JavaScript array (if the data option is set).
         /// </summary>
-        /// <param name="data" type="Object" >Optional data to pass to the remote service configured via transport.read.</param>
+        /// <param name="data" type="Object" >Optional data to pass to the remote service.</param>
         /// </signature>
     },
     remove: function(model) {
         /// <signature>
         /// <summary>
-        /// Remove a given kendo.data.Model instance from the DataSource.
+        /// Removes the specified data item from the data source.
         /// </summary>
-        /// <param name="model" type="Object" >The kendo.data.Model instance to be removed.</param>
+        /// <param name="model" type="kendo.data.Model" >The data item which should be removed.</param>
         /// </signature>
     },
-    sort: function(sort) {
+    sort: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current sort descriptors or sorts the data.
+        /// Gets or sets the sort order which will be applied over the data items.
         /// </summary>
-        /// <param name="sort" type="Object" >Sort options to be applied to the data</param>
-        /// <returns type="Array">the current sort descriptors.</returns>
+        /// <param name="value" type="Object" >The sort configuration. Accepts the same values as the sort option.</param>
+        /// <returns type="Array">the current sort configuration.</returns>
         /// </signature>
     },
     sync: function() {
         /// <signature>
         /// <summary>
-        /// Synchronizes changes through the transport. Any pending CRUD operations will be sent to the server.
-/// If the DataSource is in batch mode, only one call will be made for each type of operation (Create, Update, Destroy).
-/// Otherwise, the DataSource will send one request per item change and change type.
+        /// Saves any data item changes.The sync method will request the remote service if:
         /// </summary>
         /// </signature>
     },
     total: function() {
         /// <signature>
         /// <summary>
-        /// Get the total number of data items.
+        /// Gets the total number of data items. Uses schema.total if the transport.read option is set.
         /// </summary>
-        /// <returns type="Number">the number of data items.</returns>
+        /// <returns type="Number">the total number of data items. Returns the length of the array returned by the data method if schema.total or transport.read are not set.Returns 0 if the data source hasn't been populated with data items via the read, fetch or query methods.</returns>
         /// </signature>
     },
     totalPages: function() {
         /// <signature>
         /// <summary>
-        /// Get the number of available pages.
+        /// Gets the number of available pages.
         /// </summary>
         /// <returns type="Number">the available pages.</returns>
         /// </signature>
@@ -586,9 +582,9 @@ intellisense.annotate(instance, {
     view: function() {
         /// <signature>
         /// <summary>
-        /// Returns a the current state of the data items - with applied paging, sorting, filtering and grouping.To ensure that data is available this method should be use from within change event of the DataSource.
+        /// Returns the data items which correspond to the current page, filter, sort and group configuration.To ensure that data is available this method should be used within the change event handler or the fetch method.
         /// </summary>
-        /// <returns type="kendo.data.ObservableArray">the data items.</returns>
+        /// <returns type="kendo.data.ObservableArray">the data items. Returns groups if the data items are grouped (via the group option or the group method).</returns>
         /// </signature>
     },
 
@@ -688,7 +684,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
         /// </summary>
         /// </signature>
     },
@@ -1047,6 +1043,100 @@ return wrapper;
 })();
 
 
+intellisense.annotate(kendo.data, {
+    SchedulerDataSource: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.data.SchedulerDataSource</summary>
+        /// </signature>
+    }
+});
+
+kendo.data.SchedulerDataSource = (function() {
+var original = kendo.data.SchedulerDataSource;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+intellisense.annotate(kendo.data, {
+    SchedulerEvent: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.data.SchedulerEvent</summary>
+        /// </signature>
+    }
+});
+
+kendo.data.SchedulerEvent = (function() {
+var original = kendo.data.SchedulerEvent;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
 intellisense.annotate(kendo.mobile, {
     Application: function() {
         /// <signature>
@@ -1089,6 +1179,15 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Show the loading animation.
         /// </summary>
+        /// </signature>
+    },
+    skin: function(skin) {
+        /// <signature>
+        /// <summary>
+        /// Change the current skin of the mobile application. When used without parameters, returns the currently used skin. Available as of Q2 2013.
+        /// </summary>
+        /// <param name="skin" type="String" >The skin name to switch to or empty string to return to native.</param>
+        /// <returns type="String">Current skin in effect.</returns>
         /// </signature>
     },
     view: function() {
@@ -1224,7 +1323,7 @@ intellisense.annotate(jQuery.fn, {
         /// Instantiates a kendo.mobile.ui.ActionSheet widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
-        /// &#10;cancel — String (default: Cancel)
+        /// &#10;cancel — String (default: "Cancel")
         /// &#10;The text of the cancel button.
         /// &#10;
         /// &#10;popup — Object 
@@ -1334,6 +1433,15 @@ var original = kendo.mobile.ui.Button;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    badge: function(value) {
+        /// <signature>
+        /// <summary>
+        /// Introduced in Q1 2013 SP Sets a badge on the Button with the specified value. If invoked without parameters, returns the current badge value. Set the value to false to remove the badge.
+        /// </summary>
+        /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
+        /// <returns type="String|kendo.mobile.ui.Button">Returns the badge value if invoked without parameters, otherwise returns the Button object.</returns>
+        /// </signature>
+    },
     destroy: function() {
         /// <signature>
         /// <summary>
@@ -1396,6 +1504,9 @@ intellisense.annotate(jQuery.fn, {
         /// Instantiates a kendo.mobile.ui.Button widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
+        /// &#10;badge — String 
+        /// &#10;The badge of the button.
+        /// &#10;
         /// &#10;icon — String 
         /// &#10;The icon of the button. It can be either one of the built-in icons, or a custom one.
         /// &#10;
@@ -1420,6 +1531,16 @@ var original = kendo.mobile.ui.ButtonGroup;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    badge: function(button,value) {
+        /// <signature>
+        /// <summary>
+        /// Introduced in Q1 2013 SP Sets a badge on one of the ButtonGroup buttons with the specified value. If invoked without parameters, returns the button's current badge value. Set the value to false to remove the badge.
+        /// </summary>
+        /// <param name="button" type="Object" >The target button specified either as a jQuery selector/object or as an button index.</param>
+        /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
+        /// <returns type="String|kendo.mobile.ui.Button">Returns the badge value if invoked without parameters, otherwise returns the ButtonGroup object.</returns>
+        /// </signature>
+    },
     current: function() {
         /// <signature>
         /// <summary>
@@ -1597,6 +1718,112 @@ intellisense.annotate(jQuery.fn, {
 });
 
 intellisense.annotate(kendo.mobile.ui, {
+    Drawer: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.mobile.ui.Drawer</summary>
+        /// </signature>
+    }
+});
+
+kendo.mobile.ui.Drawer = (function() {
+var original = kendo.mobile.ui.Drawer;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    destroy: function() {
+        /// <signature>
+        /// <summary>
+        /// Prepares the Drawer for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+        /// </signature>
+    },
+    hide: function() {
+        /// <signature>
+        /// <summary>
+        /// Hide the Drawer
+        /// </summary>
+        /// </signature>
+    },
+    show: function() {
+        /// <signature>
+        /// <summary>
+        /// Show the Drawer
+        /// </summary>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+jQuery.fn.kendoDrawer = function() {
+    this.data("kendoDrawer", new kendo.mobile.ui.Drawer());
+
+    return this;
+};
+
+intellisense.annotate(jQuery.fn, {
+    getKendoDrawer: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a reference to the kendo.mobile.ui.Drawer widget, instantiated on the selector.
+        /// </summary>
+        /// <returns type="kendo.mobile.ui.Drawer">The kendo.mobile.ui.Drawer instance (if present).</returns>
+        /// </signature>
+    },
+    kendoDrawer: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Instantiates a kendo.mobile.ui.Drawer widget based the DOM elements that match the selector.
+        /// &#10;Accepts an object with the following configuration options:
+        /// &#10;
+        /// &#10;position — String (default: 'left')
+        /// &#10;The position of the drawer. Can be left (default) or right.
+        /// &#10;
+        /// &#10;title — String 
+        /// &#10;The text to display in the navbar title (if present).
+        /// &#10;
+        /// &#10;views — Array 
+        /// &#10;A list of the view ids on which the drawer will appear. If omitted, the drawer can be revealed on any view in the application.
+        /// &#10;
+        /// </summary>
+        /// <param name="options" type="Object">
+        /// The widget configuration options
+        /// </param>
+        /// </signature>
+    }
+});
+
+intellisense.annotate(kendo.mobile.ui, {
     Layout: function() {
         /// <signature>
         /// <summary>Constructor of kendo.mobile.ui.Layout</summary>
@@ -1692,6 +1919,47 @@ var original = kendo.mobile.ui.ListView;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    append: function(dataItems) {
+        /// <signature>
+        /// <summary>
+        /// Appends new items generated by rendering the given data items with the listview template to the bottom of the listview.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+        /// </signature>
+    },
+    prepend: function(dataItems) {
+        /// <signature>
+        /// <summary>
+        /// Prepends new items generated by rendering the given data items with the listview template to the top of the listview.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+        /// </signature>
+    },
+    replace: function(dataItems) {
+        /// <signature>
+        /// <summary>
+        /// Replaces the contents of the listview with the passed rendered data items.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+        /// </signature>
+    },
+    remove: function(dataItems) {
+        /// <signature>
+        /// <summary>
+        /// Removes the listview items which are rendered with the passed data items.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+        /// </signature>
+    },
+    setDataItem: function(item,dataItem) {
+        /// <signature>
+        /// <summary>
+        /// Re-renders the given listview item with the new dataItem provided. In order for the method to work as expected, the data items should be of type kendo.data.Model.
+        /// </summary>
+        /// <param name="item" type="jQuery" >The listview item to update</param>
+        /// <param name="dataItem" type="kendo.data.Model" >The new dataItem</param>
+        /// </signature>
+    },
     destroy: function() {
         /// <signature>
         /// <summary>
@@ -1720,20 +1988,6 @@ intellisense.annotate(instance, {
         /// Sets the dataSource of an existing ListView and rebinds it.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" ></param>
-        /// </signature>
-    },
-    stopEndlessScrolling: function() {
-        /// <signature>
-        /// <summary>
-        /// Stops the 'endless scroll' of the ListView.
-        /// </summary>
-        /// </signature>
-    },
-    stopLoadMore: function() {
-        /// <signature>
-        /// <summary>
-        /// Stops the 'load more' functionality of the ListView.
-        /// </summary>
         /// </signature>
     },
 
@@ -1792,7 +2046,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
         /// &#10;appendOnRefresh — Boolean (default: false)
-        /// &#10;Used in combination with pullToRefresh. If set to true, newly loaded data will be appended on top when refershing.
+        /// &#10;Used in combination with pullToRefresh. If set to true, newly loaded data will be appended on top when refershing. Notice: not applicable if ListView is in a virtual mode.
         /// &#10;
         /// &#10;autoBind — Boolean (default: true)
         /// &#10;Indicates whether the listview will call read on the DataSource initially.
@@ -1803,46 +2057,39 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;endlessScroll — Boolean (default: false)
         /// &#10;If set to true, the listview gets the next page of data when the user scrolls near the bottom of the view.
         /// &#10;
-        /// &#10;endlessScrollParameters — Function 
-        /// &#10;A callback function used when the 'endlessScroll' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.
-        /// &#10;
         /// &#10;fixedHeaders — Boolean (default: false)
-        /// &#10;If set to true, the group headers will persist their position when the user scrolls through the listview. Applicable only when the type is set to group, or when binding to grouped datasource.
+        /// &#10;If set to true, the group headers will persist their position when the user scrolls through the listview.
+/// &#10;Applicable only when the type is set to group, or when binding to grouped datasource.Notice: this feature is not available in virtual mode
         /// &#10;
-        /// &#10;headerTemplate — String (default: #:value#)
+        /// &#10;headerTemplate — String|Function (default: "#:value#")
         /// &#10;The header item template (applicable when the type is set to group).
         /// &#10;
         /// &#10;loadMore — Boolean (default: false)
-        /// &#10;If set to true, a button is rendered at the bottom of the listview, which fetch the next page of data when tapped.
+        /// &#10;If set to true, a button is rendered at the bottom of the listview. Tapping it fetches and displayes the items from the next page of the datasource.
         /// &#10;
         /// &#10;loadMoreText — String (default: "Press to load more")
         /// &#10;The text of the rendered load-more button (applies only if loadMore is set to true).
         /// &#10;
-        /// &#10;loadMoreParameters — Function 
-        /// &#10;Check the 'endlessScrollParameters' option.
-        /// &#10;
-        /// &#10;pullTemplate — String (default: "Pull to refresh")
+        /// &#10;pullTemplate — String|Function (default: "Pull to refresh")
         /// &#10;The message template displayed when the user pulls the listView. Applicable only when pullToRefresh is set to true.
         /// &#10;
         /// &#10;pullToRefresh — Boolean (default: false)
         /// &#10;If set to true, the listview will reload its data when the user pulls the view over the top limit.
         /// &#10;
         /// &#10;pullParameters — Function 
-        /// &#10;A callback function used when the 'pullToRefresh' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.
+        /// &#10;A callback function used when the 'pullToRefresh' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.Notice: When the listview is in a virtual mode, the pull to refresh action removes the previously loaded items in the listview (instead of appending new records at the top).
+/// &#10;Previously loaded pages in the datasource are also discarded.
         /// &#10;
-        /// &#10;refreshTemplate — String (default: "Refreshing")
+        /// &#10;refreshTemplate — String|Function (default: "Refreshing")
         /// &#10;The message template displayed during the refresh. Applicable only when pullToRefresh is set to true.
         /// &#10;
-        /// &#10;releaseTemplate — String (default: "Release to refresh")
+        /// &#10;releaseTemplate — String|Function (default: "Release to refresh")
         /// &#10;The message template indicating that pullToRefresh will occur. Applicable only when pullToRefresh is set to true.
-        /// &#10;
-        /// &#10;scrollTreshold — String (default: 30)
-        /// &#10;The distance to the bottom in pixels, after which the listview will start fetching the next page. Applicable only when endlessScroll is set to true.
         /// &#10;
         /// &#10;style — String 
         /// &#10;The style of the control. Can be either empty string(""), or inset.
         /// &#10;
-        /// &#10;template — String (default: #:data#)
+        /// &#10;template — String|Function (default: "#:data#")
         /// &#10;The item template.
         /// &#10;
         /// &#10;type — String 
@@ -2262,7 +2509,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;layout — String 
         /// &#10;The id of the default Pane Layout.
         /// &#10;
-        /// &#10;loading — String (default: Loading...)
+        /// &#10;loading — String (default: "Loading...")
         /// &#10;The text displayed in the loading popup. Setting this value to false will disable the loading popup.
         /// &#10;
         /// &#10;transition — String 
@@ -2396,7 +2643,7 @@ intellisense.annotate(instance, {
     content: function(content) {
         /// <signature>
         /// <summary>
-        /// Update the scrollview HTML content
+        /// Update the scrollview HTML content.
         /// </summary>
         /// <param name="content" type="Object" >the new scrollView content.</param>
         /// </signature>
@@ -2479,17 +2726,38 @@ intellisense.annotate(jQuery.fn, {
         /// Instantiates a kendo.mobile.ui.ScrollView widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
+        /// &#10;autoBind — Boolean (default: true)
+        /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.Applicable only in data bound mode.
+        /// &#10;
         /// &#10;bounceVelocityThreshold — Number (default: 1.6)
         /// &#10;The velocity threshold after which a swipe will result in a bounce effect.
         /// &#10;
+        /// &#10;contentHeight — Number|String (default: "auto")
+        /// &#10;The height of the ScrollView content.
+        /// &#10;
+        /// &#10;dataSource — Object 
+        /// &#10;Instance of DataSource that the mobile ScrollView will be bound to. If DataSource is set, the widget will operate in data bound mode.
+        /// &#10;
         /// &#10;duration — Number (default: 300)
         /// &#10;The milliseconds that take the ScrollView to snap to the current page after released.
+        /// &#10;
+        /// &#10;emptyTemplate — String (default: "")
+        /// &#10;The template which is used to render the pages without content. By default the ScrollView renders a blank page.Applicable only in data bound mode.
+        /// &#10;
+        /// &#10;enablePager — Boolean (default: true)
+        /// &#10;If set to true the ScrollView will display a pager. By default pager is enabled.
+        /// &#10;
+        /// &#10;itemsPerPage — Number (default: 1)
+        /// &#10;Determines how many data items will be passed to the page template.Applicable only in data bound mode.
         /// &#10;
         /// &#10;page — Number (default: 0)
         /// &#10;The initial page to display.
         /// &#10;
         /// &#10;pageSize — Number (default: 1)
-        /// &#10;Multiplier applied to the snap amount of the ScrollView. By default, the widget scrolls to the next screen when swipe. If the pageSize property is set to 0.5, the ScrollView will scroll by half of the widget width.
+        /// &#10;Multiplier applied to the snap amount of the ScrollView. By default, the widget scrolls to the next screen when swipe. If the pageSize property is set to 0.5, the ScrollView will scroll by half of the widget width.Not applicable in data bound mode.
+        /// &#10;
+        /// &#10;template — String (default: "#:data#")
+        /// &#10;The template which is used to render the content of pages. By default the ScrollView renders a div element for every page.Applicable only in data bound mode.
         /// &#10;
         /// &#10;velocityThreshold — Number (default: 0.8)
         /// &#10;The velocity threshold after which a swipe will navigate to the next page (as opposed to snapping back to the current page).
@@ -2520,6 +2788,28 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Prepares the Scroller for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
+        /// </signature>
+    },
+    disable: function() {
+        /// <signature>
+        /// <summary>
+        /// Disables the scrolling of the element.
+        /// </summary>
+        /// </signature>
+    },
+    enable: function() {
+        /// <signature>
+        /// <summary>
+        /// Enables the scrolling of the element after it has been disabled by calling disable.
+        /// </summary>
+        /// </signature>
+    },
+    height: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the viewport height of the scrollable element.
+        /// </summary>
+        /// <returns type="Number">the viewport height in pixels.</returns>
         /// </signature>
     },
     pullHandled: function() {
@@ -2624,7 +2914,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;The threshold below which a releasing the scroller will trigger the pull event.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
         /// &#10;
-        /// &#10;pullTemplate — String (default: Pull to refresh)
+        /// &#10;pullTemplate — String (default: "Pull to refresh")
         /// &#10;The message template displayed when the user pulls the scroller.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
         /// &#10;
@@ -2632,17 +2922,18 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;If set to true, the scroller will display a hint when the user pulls the container beyond its top limit.
 /// &#10;If a pull beyond the specified pullOffset occurs, a pull event will be triggered.
         /// &#10;
-        /// &#10;refreshTemplate — String (default: Refreshing)
+        /// &#10;refreshTemplate — String (default: "Refreshing")
         /// &#10;The message template displayed during the refresh.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
         /// &#10;
-        /// &#10;releaseTemplate — String (default: Release to refresh)
+        /// &#10;releaseTemplate — String (default: "Release to refresh")
         /// &#10;The message template displayed when the user pulls the scroller below the
 /// &#10;pullOffset, indicating that pullToRefresh will occur.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
         /// &#10;
         /// &#10;useNative — Boolean (default: false)
-        /// &#10;If set to true, the scroller will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+        /// &#10;(available since Q1 2013)
+/// &#10; If set to true, the scroller will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
 /// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
         /// &#10;
         /// </summary>
@@ -2728,84 +3019,8 @@ intellisense.annotate(jQuery.fn, {
         /// Instantiates a kendo.mobile.ui.SplitView widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
-        /// &#10;style — String (default: horizontal)
+        /// &#10;style — String (default: "horizontal")
         /// &#10;Defines the SplitView style - horizontal or vertical.
-        /// &#10;
-        /// </summary>
-        /// <param name="options" type="Object">
-        /// The widget configuration options
-        /// </param>
-        /// </signature>
-    }
-});
-
-intellisense.annotate(kendo.mobile.ui, {
-    Swipe: function() {
-        /// <signature>
-        /// <summary>Constructor of kendo.mobile.ui.Swipe</summary>
-        /// </signature>
-    }
-});
-
-kendo.mobile.ui.Swipe = (function() {
-var original = kendo.mobile.ui.Swipe;
-var wrapper = function() {
-var instance = new original();
-intellisense.annotate(instance, {
-
-    bind: function(event, callback) {
-        /// <signature>
-        /// <summary>
-        /// Binds to a widget event.
-        /// </summary>
-        /// <param name="event" type="String">The event name</param>
-        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
-        /// </signature>
-    },
-
-    unbind: function(event, callback) {
-        /// <signature>
-        /// <summary>
-        /// Unbinds a callback from a widget event.
-        /// </summary>
-        /// <param name="event" type="String">The event name</param>
-        /// <param name="callback" type="Function">The callback to be removed.</param>
-        /// </signature>
-    }
-
-});
-
-return instance;
-
-};
-
-intellisense.redirectDefinition(wrapper, original);
-
-return wrapper;
-
-})();
-
-
-jQuery.fn.kendoSwipe = function() {
-    this.data("kendoSwipe", new kendo.mobile.ui.Swipe());
-
-    return this;
-};
-
-intellisense.annotate(jQuery.fn, {
-    getKendoSwipe: function() {
-        /// <signature>
-        /// <summary>
-        /// Returns a reference to the kendo.mobile.ui.Swipe widget, instantiated on the selector.
-        /// </summary>
-        /// <returns type="kendo.mobile.ui.Swipe">The kendo.mobile.ui.Swipe instance (if present).</returns>
-        /// </signature>
-    },
-    kendoSwipe: function(options) {
-        /// <signature>
-        /// <summary>
-        /// Instantiates a kendo.mobile.ui.Swipe widget based the DOM elements that match the selector.
-        /// &#10;Accepts an object with the following configuration options:
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -2909,10 +3124,10 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;checked — Boolean (default: false)
         /// &#10;The checked state of the widget.
         /// &#10;
-        /// &#10;offLabel — String (default: OFF)
+        /// &#10;offLabel — String (default: "OFF")
         /// &#10;The OFF label.
         /// &#10;
-        /// &#10;onLabel — String (default: ON)
+        /// &#10;onLabel — String (default: "ON")
         /// &#10;The ON label.
         /// &#10;
         /// </summary>
@@ -2936,6 +3151,16 @@ var original = kendo.mobile.ui.TabStrip;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    badge: function(tab,value) {
+        /// <signature>
+        /// <summary>
+        /// Introduced in Q1 2013 SP Sets a badge on one of the tabs with the specified value. If invoked without second parameter, returns the tab's current badge value. Set the value to false to remove the badge.
+        /// </summary>
+        /// <param name="tab" type="Object" >The target tab specified either as a jQuery selector/object or as an item index.</param>
+        /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
+        /// <returns type="String|kendo.mobile.ui.TabStrip">Returns the badge value if invoked without parameters, otherwise returns the TabStrip object.</returns>
+        /// </signature>
+    },
     currentItem: function() {
         /// <signature>
         /// <summary>
@@ -3128,7 +3353,8 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;The text to display in the navbar title (if present) and the browser title.
         /// &#10;
         /// &#10;useNativeScrolling — Boolean (default: false)
-        /// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+        /// &#10;(available since Q1 2013)
+/// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
 /// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
         /// &#10;
         /// &#10;zoom — Boolean (default: false)
@@ -3633,7 +3859,7 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Validates the input element against the declared validation rules.
         /// </summary>
-        /// <param name="input" type="Element" >Input element to be validated.</param>
+        /// <param name="input" type="Object" >Input element to be validated.</param>
         /// <returns type="Boolean">true if all validation rules passed successfully.</returns>
         /// </signature>
     },

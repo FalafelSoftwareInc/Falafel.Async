@@ -110,7 +110,8 @@
 
                     //UPDATE MODAL CONTENT
                     var bodyEl = el.find('> .modal-body');
-                    bodyEl.html(content);
+                    if (options.ajax) bodyEl.load(content);
+                    else bodyEl.html(content);
 
                     //HANDLE MODAL HEADER IF APPLICABLE
                     var headerEl = el.find('> .modal-header');

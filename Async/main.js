@@ -38,22 +38,17 @@
     require.config({
         baseUrl: baseScriptsUrl,
         paths: {
-            alert: 'libs/require/js/alert.min',
-            async: 'libs/require/js/async.min',
+            amplify: 'libs/amplify/js/amplify.min',
             blockui: 'libs/blockui/js/jquery.blockUI',
             bootstrap: 'libs/bootstrap/js/bootstrap.min',
             bxslider: 'libs/bxslider/js/jquery.bxslider.min',
-            domReady: 'libs/require/js/domReady.min',
-            font: 'libs/require/js/font.min',
+            cookie: 'libs/jquery-cookie/js/jquery-cookie',
 			fullcalendar: 'libs/fullcalendar/js/fullcalendar.min',
-            goog: 'libs/require/js/goog.min',
-            helpers: 'libs/require/js/helpers.min',
+            hijri: 'libs/hijricalendar/js/hijricalendar.mod',
             html5shiv: 'libs/html5shiv/js/html5shiv.min',
-            i18n: 'libs/require/js/i18n.min',
             innerfade: 'libs/innerfade/js/jquery.innerfade.min',
             jqparse: 'libs/parse/js/jquery.parse',
             jqueryui: 'libs/jquery-ui/js/jquery-ui.min',
-            json2: 'libs/require/js/json2.min',
             jsurl: 'libs/js-url/js/js-url.min',
             kendoall: 'libs/kendoui/js/kendo.all.min',
             kendodataviz: 'libs/kendoui/js/kendo.dataviz.min',
@@ -65,14 +60,13 @@
             modernizr: 'libs/modernizr/js/modernizr.min',
             moment: 'libs/moment/js/moment.min',
             mustache: 'libs/mustache/js/mustache.min',
-            mdown: 'libs/require/js/mdown.min',
-            noext: 'libs/require/js/noext.min',
             parse: 'libs/parse/js/parse.min',
             photobox: 'libs/photobox/js/photobox.min',
-            propertyParser: 'libs/require/js/propertyParser.min',
             respond: 'libs/respond/js/respond.min',
             sitefinityapi: 'libs/sitefinity/js/api',
-            text: 'libs/require/js/text.min',
+            taffy: 'libs/taffy/js/taffy-min',
+            text: 'libs/require/js/text',
+            tinysort: 'libs/tinysort/js/jquery.tinysort.min',
             toastr: 'libs/toastr/js/toastr.min',
             underscore: 'libs/underscore/js/underscore-min',
             'underscore.string': 'libs/underscore/js/underscore.string.min'
@@ -80,6 +74,9 @@
         // The shim config allows us to configure dependencies for
         // scripts that do not call define() to register a module
         shim: {
+            amplify: {
+                exports: 'amplify'
+            },
             blockui: ['jquery'],
             bootstrap: ['jquery'],
             bxslider: ['jquery'],
@@ -106,7 +103,6 @@
                 deps: ['jquery'],
                 exports: 'kendo'
             },
-            kendoui: ['jquery'],
             modernizr: {
                 exports: 'Modernizr'
             },
@@ -121,6 +117,10 @@
                 exports: 'Parse'
             },
             photobox: ['jquery'],
+            taffy: {
+                exports: 'TAFFY'
+            },
+            tinysort: ['jquery'],
             toastr: {
                 deps: ['jquery'],
                 exports: 'toastr'

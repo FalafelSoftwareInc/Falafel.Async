@@ -382,203 +382,199 @@ intellisense.annotate(instance, {
     add: function(model) {
         /// <signature>
         /// <summary>
-        /// Adds a new data item to the DataSource.
+        /// Appends a data item to the data source.
         /// </summary>
-        /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the field values.</param>
-        /// <returns type="kendo.data.Model">The instance which has been added.</returns>
+        /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the data item field values.</param>
+        /// <returns type="kendo.data.Model">the data item which is inserted.</returns>
         /// </signature>
     },
-    aggregate: function(val) {
+    aggregate: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current aggregate descriptors or applies aggregates to the data.
+        /// Gets or sets the aggregate configuration.
         /// </summary>
-        /// <param name="val" type="Object" >Aggregate(s) to be applied to the data.</param>
-        /// <returns type="Array">Current aggregate descriptors</returns>
+        /// <param name="value" type="Object" >The aggregate configuration. Accepts the same values as the aggregate option.</param>
+        /// <returns type="Array">the current aggregate configuration.</returns>
         /// </signature>
     },
     aggregates: function() {
         /// <signature>
         /// <summary>
-        /// Get result of aggregates calculation
+        /// Returns the aggregate results.
         /// </summary>
-        /// <returns type="Array">Aggregates result</returns>
+        /// <returns type="Object">the aggregate results. There is a key for every aggregated field.</returns>
         /// </signature>
     },
     at: function(index) {
         /// <signature>
         /// <summary>
-        /// Returns the data item at the specified index.
+        /// Returns the data item at the specified index. The index is zero-based.
         /// </summary>
         /// <param name="index" type="Number" >The zero-based index of the data item.</param>
-        /// <returns type="kendo.data.ObservableObject | kendo.data.Model">The type depends on the schema.</returns>
+        /// <returns type="kendo.data.ObservableObject">the data item at the specified index. Returns undefined if a data item is not found at the specified index.Returns a kendo.data.Model instance if the schema.model option is set.</returns>
         /// </signature>
     },
     cancelChanges: function(model) {
         /// <signature>
         /// <summary>
-        /// Cancel the changes made to the DataSource after the last sync. Any changes currently existing in the model
-/// will be discarded.
+        /// Cancels any pending changes in the data source. Deleted data items are restored, new data items are removed and updated data items are restored to their initial state.
         /// </summary>
-        /// <param name="model" type="kendo.data.Model" >Optional model instance. If specified only the changes of this model will be discarded. If omitted all changes will be discarded.</param>
+        /// <param name="model" type="kendo.data.Model" >The optional data item (model). If specified only the changes of this data item will be discarded. If omitted all changes will be discarded.</param>
         /// </signature>
     },
     data: function(value) {
         /// <signature>
         /// <summary>
-        /// Gets or sets the data of the DataSource.
+        /// Gets or sets the data items of the data source.If the data source is bound to a remote service (via the transport option) the data method will return the service response.
+/// Every item from the response is wrapped in a kendo.data.ObservableObject or kendo.data.Model (if the schema.model option is set).If the data source is bound to a JavaScript array (via the data option) the data method will return the items of that array.
+/// Every item from the array is wrapped in a kendo.data.ObservableObject or kendo.data.Model (if the schema.model option is set).If the data source is grouped (via the group option or the group method) and the serverGrouping is set to true
+/// the data method will return the group items.
         /// </summary>
-        /// <param name="value" type="Array" >An Array of items to set as the current data of the DataSource. If omitted the current data will be returned.</param>
-        /// <returns type="kendo.data.ObservableArray">the items of the DataSource</returns>
+        /// <param name="value" type="Object" >The data items which will replace the current ones in the data source. If omitted the current data items will be returned.</param>
+        /// <returns type="kendo.data.ObservableArray">the data items of the data source. Returns empty array if the data source hasn't been populated with data items via the read, fetch or query methods.</returns>
         /// </signature>
     },
     fetch: function(callback) {
         /// <signature>
         /// <summary>
-        /// Fetches data using the current filter/sort/group/paging information.
-/// If data is not available and remote operations are enabled data is requested through the transport,
-/// otherwise operations are executed over the available data.
+        /// Reads the data items from a remote service (if the transport option is set) or from a JavaScript array (if the data option is set).
         /// </summary>
-        /// <param name="callback" type="Function" >Optional callback which will be executed when the data is ready.</param>
+        /// <param name="callback" type="Function" >The optional function which is executed when the remote request is finished.  The function context (available via the this keyword) will be set to the data source instance.</param>
         /// </signature>
     },
-    filter: function(filters) {
+    filter: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current filters or filter the data.Supported filter operators/aliases are:
+        /// Gets or sets the filter configuration.
         /// </summary>
-        /// <param name="filters" type="Object" >Filter(s) to be applied to the data.</param>
-        /// <returns type="Array">The current filter descriptors.</returns>
+        /// <param name="value" type="Object" >The filter configuration. Accepts the same values as the filter option.</param>
+        /// <returns type="Object">the current filter configuration.</returns>
         /// </signature>
     },
     get: function(id) {
         /// <signature>
         /// <summary>
-        /// Retrieves a model instance by given id.
+        /// Gets the data item (model) with the specified id.
         /// </summary>
-        /// <param name="id" type="Object" >The id of the model to be retrieved. The id of the model is defined via schema.model.id.</param>
-        /// <returns type="kendo.data.Model">the model instance. If not found undefined is returned.</returns>
+        /// <param name="id" type="Object" >The id of the model to look for.</param>
+        /// <returns type="kendo.data.Model">the model instance. Returns undefined if a model with the specified id is not found.</returns>
         /// </signature>
     },
     getByUid: function(uid) {
         /// <signature>
         /// <summary>
-        /// Retrieves a data item by its uid field.
+        /// Gets the data item (model) with the specified uid.
         /// </summary>
-        /// <param name="uid" type="String" >The uid of the item to be retrieved</param>
-        /// <returns type="kendo.data.ObservableObject">or kendo.data.Model (if schema.model is set). If not found undefined is returned.</returns>
+        /// <param name="uid" type="String" >The uid of the model to look for.</param>
+        /// <returns type="kendo.data.ObservableObject">the model instance. Returns undefined if a model with the specified uid is not found.</returns>
         /// </signature>
     },
-    group: function(groups) {
+    group: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current group descriptors or group the data.
+        /// Gets or sets the grouping configuration.
         /// </summary>
-        /// <param name="groups" type="Object" >Group(s) to be applied to the data.</param>
-        /// <returns type="Array">The current group descriptors.</returns>
+        /// <param name="value" type="Object" >The grouping configuration. Accepts the same values as the group option.</param>
+        /// <returns type="Array">the current grouping configuration.</returns>
         /// </signature>
     },
     hasChanges: function() {
         /// <signature>
         /// <summary>
-        /// Get if DataSource has changes.
+        /// Cheks if the data itams have changed.
         /// </summary>
-        /// <returns type="Boolean">True if DataSource records are modified. Otherwise, false.</returns>
+        /// <returns type="Boolean">returns true if the data items have changed. Otherwise, false.</returns>
         /// </signature>
     },
-    indexOf: function(value) {
+    indexOf: function(dataItem) {
         /// <signature>
         /// <summary>
-        /// Get the index of the specified kendo.data.ObservableObject or kendo.data.Model.
+        /// Gets the index of the specified data item.
         /// </summary>
-        /// <param name="value" type="kendo.data.ObservableObject" ></param>
-        /// <returns type="Number">the index of the specified value.</returns>
+        /// <param name="dataItem" type="kendo.data.ObservableObject" >The target data item.</param>
+        /// <returns type="Number">the index of the specified data item. Returns -1 if the data item is not found.</returns>
         /// </signature>
     },
     insert: function(index,model) {
         /// <signature>
         /// <summary>
-        /// Inserts a new data item in the DataSource.
+        /// Inserts a data item in the data source at the specified index.
         /// </summary>
-        /// <param name="index" type="Number" >The zer-based index at which the data item will be inserted</param>
+        /// <param name="index" type="Number" >The zero-based index at which the data item will be inserted.</param>
         /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the field values.</param>
-        /// <returns type="kendo.data.Model">The instance which has been inserted.</returns>
+        /// <returns type="kendo.data.Model">the data item which is inserted.</returns>
         /// </signature>
     },
     page: function(page) {
         /// <signature>
         /// <summary>
-        /// Get/set the current page index.
+        /// Gets or sets the current page.
         /// </summary>
-        /// <param name="page" type="Number" >The index of the page to be retrieved</param>
-        /// <returns type="Number">Current page index</returns>
+        /// <param name="page" type="Number" >The new page.</param>
+        /// <returns type="Number">the current page.</returns>
         /// </signature>
     },
     pageSize: function(size) {
         /// <signature>
         /// <summary>
-        /// Get/set the current pageSize or request a page with specified number of records.
+        /// Gets or sets the current page size.
         /// </summary>
-        /// <param name="size" type="Number" >The of number of records to be retrieved.</param>
-        /// <returns type="Number">Current page size</returns>
+        /// <param name="size" type="Number" >The new page size.</param>
+        /// <returns type="Number">the current page size.</returns>
         /// </signature>
     },
     query: function(options) {
         /// <signature>
         /// <summary>
-        /// Executes a query over the data. Available operations are paging, sorting, filtering, grouping.
-/// If data is not available or remote operations are enabled, data is requested through the transport.
-/// Otherwise operations are executed over the available data.
+        /// Executes the specified query over the data items. Makes a HTTP request if bound to a remote service.
         /// </summary>
-        /// <param name="options" type="Object" >Contains the settings for the operations.</param>
+        /// <param name="options" type="" >The query options which should be applied.</param>
         /// </signature>
     },
     read: function(data) {
         /// <signature>
         /// <summary>
-        /// Read data into the DataSource using the transport.read setting.
+        /// Reads data items from a remote service (if the transport option is set) or from a JavaScript array (if the data option is set).
         /// </summary>
-        /// <param name="data" type="Object" >Optional data to pass to the remote service configured via transport.read.</param>
+        /// <param name="data" type="Object" >Optional data to pass to the remote service.</param>
         /// </signature>
     },
     remove: function(model) {
         /// <signature>
         /// <summary>
-        /// Remove a given kendo.data.Model instance from the DataSource.
+        /// Removes the specified data item from the data source.
         /// </summary>
-        /// <param name="model" type="Object" >The kendo.data.Model instance to be removed.</param>
+        /// <param name="model" type="kendo.data.Model" >The data item which should be removed.</param>
         /// </signature>
     },
-    sort: function(sort) {
+    sort: function(value) {
         /// <signature>
         /// <summary>
-        /// Get current sort descriptors or sorts the data.
+        /// Gets or sets the sort order which will be applied over the data items.
         /// </summary>
-        /// <param name="sort" type="Object" >Sort options to be applied to the data</param>
-        /// <returns type="Array">the current sort descriptors.</returns>
+        /// <param name="value" type="Object" >The sort configuration. Accepts the same values as the sort option.</param>
+        /// <returns type="Array">the current sort configuration.</returns>
         /// </signature>
     },
     sync: function() {
         /// <signature>
         /// <summary>
-        /// Synchronizes changes through the transport. Any pending CRUD operations will be sent to the server.
-/// If the DataSource is in batch mode, only one call will be made for each type of operation (Create, Update, Destroy).
-/// Otherwise, the DataSource will send one request per item change and change type.
+        /// Saves any data item changes.The sync method will request the remote service if:
         /// </summary>
         /// </signature>
     },
     total: function() {
         /// <signature>
         /// <summary>
-        /// Get the total number of data items.
+        /// Gets the total number of data items. Uses schema.total if the transport.read option is set.
         /// </summary>
-        /// <returns type="Number">the number of data items.</returns>
+        /// <returns type="Number">the total number of data items. Returns the length of the array returned by the data method if schema.total or transport.read are not set.Returns 0 if the data source hasn't been populated with data items via the read, fetch or query methods.</returns>
         /// </signature>
     },
     totalPages: function() {
         /// <signature>
         /// <summary>
-        /// Get the number of available pages.
+        /// Gets the number of available pages.
         /// </summary>
         /// <returns type="Number">the available pages.</returns>
         /// </signature>
@@ -586,9 +582,9 @@ intellisense.annotate(instance, {
     view: function() {
         /// <signature>
         /// <summary>
-        /// Returns a the current state of the data items - with applied paging, sorting, filtering and grouping.To ensure that data is available this method should be use from within change event of the DataSource.
+        /// Returns the data items which correspond to the current page, filter, sort and group configuration.To ensure that data is available this method should be used within the change event handler or the fetch method.
         /// </summary>
-        /// <returns type="kendo.data.ObservableArray">the data items.</returns>
+        /// <returns type="kendo.data.ObservableArray">the data items. Returns groups if the data items are grouped (via the group option or the group method).</returns>
         /// </signature>
     },
 
@@ -688,7 +684,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
         /// </summary>
         /// </signature>
     },
@@ -1047,6 +1043,245 @@ return wrapper;
 })();
 
 
+intellisense.annotate(kendo.data, {
+    SchedulerDataSource: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.data.SchedulerDataSource</summary>
+        /// </signature>
+    }
+});
+
+kendo.data.SchedulerDataSource = (function() {
+var original = kendo.data.SchedulerDataSource;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+intellisense.annotate(kendo.data, {
+    SchedulerEvent: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.data.SchedulerEvent</summary>
+        /// </signature>
+    }
+});
+
+kendo.data.SchedulerEvent = (function() {
+var original = kendo.data.SchedulerEvent;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+intellisense.annotate(kendo.dataviz.ui, {
+    Barcode: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.dataviz.ui.Barcode</summary>
+        /// </signature>
+    }
+});
+
+kendo.dataviz.ui.Barcode = (function() {
+var original = kendo.dataviz.ui.Barcode;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the barcode encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
+        /// </signature>
+    },
+    redraw: function() {
+        /// <signature>
+        /// <summary>
+        /// Redraws the barcode.
+        /// </summary>
+        /// </signature>
+    },
+    svg: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the SVG representation of the barcode. The returned string is a self-contained SVG document that can be used as is or converted to other formats using tools like Inkscape and
+/// ImageMagick. Both programs provide command-line interface suitable for server-side processing.
+        /// </summary>
+        /// <returns type="String">the SVG representation of the barcode.</returns>
+        /// </signature>
+    },
+    value: function(value) {
+        /// <signature>
+        /// <summary>
+        /// Gets/Sets the value of the barcode.
+        /// </summary>
+        /// <param name="value" type="Object" >The value to set.</param>
+        /// <returns type="String">The value of the barcode.</returns>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+jQuery.fn.kendoBarcode = function() {
+    this.data("kendoBarcode", new kendo.dataviz.ui.Barcode());
+
+    return this;
+};
+
+intellisense.annotate(jQuery.fn, {
+    getKendoBarcode: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a reference to the kendo.dataviz.ui.Barcode widget, instantiated on the selector.
+        /// </summary>
+        /// <returns type="kendo.dataviz.ui.Barcode">The kendo.dataviz.ui.Barcode instance (if present).</returns>
+        /// </signature>
+    },
+    kendoBarcode: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Instantiates a kendo.dataviz.ui.Barcode widget based the DOM elements that match the selector.
+        /// &#10;Accepts an object with the following configuration options:
+        /// &#10;
+        /// &#10;background — String (default: "white")
+        /// &#10;The background of the barcode area.
+/// &#10;Any valid CSS color string will work here, including hex and rgb.
+        /// &#10;
+        /// &#10;border — Object 
+        /// &#10;The border of the barcode area.
+        /// &#10;
+        /// &#10;checksum — Boolean (default: false)
+        /// &#10;If set to true the barcode will not display the checksum digit next to the value in the text area.
+        /// &#10;
+        /// &#10;color — String (default: "black")
+        /// &#10;The color of the bar elements.
+/// &#10;Any valid CSS color string will work here, including hex and rgb.
+        /// &#10;
+        /// &#10;height — Number (default: 100)
+        /// &#10;The height of the barcode in pixels.  By default the height is 100.
+        /// &#10;
+        /// &#10;padding — Object 
+        /// &#10;The padding of the barcode.
+        /// &#10;
+        /// &#10;renderAs — String (default: "canvas")
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Barcode will switch to the first available mode.The supported values are:
+        /// &#10;
+        /// &#10;text — Object 
+        /// &#10;Can be set to a JavaScript object which represents the text configuration.
+        /// &#10;
+        /// &#10;type — String (default: "code39")
+        /// &#10;The symbology (encoding) the barcode will use.The supported values are:
+        /// &#10;
+        /// &#10;value — String 
+        /// &#10;The initial value of the Barcode
+        /// &#10;
+        /// &#10;width — Number (default: 300)
+        /// &#10;The width of the barcode in pixels.  By default the width is 300.
+        /// &#10;
+        /// </summary>
+        /// <param name="options" type="Object">
+        /// The widget configuration options
+        /// </param>
+        /// </signature>
+    }
+});
+
 intellisense.annotate(kendo.dataviz.ui, {
     Chart: function() {
         /// <signature>
@@ -1063,44 +1298,50 @@ intellisense.annotate(instance, {
     destroy: function() {
         /// <signature>
         /// <summary>
-        /// Prepares the Chart for safe removal from the DOM.Detaches event handlers and removes data entries in order to avoid memory leaks.
-        /// </summary>
-        /// </signature>
-    },
-    refresh: function() {
-        /// <signature>
-        /// <summary>
-        /// Reloads the data and repaints the chart.
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
         /// </signature>
     },
     redraw: function() {
         /// <signature>
         /// <summary>
-        /// Repaints the chart using currently loaded data.
+        /// Repaints the chart using the currently loaded data.
+        /// </summary>
+        /// </signature>
+    },
+    refresh: function() {
+        /// <signature>
+        /// <summary>
+        /// Reloads the data and renders the chart.
         /// </summary>
         /// </signature>
     },
     setDataSource: function(dataSource) {
         /// <signature>
         /// <summary>
-        /// Sets the dataSource of an existing Chart and rebinds it.
+        /// Sets the data source of the widget.
         /// </summary>
-        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
         /// </signature>
     },
     svg: function() {
         /// <signature>
         /// <summary>
-        /// Returns the SVG representation of the current chart.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the chart.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
         /// <returns type="String">the SVG representation of the chart.</returns>
+        /// </signature>
+    },
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the chart encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
         /// </signature>
     },
 
@@ -1158,21 +1399,22 @@ intellisense.annotate(jQuery.fn, {
         /// Instantiates a kendo.dataviz.ui.Chart widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
-        /// &#10;axisDefaults — Object 
-        /// &#10;Default options for all chart axes.
+        /// &#10;autoBind — Boolean (default: true)
+        /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+/// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
         /// &#10;
-        /// &#10;categoryAxis — Array 
+        /// &#10;axisDefaults — Object 
+        /// &#10;The default options for all chart axes. Accepts the options supported by categoryAxis, valueAxis, xAxis and yAxis.
+        /// &#10;
+        /// &#10;categoryAxis — Array|Object 
         /// &#10;The category axis configuration options.
         /// &#10;
         /// &#10;chartArea — Object 
-        /// &#10;The chart area configuration options.
-/// &#10;This is the entire visible area of the chart.
+        /// &#10;The chart area configuration options. Represents the entire visible area of the chart.
         /// &#10;
-        /// &#10;dataSource — Object 
-        /// &#10;DataSource configuration or instance.
-        /// &#10;
-        /// &#10;autoBind — Boolean (default: true)
-        /// &#10;Indicates whether the chart will call read on the data source initially.
+        /// &#10;dataSource — Object|Array 
+        /// &#10;The data source of the chart which is used to display the series. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
         /// &#10;
         /// &#10;legend — Object 
         /// &#10;The chart legend configuration options.
@@ -1182,40 +1424,45 @@ intellisense.annotate(jQuery.fn, {
 /// &#10;Axis that don't have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.
         /// &#10;
         /// &#10;plotArea — Object 
-        /// &#10;The plot area configuration options. This is the area containing the plotted series.
+        /// &#10;The plot area configuration options. The plot area is the area which displays the series.
+        /// &#10;
+        /// &#10;renderAs — String 
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:
         /// &#10;
         /// &#10;series — Array 
-        /// &#10;Array of series definitions.The series type is determined by the value of the type field.
-/// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.
+        /// &#10;The configuration of the chart series.The series type is determined by the value of the type field.
+/// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.
         /// &#10;
         /// &#10;seriesColors — Array 
         /// &#10;The default colors for the chart's series. When all colors are used, new colors are pulled from the start again.
         /// &#10;
         /// &#10;seriesDefaults — Object 
-        /// &#10;Default values for each series.
+        /// &#10;The default options for all series.
         /// &#10;
         /// &#10;theme — String 
-        /// &#10;Sets Chart theme. Available themes: default, blueOpal, black.
+        /// &#10;The chart theme.The supported values are:
+        /// &#10;
+        /// &#10;title — String 
+        /// &#10;The chart title configuration options or text.
         /// &#10;
         /// &#10;title — Object 
         /// &#10;The chart title configuration options or text.
         /// &#10;
         /// &#10;tooltip — Object 
-        /// &#10;The data point tooltip configuration options.
+        /// &#10;The chart series tooltip configuration options.
         /// &#10;
         /// &#10;transitions — Boolean (default: true)
-        /// &#10;A value indicating if transition animations should be played.
+        /// &#10;If set to true the chart will play animations when displaying the series. By default animations are enabled.
         /// &#10;
         /// &#10;valueAxis — Array 
         /// &#10;The value axis configuration options.
         /// &#10;
         /// &#10;xAxis — Array 
-        /// &#10;Scatter charts X-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
+        /// &#10;The X-axis configuration options of the scatter chart X-axis. Supports all valueAxis options.
         /// &#10;
         /// &#10;yAxis — Array 
-        /// &#10;Scatter charts Y-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
+        /// &#10;The y axis configuration options of the scatter chart. Supports all valueAxis options.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -1255,14 +1502,20 @@ intellisense.annotate(instance, {
     svg: function() {
         /// <signature>
         /// <summary>
-        /// Returns the SVG representation of the current gauge.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the gauge.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
+        /// </signature>
+    },
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the gauge encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
         /// </signature>
     },
     value: function() {
@@ -1334,11 +1587,163 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;pointer — Object 
         /// &#10;The pointer configuration options.
         /// &#10;
+        /// &#10;renderAs — String 
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
+        /// &#10;
         /// &#10;scale — Object 
         /// &#10;Configures the scale.
         /// &#10;
         /// &#10;transitions — Boolean (default: true)
         /// &#10;A value indicating if transition animations should be played.
+        /// &#10;
+        /// </summary>
+        /// <param name="options" type="Object">
+        /// The widget configuration options
+        /// </param>
+        /// </signature>
+    }
+});
+
+intellisense.annotate(kendo.dataviz.ui, {
+    QRCode: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.dataviz.ui.QRCode</summary>
+        /// </signature>
+    }
+});
+
+kendo.dataviz.ui.QRCode = (function() {
+var original = kendo.dataviz.ui.QRCode;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    destroy: function() {
+        /// <signature>
+        /// <summary>
+        /// Prepares the QRCode for safe removal from the DOM.Removes data entries in order to avoid memory leaks.
+        /// </summary>
+        /// </signature>
+    },
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the qrcode encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
+        /// </signature>
+    },
+    redraw: function() {
+        /// <signature>
+        /// <summary>
+        /// Redraws the QR code using the current value and options.
+        /// </summary>
+        /// </signature>
+    },
+    setOptions: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Sets new options to the QRCode and redraws it.
+        /// </summary>
+        /// <param name="options" type="Object" >An object with the new options. All configuration options can be set.</param>
+        /// </signature>
+    },
+    svg: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the SVG representation of the qrcode. The returned string is a self-contained SVG document that can be used as is or converted to other formats using tools like Inkscape and
+/// ImageMagick. Both programs provide command-line interface suitable for server-side processing.
+        /// </summary>
+        /// <returns type="String">the SVG representation of the qrcode.</returns>
+        /// </signature>
+    },
+    value: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Change the value of the QR code.
+        /// </summary>
+        /// <param name="options" type="Object" >The new value to be set.</param>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+jQuery.fn.kendoQRCode = function() {
+    this.data("kendoQRCode", new kendo.dataviz.ui.QRCode());
+
+    return this;
+};
+
+intellisense.annotate(jQuery.fn, {
+    getKendoQRCode: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a reference to the kendo.dataviz.ui.QRCode widget, instantiated on the selector.
+        /// </summary>
+        /// <returns type="kendo.dataviz.ui.QRCode">The kendo.dataviz.ui.QRCode instance (if present).</returns>
+        /// </signature>
+    },
+    kendoQRCode: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Instantiates a kendo.dataviz.ui.QRCode widget based the DOM elements that match the selector.
+        /// &#10;Accepts an object with the following configuration options:
+        /// &#10;
+        /// &#10;background — String (default: "#fff")
+        /// &#10;The background color of the QR code. Accepts a valid CSS color string, including hex and rgb.
+        /// &#10;
+        /// &#10;border — Object 
+        /// &#10;The border of the QR code.
+        /// &#10;
+        /// &#10;color — String (default: "#000")
+        /// &#10;The color of the QR code. Accepts a valid CSS color string, including hex and rgb.
+        /// &#10;
+        /// &#10;encoding — String (default: "ISO_8859_1")
+        /// &#10;The encoding mode used to encode the value.The possible values are:
+        /// &#10;
+        /// &#10;errorCorrection — String (default: "L")
+        /// &#10;The error correction level used to encode the value.The possible values are:
+        /// &#10;
+        /// &#10;renderAs — String (default: "canvas")
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the QRCode will switch to the first available mode.The supported values are:
+        /// &#10;
+        /// &#10;size — Number|String 
+        /// &#10;Specifies the size of a QR code in pixels (i.e. "200px"). Numeric values are treated as pixels. If no size is specified, it will be determined from the element width and height. In case the element does not have width or height bigger than zero, a default value of 200 pixels will be used.
+        /// &#10;
+        /// &#10;value — Number|String 
+        /// &#10;The value of the QRCode.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -1378,14 +1783,20 @@ intellisense.annotate(instance, {
     svg: function() {
         /// <signature>
         /// <summary>
-        /// Returns the SVG representation of the current gauge.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the gauge.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
+        /// </signature>
+    },
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the gauge encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
         /// </signature>
     },
     value: function() {
@@ -1457,6 +1868,10 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;pointer — Object 
         /// &#10;The pointer configuration options.
         /// &#10;
+        /// &#10;renderAs — String 
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
+        /// &#10;
         /// &#10;rangeSize — Number 
         /// &#10;The width of the range indicators.
         /// &#10;
@@ -1515,15 +1930,21 @@ intellisense.annotate(instance, {
     svg: function() {
         /// <signature>
         /// <summary>
-        /// Returns the SVG representation of the current chart.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the chart.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
         /// <returns type="String">the SVG representation of the sparkline.</returns>
+        /// </signature>
+    },
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the sparkline encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
         /// </signature>
     },
 
@@ -1606,6 +2027,10 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;pointWidth — Number (default: 5)
         /// &#10;The width to allocate for each data point.
         /// &#10;
+        /// &#10;renderAs — String 
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Sparkline will switch to the first available mode.The supported values are:
+        /// &#10;
         /// &#10;series — Array 
         /// &#10;Array of series definitions.The series type is determined by the value of the type field.
 /// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.
@@ -1652,6 +2077,55 @@ var original = kendo.dataviz.ui.StockChart;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    destroy: function() {
+        /// <signature>
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+        /// </signature>
+    },
+    redraw: function() {
+        /// <signature>
+        /// <summary>
+        /// Repaints the chart using the currently loaded data.
+        /// </summary>
+        /// </signature>
+    },
+    refresh: function() {
+        /// <signature>
+        /// <summary>
+        /// Reloads the data and renders the chart.
+        /// </summary>
+        /// </signature>
+    },
+    setDataSource: function(dataSource) {
+        /// <signature>
+        /// <summary>
+        /// Sets the data source of the widget.
+        /// </summary>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
+        /// </signature>
+    },
+    svg: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the SVG representation of the chart.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
+/// ImageMagick.
+/// Both programs provide command-line interface suitable for server-side processing.
+        /// </summary>
+        /// <returns type="String">the SVG representation of the chart.</returns>
+        /// </signature>
+    },
+    imageDataURL: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a PNG image of the chart encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1709,7 +2183,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;dateField — String (default: "date")
         /// &#10;The field containing the point date.
-/// &#10;It is used as a default field for all date axes, including the navigator pane.The data item field value must be either:
+/// &#10;It is used as a default categoryField for all series.The data item field value must be either:
         /// &#10;
         /// &#10;navigator — Object 
         /// &#10;The data navigator configuration options.
@@ -1740,6 +2214,10 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;plotArea — Object 
         /// &#10;The plot area configuration options. This is the area containing the plotted series.
         /// &#10;
+        /// &#10;renderAs — String 
+        /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:
+        /// &#10;
         /// &#10;series — Array 
         /// &#10;Array of series definitions.The series type is determined by the value of the type field.
 /// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.
@@ -1764,14 +2242,6 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;valueAxis — Array 
         /// &#10;The value axis configuration options.
-        /// &#10;
-        /// &#10;xAxis — Array 
-        /// &#10;Scatter charts X-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
-        /// &#10;
-        /// &#10;yAxis — Array 
-        /// &#10;Scatter charts Y-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -2165,7 +2635,7 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Validates the input element against the declared validation rules.
         /// </summary>
-        /// <param name="input" type="Element" >Input element to be validated.</param>
+        /// <param name="input" type="Object" >Input element to be validated.</param>
         /// <returns type="Boolean">true if all validation rules passed successfully.</returns>
         /// </signature>
     },

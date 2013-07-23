@@ -430,6 +430,9 @@ $.fn.kendoView = function(options) {
     /// &#10;tagName — String (default: "div")
     /// &#10;The tag used for the root element of the view.
     /// &#10;
+    /// &#10;wrap — Boolean (default: true)
+    /// &#10;If set to false, the view will not wrap its contents in a root element. In that case, the view element will point to the root element in the template.
+    /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
     /// The widget configuration options
@@ -490,208 +493,204 @@ kendo.data.DataSource.prototype = {
 
     add: function(model) {
         /// <summary>
-        /// Adds a new data item to the DataSource.
+        /// Appends a data item to the data source.
         /// </summary>
-        /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the field values.</param>
-        /// <returns type="kendo.data.Model">The instance which has been added.</returns>
+        /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the data item field values.</param>
+        /// <returns type="kendo.data.Model">the data item which is inserted.</returns>
 
     },
 
 
-    aggregate: function(val) {
+    aggregate: function(value) {
         /// <summary>
-        /// Get current aggregate descriptors or applies aggregates to the data.
+        /// Gets or sets the aggregate configuration.
         /// </summary>
-        /// <param name="val" type="Object" >Aggregate(s) to be applied to the data.</param>
-        /// <returns type="Array">Current aggregate descriptors</returns>
+        /// <param name="value" type="Object" >The aggregate configuration. Accepts the same values as the aggregate option.</param>
+        /// <returns type="Array">the current aggregate configuration.</returns>
 
     },
 
 
     aggregates: function() {
         /// <summary>
-        /// Get result of aggregates calculation
+        /// Returns the aggregate results.
         /// </summary>
-        /// <returns type="Array">Aggregates result</returns>
+        /// <returns type="Object">the aggregate results. There is a key for every aggregated field.</returns>
 
     },
 
 
     at: function(index) {
         /// <summary>
-        /// Returns the data item at the specified index.
+        /// Returns the data item at the specified index. The index is zero-based.
         /// </summary>
         /// <param name="index" type="Number" >The zero-based index of the data item.</param>
-        /// <returns type="kendo.data.ObservableObject | kendo.data.Model">The type depends on the schema.</returns>
+        /// <returns type="kendo.data.ObservableObject">the data item at the specified index. Returns undefined if a data item is not found at the specified index.Returns a kendo.data.Model instance if the schema.model option is set.</returns>
 
     },
 
 
     cancelChanges: function(model) {
         /// <summary>
-        /// Cancel the changes made to the DataSource after the last sync. Any changes currently existing in the model
-/// will be discarded.
+        /// Cancels any pending changes in the data source. Deleted data items are restored, new data items are removed and updated data items are restored to their initial state.
         /// </summary>
-        /// <param name="model" type="kendo.data.Model" >Optional model instance. If specified only the changes of this model will be discarded. If omitted all changes will be discarded.</param>
+        /// <param name="model" type="kendo.data.Model" >The optional data item (model). If specified only the changes of this data item will be discarded. If omitted all changes will be discarded.</param>
 
     },
 
 
     data: function(value) {
         /// <summary>
-        /// Gets or sets the data of the DataSource.
+        /// Gets or sets the data items of the data source.If the data source is bound to a remote service (via the transport option) the data method will return the service response.
+/// Every item from the response is wrapped in a kendo.data.ObservableObject or kendo.data.Model (if the schema.model option is set).If the data source is bound to a JavaScript array (via the data option) the data method will return the items of that array.
+/// Every item from the array is wrapped in a kendo.data.ObservableObject or kendo.data.Model (if the schema.model option is set).If the data source is grouped (via the group option or the group method) and the serverGrouping is set to true
+/// the data method will return the group items.
         /// </summary>
-        /// <param name="value" type="Array" >An Array of items to set as the current data of the DataSource. If omitted the current data will be returned.</param>
-        /// <returns type="kendo.data.ObservableArray">the items of the DataSource</returns>
+        /// <param name="value" type="Object" >The data items which will replace the current ones in the data source. If omitted the current data items will be returned.</param>
+        /// <returns type="kendo.data.ObservableArray">the data items of the data source. Returns empty array if the data source hasn't been populated with data items via the read, fetch or query methods.</returns>
 
     },
 
 
     fetch: function(callback) {
         /// <summary>
-        /// Fetches data using the current filter/sort/group/paging information.
-/// If data is not available and remote operations are enabled data is requested through the transport,
-/// otherwise operations are executed over the available data.
+        /// Reads the data items from a remote service (if the transport option is set) or from a JavaScript array (if the data option is set).
         /// </summary>
-        /// <param name="callback" type="Function" >Optional callback which will be executed when the data is ready.</param>
+        /// <param name="callback" type="Function" >The optional function which is executed when the remote request is finished.  The function context (available via the this keyword) will be set to the data source instance.</param>
 
     },
 
 
-    filter: function(filters) {
+    filter: function(value) {
         /// <summary>
-        /// Get current filters or filter the data.Supported filter operators/aliases are:
+        /// Gets or sets the filter configuration.
         /// </summary>
-        /// <param name="filters" type="Object" >Filter(s) to be applied to the data.</param>
-        /// <returns type="Array">The current filter descriptors.</returns>
+        /// <param name="value" type="Object" >The filter configuration. Accepts the same values as the filter option.</param>
+        /// <returns type="Object">the current filter configuration.</returns>
 
     },
 
 
     get: function(id) {
         /// <summary>
-        /// Retrieves a model instance by given id.
+        /// Gets the data item (model) with the specified id.
         /// </summary>
-        /// <param name="id" type="Object" >The id of the model to be retrieved. The id of the model is defined via schema.model.id.</param>
-        /// <returns type="kendo.data.Model">the model instance. If not found undefined is returned.</returns>
+        /// <param name="id" type="Object" >The id of the model to look for.</param>
+        /// <returns type="kendo.data.Model">the model instance. Returns undefined if a model with the specified id is not found.</returns>
 
     },
 
 
     getByUid: function(uid) {
         /// <summary>
-        /// Retrieves a data item by its uid field.
+        /// Gets the data item (model) with the specified uid.
         /// </summary>
-        /// <param name="uid" type="String" >The uid of the item to be retrieved</param>
-        /// <returns type="kendo.data.ObservableObject">or kendo.data.Model (if schema.model is set). If not found undefined is returned.</returns>
+        /// <param name="uid" type="String" >The uid of the model to look for.</param>
+        /// <returns type="kendo.data.ObservableObject">the model instance. Returns undefined if a model with the specified uid is not found.</returns>
 
     },
 
 
-    group: function(groups) {
+    group: function(value) {
         /// <summary>
-        /// Get current group descriptors or group the data.
+        /// Gets or sets the grouping configuration.
         /// </summary>
-        /// <param name="groups" type="Object" >Group(s) to be applied to the data.</param>
-        /// <returns type="Array">The current group descriptors.</returns>
+        /// <param name="value" type="Object" >The grouping configuration. Accepts the same values as the group option.</param>
+        /// <returns type="Array">the current grouping configuration.</returns>
 
     },
 
 
     hasChanges: function() {
         /// <summary>
-        /// Get if DataSource has changes.
+        /// Cheks if the data itams have changed.
         /// </summary>
-        /// <returns type="Boolean">True if DataSource records are modified. Otherwise, false.</returns>
+        /// <returns type="Boolean">returns true if the data items have changed. Otherwise, false.</returns>
 
     },
 
 
-    indexOf: function(value) {
+    indexOf: function(dataItem) {
         /// <summary>
-        /// Get the index of the specified kendo.data.ObservableObject or kendo.data.Model.
+        /// Gets the index of the specified data item.
         /// </summary>
-        /// <param name="value" type="kendo.data.ObservableObject" ></param>
-        /// <returns type="Number">the index of the specified value.</returns>
+        /// <param name="dataItem" type="kendo.data.ObservableObject" >The target data item.</param>
+        /// <returns type="Number">the index of the specified data item. Returns -1 if the data item is not found.</returns>
 
     },
 
 
     insert: function(index,model) {
         /// <summary>
-        /// Inserts a new data item in the DataSource.
+        /// Inserts a data item in the data source at the specified index.
         /// </summary>
-        /// <param name="index" type="Number" >The zer-based index at which the data item will be inserted</param>
+        /// <param name="index" type="Number" >The zero-based index at which the data item will be inserted.</param>
         /// <param name="model" type="Object" >Either a kendo.data.Model instance or JavaScript object containing the field values.</param>
-        /// <returns type="kendo.data.Model">The instance which has been inserted.</returns>
+        /// <returns type="kendo.data.Model">the data item which is inserted.</returns>
 
     },
 
 
     page: function(page) {
         /// <summary>
-        /// Get/set the current page index.
+        /// Gets or sets the current page.
         /// </summary>
-        /// <param name="page" type="Number" >The index of the page to be retrieved</param>
-        /// <returns type="Number">Current page index</returns>
+        /// <param name="page" type="Number" >The new page.</param>
+        /// <returns type="Number">the current page.</returns>
 
     },
 
 
     pageSize: function(size) {
         /// <summary>
-        /// Get/set the current pageSize or request a page with specified number of records.
+        /// Gets or sets the current page size.
         /// </summary>
-        /// <param name="size" type="Number" >The of number of records to be retrieved.</param>
-        /// <returns type="Number">Current page size</returns>
+        /// <param name="size" type="Number" >The new page size.</param>
+        /// <returns type="Number">the current page size.</returns>
 
     },
 
 
     query: function(options) {
         /// <summary>
-        /// Executes a query over the data. Available operations are paging, sorting, filtering, grouping.
-/// If data is not available or remote operations are enabled, data is requested through the transport.
-/// Otherwise operations are executed over the available data.
+        /// Executes the specified query over the data items. Makes a HTTP request if bound to a remote service.
         /// </summary>
-        /// <param name="options" type="Object" >Contains the settings for the operations.</param>
+        /// <param name="options" type="" >The query options which should be applied.</param>
 
     },
 
 
     read: function(data) {
         /// <summary>
-        /// Read data into the DataSource using the transport.read setting.
+        /// Reads data items from a remote service (if the transport option is set) or from a JavaScript array (if the data option is set).
         /// </summary>
-        /// <param name="data" type="Object" >Optional data to pass to the remote service configured via transport.read.</param>
+        /// <param name="data" type="Object" >Optional data to pass to the remote service.</param>
 
     },
 
 
     remove: function(model) {
         /// <summary>
-        /// Remove a given kendo.data.Model instance from the DataSource.
+        /// Removes the specified data item from the data source.
         /// </summary>
-        /// <param name="model" type="Object" >The kendo.data.Model instance to be removed.</param>
+        /// <param name="model" type="kendo.data.Model" >The data item which should be removed.</param>
 
     },
 
 
-    sort: function(sort) {
+    sort: function(value) {
         /// <summary>
-        /// Get current sort descriptors or sorts the data.
+        /// Gets or sets the sort order which will be applied over the data items.
         /// </summary>
-        /// <param name="sort" type="Object" >Sort options to be applied to the data</param>
-        /// <returns type="Array">the current sort descriptors.</returns>
+        /// <param name="value" type="Object" >The sort configuration. Accepts the same values as the sort option.</param>
+        /// <returns type="Array">the current sort configuration.</returns>
 
     },
 
 
     sync: function() {
         /// <summary>
-        /// Synchronizes changes through the transport. Any pending CRUD operations will be sent to the server.
-/// If the DataSource is in batch mode, only one call will be made for each type of operation (Create, Update, Destroy).
-/// Otherwise, the DataSource will send one request per item change and change type.
+        /// Saves any data item changes.The sync method will request the remote service if:
         /// </summary>
 
     },
@@ -699,16 +698,16 @@ kendo.data.DataSource.prototype = {
 
     total: function() {
         /// <summary>
-        /// Get the total number of data items.
+        /// Gets the total number of data items. Uses schema.total if the transport.read option is set.
         /// </summary>
-        /// <returns type="Number">the number of data items.</returns>
+        /// <returns type="Number">the total number of data items. Returns the length of the array returned by the data method if schema.total or transport.read are not set.Returns 0 if the data source hasn't been populated with data items via the read, fetch or query methods.</returns>
 
     },
 
 
     totalPages: function() {
         /// <summary>
-        /// Get the number of available pages.
+        /// Gets the number of available pages.
         /// </summary>
         /// <returns type="Number">the available pages.</returns>
 
@@ -717,9 +716,9 @@ kendo.data.DataSource.prototype = {
 
     view: function() {
         /// <summary>
-        /// Returns a the current state of the data items - with applied paging, sorting, filtering and grouping.To ensure that data is available this method should be use from within change event of the DataSource.
+        /// Returns the data items which correspond to the current page, filter, sort and group configuration.To ensure that data is available this method should be used within the change event handler or the fetch method.
         /// </summary>
-        /// <returns type="kendo.data.ObservableArray">the data items.</returns>
+        /// <returns type="kendo.data.ObservableArray">the data items. Returns groups if the data items are grouped (via the group option or the group method).</returns>
 
     },
 
@@ -754,57 +753,58 @@ $.fn.kendoDataSource = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;aggregate — Array|Object 
-    /// &#10;Sets fields on which initial aggregates should be calculated
+    /// &#10;aggregate — Array 
+    /// &#10;The aggregate(s) which are calculated when the data source populates with data. The supported aggregates are "average", "count", "max", "min" and "sum".
     /// &#10;
     /// &#10;autoSync — Boolean (default: false)
-    /// &#10;Enables (true) or disables (false) the automatic invocation of the sync() method for each change made.
+    /// &#10;If set to true the data source would automatically save any changed data items by calling the sync method. By default changes are not automatically saved.
     /// &#10;
     /// &#10;batch — Boolean (default: false)
-    /// &#10;Enables (true) or disables (false) batch mode.
+    /// &#10;If set to true the data source will batch CRUD operation requests. For example updating two data items would cause one HTTP request instead of two. By default the data source
+/// &#10;makes a HTTP request for every CRUD operation.
     /// &#10;
-    /// &#10;data — Array 
-    /// &#10;Specifies the local JavaScript object to use for the data source.
+    /// &#10;data — Array|String 
+    /// &#10;The array of data items which the data source contains. The data source will wrap those items as kendo.data.ObservableObject or kendo.data.Model (if schema.model is set).Can be set to a string value if the schema.type option is set to "xml".
     /// &#10;
     /// &#10;filter — Array|Object 
-    /// &#10;Sets the initial filter.
+    /// &#10;The filter(s) which is (are) applied over the data items. By default no filter is applied.
     /// &#10;
     /// &#10;group — Array|Object 
-    /// &#10;Sets initial grouping
+    /// &#10;The grouping configuration of the data source. If set the data items will be grouped when the data source is populated. By default grouping is not applied.
     /// &#10;
-    /// &#10;page — Number (default: undefined)
-    /// &#10;Sets the index of the displayed page of data.
+    /// &#10;page — Number 
+    /// &#10;The page of data which the data source will return when the view method is invoked or request from the remote service.
     /// &#10;
-    /// &#10;pageSize — Number (default: undefined)
-    /// &#10;Sets the number of records which contains a given page of data.
+    /// &#10;pageSize — Number 
+    /// &#10;The number of data items per page.
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;Set the object responsible for describing the raw data format.
+    /// &#10;The configuration used to parse the remote sevice response.
     /// &#10;
     /// &#10;serverAggregates — Boolean (default: false)
-    /// &#10;Determines if aggregates are calculated on the server or not. By default aggregates are calculated client-side.
+    /// &#10;If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
     /// &#10;
     /// &#10;serverFiltering — Boolean (default: false)
-    /// &#10;Determines if filtering of the data is handled on the server. By default filtering is performed client-side.By default, a filter object is sent to the server with the query string in the following form:Possible values for operator include:
+    /// &#10;If set to true the data source will leave the filtering implementation to the remote service. By default the data source performs filtering client-side.By default the filter is sent to the server following jQuery's conventions.For example the filter { logic: "and", filters: [ { field: "name", operator: "startswith", value: "Jane" } ] } is sent as:Use the parameterMap option to send the filter option in a different format.
     /// &#10;
     /// &#10;serverGrouping — Boolean (default: false)
-    /// &#10;Determines if grouping of the data is handled on the server. By default grouping is performed client-side.By default, a group object is sent to the server with the query string in the following form:It is possible to modify these parameters by using the parameterMap function found on the transport.
+    /// &#10;If set to true the data source will leave the grouping implementation to the remote service. By default the data source performs grouping client-side.By default the group is sent to the server following jQuery's conventions.For example the group { field: "category", dir: "desc" } is sent as:Use the parameterMap option to send the group option in a different format.
     /// &#10;
     /// &#10;serverPaging — Boolean (default: false)
-    /// &#10;Determines if paging of the data is on the server. By default paging is performed client-side. If serverPaging is enabled the
-/// &#10;total number of data items should also be returned in the response. Use the schema.total setting to customize that.The following options are sent to the server as part of the query string by default:
+    /// &#10;If set to true the data source will leave the data item paging implementation to the remote service. By default the data source performs paging client-side.The following options are sent to the server when server paging is enabled:Use the parameterMap option to send the paging options in a different format.
     /// &#10;
     /// &#10;serverSorting — Boolean (default: false)
-    /// &#10;Determines if sorting of the data should is handled on the server. By default sorting is performed client-side.By default, a sort object is sent to the server with the query string in the following form:It is possible to modify these parameters by using the parameterMap function found on the transport.
+    /// &#10;If set to true the data source will leave the data item sorting implementation to the remote service. By default the data source performs sorting client-side.By default the sort is sent to the server following jQuery's conventions.For example the sort { field: "age", dir: "desc" } is sent as:Use the parameterMap option to send the paging options in a different format.
     /// &#10;
     /// &#10;sort — Array|Object 
-    /// &#10;Sets initial sort order
+    /// &#10;The sort order which will be applied over the data items. By default the data items are not sorted.
     /// &#10;
     /// &#10;transport — Object 
-    /// &#10;Specifies the settings for loading and saving data. This can be a remote or local/in-memory data.
+    /// &#10;The configuration used to load and save the data items. A data source is remote or local based on the way of it retrieves data items.Remote data sources load and save data items from and to a remote end-point (a.k.a. remote service or server). The transport option describes the remote service configuration - URL, HTTP verb, HTTP headers etc.
+/// &#10;The transport option can also be used to implement custom data loading and saving.Local data sources are bound to a JavaScript array via the data option.
     /// &#10;
     /// &#10;type — String 
-    /// &#10;Loads transport with preconfigured settings. Currently supports only "odata" (Requires kendo.data.odata.js to be included).
+    /// &#10;If set the data source will use a predefined transport and/or schema. The only supported value is "odata" which supports the OData v.2 protocol.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -850,8 +850,8 @@ $.fn.kendoHierarchicalDataSource = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;schema.model — Object 
-    /// &#10;The model configuration of the HierarchicalDataSource.
+    /// &#10;schema — Object 
+    /// &#10;The schema configuration of the HierarchicalDataSource.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -869,7 +869,7 @@ kendo.data.Model.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
         /// </summary>
 
     },
@@ -1255,6 +1255,247 @@ $.fn.kendoObservableObject = function(options) {
 };
 
 
+kendo.data.SchedulerDataSource = function() { };
+
+kendo.data.SchedulerDataSource.prototype = {
+
+
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoSchedulerDataSource = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.data.SchedulerDataSource widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.data.SchedulerDataSource">The kendo.data.SchedulerDataSource instance (if present).</returns>
+};
+
+$.fn.kendoSchedulerDataSource = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.data.SchedulerDataSource widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;schema — Object 
+    /// &#10;The schema configuration of the SchedulerDataSource.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.data.SchedulerEvent = function() { };
+
+kendo.data.SchedulerEvent.prototype = {
+
+
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoSchedulerEvent = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.data.SchedulerEvent widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.data.SchedulerEvent">The kendo.data.SchedulerEvent instance (if present).</returns>
+};
+
+$.fn.kendoSchedulerEvent = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.data.SchedulerEvent widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;description — String (default: "")
+    /// &#10;The optional event description.
+    /// &#10;
+    /// &#10;end — Date 
+    /// &#10;The date at which the scheduler event ends.
+    /// &#10;
+    /// &#10;endTimezone — String (default: undefined)
+    /// &#10;The timezone of the end date. If not specified the timezone will be used.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
+    /// &#10;
+    /// &#10;id — String|Number|Object 
+    /// &#10;The unique identifier of the event.
+    /// &#10;
+    /// &#10;isAllDay — Boolean (default: false)
+    /// &#10;If set to true the event is "all day".
+    /// &#10;
+    /// &#10;recurrenceException — String (default: undefined)
+    /// &#10;The recurrence exceptions. A list of colon separated dates formatted using the yyyyMMddTHHmmssZ format string.
+    /// &#10;
+    /// &#10;recurrenceId — String|Number|Object (default: undefined)
+    /// &#10;The id of the recurrence parent event.
+    /// &#10;
+    /// &#10;recurrenceRule — String (default: undefined)
+    /// &#10;The recurrence rule describing the recurring pattern of the event.
+    /// &#10;
+    /// &#10;start — Date 
+    /// &#10;The date at which the scheduler event starts.
+    /// &#10;
+    /// &#10;startTimezone — String (default: undefined)
+    /// &#10;The timezone of the start date. If not specified the timezone will be used.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
+    /// &#10;
+    /// &#10;title — String (default: "")
+    /// &#10;The title of the event which is displayed by the scheduler widget.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.dataviz.ui.Barcode = function() { };
+
+kendo.dataviz.ui.Barcode.prototype = {
+
+
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the barcode encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
+
+    },
+
+
+    redraw: function() {
+        /// <summary>
+        /// Redraws the barcode.
+        /// </summary>
+
+    },
+
+
+    svg: function() {
+        /// <summary>
+        /// Returns the SVG representation of the barcode. The returned string is a self-contained SVG document that can be used as is or converted to other formats using tools like Inkscape and
+/// ImageMagick. Both programs provide command-line interface suitable for server-side processing.
+        /// </summary>
+        /// <returns type="String">the SVG representation of the barcode.</returns>
+
+    },
+
+
+    value: function(value) {
+        /// <summary>
+        /// Gets/Sets the value of the barcode.
+        /// </summary>
+        /// <param name="value" type="Object" >The value to set.</param>
+        /// <returns type="String">The value of the barcode.</returns>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoBarcode = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.dataviz.ui.Barcode widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.dataviz.ui.Barcode">The kendo.dataviz.ui.Barcode instance (if present).</returns>
+};
+
+$.fn.kendoBarcode = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.dataviz.ui.Barcode widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;background — String (default: "white")
+    /// &#10;The background of the barcode area.
+/// &#10;Any valid CSS color string will work here, including hex and rgb.
+    /// &#10;
+    /// &#10;border — Object 
+    /// &#10;The border of the barcode area.
+    /// &#10;
+    /// &#10;checksum — Boolean (default: false)
+    /// &#10;If set to true the barcode will not display the checksum digit next to the value in the text area.
+    /// &#10;
+    /// &#10;color — String (default: "black")
+    /// &#10;The color of the bar elements.
+/// &#10;Any valid CSS color string will work here, including hex and rgb.
+    /// &#10;
+    /// &#10;height — Number (default: 100)
+    /// &#10;The height of the barcode in pixels.  By default the height is 100.
+    /// &#10;
+    /// &#10;padding — Object 
+    /// &#10;The padding of the barcode.
+    /// &#10;
+    /// &#10;renderAs — String (default: "canvas")
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Barcode will switch to the first available mode.The supported values are:
+    /// &#10;
+    /// &#10;text — Object 
+    /// &#10;Can be set to a JavaScript object which represents the text configuration.
+    /// &#10;
+    /// &#10;type — String (default: "code39")
+    /// &#10;The symbology (encoding) the barcode will use.The supported values are:
+    /// &#10;
+    /// &#10;value — String 
+    /// &#10;The initial value of the Barcode
+    /// &#10;
+    /// &#10;width — Number (default: 300)
+    /// &#10;The width of the barcode in pixels.  By default the width is 300.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
 kendo.dataviz.ui.Chart = function() { };
 
 kendo.dataviz.ui.Chart.prototype = {
@@ -1264,15 +1505,7 @@ kendo.dataviz.ui.Chart.prototype = {
 
     destroy: function() {
         /// <summary>
-        /// Prepares the Chart for safe removal from the DOM.Detaches event handlers and removes data entries in order to avoid memory leaks.
-        /// </summary>
-
-    },
-
-
-    refresh: function() {
-        /// <summary>
-        /// Reloads the data and repaints the chart.
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
 
     },
@@ -1280,7 +1513,15 @@ kendo.dataviz.ui.Chart.prototype = {
 
     redraw: function() {
         /// <summary>
-        /// Repaints the chart using currently loaded data.
+        /// Repaints the chart using the currently loaded data.
+        /// </summary>
+
+    },
+
+
+    refresh: function() {
+        /// <summary>
+        /// Reloads the data and renders the chart.
         /// </summary>
 
     },
@@ -1288,24 +1529,31 @@ kendo.dataviz.ui.Chart.prototype = {
 
     setDataSource: function(dataSource) {
         /// <summary>
-        /// Sets the dataSource of an existing Chart and rebinds it.
+        /// Sets the data source of the widget.
         /// </summary>
-        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
 
     },
 
 
     svg: function() {
         /// <summary>
-        /// Returns the SVG representation of the current chart.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the chart.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
         /// <returns type="String">the SVG representation of the chart.</returns>
+
+    },
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the chart encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
 
     },
 
@@ -1340,21 +1588,22 @@ $.fn.kendoChart = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;axisDefaults — Object 
-    /// &#10;Default options for all chart axes.
+    /// &#10;autoBind — Boolean (default: true)
+    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+/// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
     /// &#10;
-    /// &#10;categoryAxis — Array 
+    /// &#10;axisDefaults — Object 
+    /// &#10;The default options for all chart axes. Accepts the options supported by categoryAxis, valueAxis, xAxis and yAxis.
+    /// &#10;
+    /// &#10;categoryAxis — Array|Object 
     /// &#10;The category axis configuration options.
     /// &#10;
     /// &#10;chartArea — Object 
-    /// &#10;The chart area configuration options.
-/// &#10;This is the entire visible area of the chart.
+    /// &#10;The chart area configuration options. Represents the entire visible area of the chart.
     /// &#10;
-    /// &#10;dataSource — Object 
-    /// &#10;DataSource configuration or instance.
-    /// &#10;
-    /// &#10;autoBind — Boolean (default: true)
-    /// &#10;Indicates whether the chart will call read on the data source initially.
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the chart which is used to display the series. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;legend — Object 
     /// &#10;The chart legend configuration options.
@@ -1364,40 +1613,45 @@ $.fn.kendoChart = function(options) {
 /// &#10;Axis that don't have specified pane are placed in the top (default) pane.Series are moved to the desired pane by associating them with an axis.
     /// &#10;
     /// &#10;plotArea — Object 
-    /// &#10;The plot area configuration options. This is the area containing the plotted series.
+    /// &#10;The plot area configuration options. The plot area is the area which displays the series.
+    /// &#10;
+    /// &#10;renderAs — String 
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:
     /// &#10;
     /// &#10;series — Array 
-    /// &#10;Array of series definitions.The series type is determined by the value of the type field.
-/// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.
+    /// &#10;The configuration of the chart series.The series type is determined by the value of the type field.
+/// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.
     /// &#10;
     /// &#10;seriesColors — Array 
     /// &#10;The default colors for the chart's series. When all colors are used, new colors are pulled from the start again.
     /// &#10;
     /// &#10;seriesDefaults — Object 
-    /// &#10;Default values for each series.
+    /// &#10;The default options for all series.
     /// &#10;
     /// &#10;theme — String 
-    /// &#10;Sets Chart theme. Available themes: default, blueOpal, black.
+    /// &#10;The chart theme.The supported values are:
+    /// &#10;
+    /// &#10;title — String 
+    /// &#10;The chart title configuration options or text.
     /// &#10;
     /// &#10;title — Object 
     /// &#10;The chart title configuration options or text.
     /// &#10;
     /// &#10;tooltip — Object 
-    /// &#10;The data point tooltip configuration options.
+    /// &#10;The chart series tooltip configuration options.
     /// &#10;
     /// &#10;transitions — Boolean (default: true)
-    /// &#10;A value indicating if transition animations should be played.
+    /// &#10;If set to true the chart will play animations when displaying the series. By default animations are enabled.
     /// &#10;
     /// &#10;valueAxis — Array 
     /// &#10;The value axis configuration options.
     /// &#10;
     /// &#10;xAxis — Array 
-    /// &#10;Scatter charts X-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
+    /// &#10;The X-axis configuration options of the scatter chart X-axis. Supports all valueAxis options.
     /// &#10;
     /// &#10;yAxis — Array 
-    /// &#10;Scatter charts Y-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
+    /// &#10;The y axis configuration options of the scatter chart. Supports all valueAxis options.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -1431,14 +1685,21 @@ kendo.dataviz.ui.LinearGauge.prototype = {
 
     svg: function() {
         /// <summary>
-        /// Returns the SVG representation of the current gauge.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the gauge.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
+
+    },
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the gauge encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
 
     },
 
@@ -1488,11 +1749,137 @@ $.fn.kendoLinearGauge = function(options) {
     /// &#10;pointer — Object 
     /// &#10;The pointer configuration options.
     /// &#10;
+    /// &#10;renderAs — String 
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
+    /// &#10;
     /// &#10;scale — Object 
     /// &#10;Configures the scale.
     /// &#10;
     /// &#10;transitions — Boolean (default: true)
     /// &#10;A value indicating if transition animations should be played.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.dataviz.ui.QRCode = function() { };
+
+kendo.dataviz.ui.QRCode.prototype = {
+
+
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the QRCode for safe removal from the DOM.Removes data entries in order to avoid memory leaks.
+        /// </summary>
+
+    },
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the qrcode encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
+
+    },
+
+
+    redraw: function() {
+        /// <summary>
+        /// Redraws the QR code using the current value and options.
+        /// </summary>
+
+    },
+
+
+    setOptions: function(options) {
+        /// <summary>
+        /// Sets new options to the QRCode and redraws it.
+        /// </summary>
+        /// <param name="options" type="Object" >An object with the new options. All configuration options can be set.</param>
+
+    },
+
+
+    svg: function() {
+        /// <summary>
+        /// Returns the SVG representation of the qrcode. The returned string is a self-contained SVG document that can be used as is or converted to other formats using tools like Inkscape and
+/// ImageMagick. Both programs provide command-line interface suitable for server-side processing.
+        /// </summary>
+        /// <returns type="String">the SVG representation of the qrcode.</returns>
+
+    },
+
+
+    value: function(options) {
+        /// <summary>
+        /// Change the value of the QR code.
+        /// </summary>
+        /// <param name="options" type="Object" >The new value to be set.</param>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoQRCode = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.dataviz.ui.QRCode widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.dataviz.ui.QRCode">The kendo.dataviz.ui.QRCode instance (if present).</returns>
+};
+
+$.fn.kendoQRCode = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.dataviz.ui.QRCode widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;background — String (default: "#fff")
+    /// &#10;The background color of the QR code. Accepts a valid CSS color string, including hex and rgb.
+    /// &#10;
+    /// &#10;border — Object 
+    /// &#10;The border of the QR code.
+    /// &#10;
+    /// &#10;color — String (default: "#000")
+    /// &#10;The color of the QR code. Accepts a valid CSS color string, including hex and rgb.
+    /// &#10;
+    /// &#10;encoding — String (default: "ISO_8859_1")
+    /// &#10;The encoding mode used to encode the value.The possible values are:
+    /// &#10;
+    /// &#10;errorCorrection — String (default: "L")
+    /// &#10;The error correction level used to encode the value.The possible values are:
+    /// &#10;
+    /// &#10;renderAs — String (default: "canvas")
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the QRCode will switch to the first available mode.The supported values are:
+    /// &#10;
+    /// &#10;size — Number|String 
+    /// &#10;Specifies the size of a QR code in pixels (i.e. "200px"). Numeric values are treated as pixels. If no size is specified, it will be determined from the element width and height. In case the element does not have width or height bigger than zero, a default value of 200 pixels will be used.
+    /// &#10;
+    /// &#10;value — Number|String 
+    /// &#10;The value of the QRCode.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -1526,14 +1913,21 @@ kendo.dataviz.ui.RadialGauge.prototype = {
 
     svg: function() {
         /// <summary>
-        /// Returns the SVG representation of the current gauge.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the gauge.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
+
+    },
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the gauge encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
 
     },
 
@@ -1582,6 +1976,10 @@ $.fn.kendoRadialGauge = function(options) {
     /// &#10;
     /// &#10;pointer — Object 
     /// &#10;The pointer configuration options.
+    /// &#10;
+    /// &#10;renderAs — String 
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
     /// &#10;
     /// &#10;rangeSize — Number 
     /// &#10;The width of the range indicators.
@@ -1636,15 +2034,22 @@ kendo.dataviz.ui.Sparkline.prototype = {
 
     svg: function() {
         /// <summary>
-        /// Returns the SVG representation of the current chart.
-/// The returned string is a self-contained SVG document
-/// that can be used as is or converted to other formats
-/// using tools like Inkscape and
+        /// Returns the SVG representation of the chart.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
 /// ImageMagick.
-/// Both programs provide command-line interface
-/// suitable for backend processing.
+/// Both programs provide command-line interface suitable for server-side processing.
         /// </summary>
         /// <returns type="String">the SVG representation of the sparkline.</returns>
+
+    },
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the sparkline encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
 
     },
 
@@ -1704,6 +2109,10 @@ $.fn.kendoSparkline = function(options) {
     /// &#10;pointWidth — Number (default: 5)
     /// &#10;The width to allocate for each data point.
     /// &#10;
+    /// &#10;renderAs — String 
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Sparkline will switch to the first available mode.The supported values are:
+    /// &#10;
     /// &#10;series — Array 
     /// &#10;Array of series definitions.The series type is determined by the value of the type field.
 /// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.
@@ -1742,6 +2151,61 @@ kendo.dataviz.ui.StockChart.prototype = {
 
 
 
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+
+    },
+
+
+    redraw: function() {
+        /// <summary>
+        /// Repaints the chart using the currently loaded data.
+        /// </summary>
+
+    },
+
+
+    refresh: function() {
+        /// <summary>
+        /// Reloads the data and renders the chart.
+        /// </summary>
+
+    },
+
+
+    setDataSource: function(dataSource) {
+        /// <summary>
+        /// Sets the data source of the widget.
+        /// </summary>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
+
+    },
+
+
+    svg: function() {
+        /// <summary>
+        /// Returns the SVG representation of the chart.
+/// The returned string is a self-contained SVG document that can be used as is or
+/// converted to other formats using tools like Inkscape and
+/// ImageMagick.
+/// Both programs provide command-line interface suitable for server-side processing.
+        /// </summary>
+        /// <returns type="String">the SVG representation of the chart.</returns>
+
+    },
+
+
+    imageDataURL: function() {
+        /// <summary>
+        /// Returns a PNG image of the chart encoded as a Data URL.
+        /// </summary>
+        /// <returns type="String">A data URL with image/png MIME type. Will be null if the browser does not support the canvas element.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1775,7 +2239,7 @@ $.fn.kendoStockChart = function(options) {
     /// &#10;
     /// &#10;dateField — String (default: "date")
     /// &#10;The field containing the point date.
-/// &#10;It is used as a default field for all date axes, including the navigator pane.The data item field value must be either:
+/// &#10;It is used as a default categoryField for all series.The data item field value must be either:
     /// &#10;
     /// &#10;navigator — Object 
     /// &#10;The data navigator configuration options.
@@ -1806,6 +2270,10 @@ $.fn.kendoStockChart = function(options) {
     /// &#10;plotArea — Object 
     /// &#10;The plot area configuration options. This is the area containing the plotted series.
     /// &#10;
+    /// &#10;renderAs — String 
+    /// &#10;Sets the preferred rendering engine.
+/// &#10;If it is not supported by the browser, the Chart will switch to the first available mode.The supported values are:
+    /// &#10;
     /// &#10;series — Array 
     /// &#10;Array of series definitions.The series type is determined by the value of the type field.
 /// &#10;If a type value is missing, the type is assumed to be the one specified in seriesDefaults.Each series type has a different set of options.
@@ -1830,14 +2298,6 @@ $.fn.kendoStockChart = function(options) {
     /// &#10;
     /// &#10;valueAxis — Array 
     /// &#10;The value axis configuration options.
-    /// &#10;
-    /// &#10;xAxis — Array 
-    /// &#10;Scatter charts X-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
-    /// &#10;
-    /// &#10;yAxis — Array 
-    /// &#10;Scatter charts Y-axis configuration options.
-/// &#10;Includes all valueAxis options in addition to:
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -1884,6 +2344,16 @@ kendo.mobile.Application.prototype = {
         /// <summary>
         /// Show the loading animation.
         /// </summary>
+
+    },
+
+
+    skin: function(skin) {
+        /// <summary>
+        /// Change the current skin of the mobile application. When used without parameters, returns the currently used skin. Available as of Q2 2013.
+        /// </summary>
+        /// <param name="skin" type="String" >The skin name to switch to or empty string to return to native.</param>
+        /// <returns type="String">Current skin in effect.</returns>
 
     },
 
@@ -1939,8 +2409,8 @@ $.fn.kendoApplication = function(options) {
     /// &#10;layout — String 
     /// &#10;The id of the default Application Layout.
     /// &#10;
-    /// &#10;loading — String (default: )
-    /// &#10;The text displayed in the loading popup. Setting this value to false will disable the loading popup.
+    /// &#10;loading — String (default: ")
+    /// &#10;The text displayed in the loading popup. Setting this value to false will disable the loading popup.Note: The text should be wrapped inside  tag.
     /// &#10;
     /// &#10;platform — String 
     /// &#10;Which platform look to force on the application. Can be one of "ios", "android", "blackberry".
@@ -1948,8 +2418,14 @@ $.fn.kendoApplication = function(options) {
     /// &#10;serverNavigation — Boolean 
     /// &#10;If set to true, the application will not use ajax to load remote views.
     /// &#10;
+    /// &#10;skin — String 
+    /// &#10;The skin to apply to the application. Currently, Kendo UI Mobile ships with a flat skin in addition to the native looking ones.
+    /// &#10;
     /// &#10;transition — String 
     /// &#10;The default View transition.
+    /// &#10;
+    /// &#10;webAppCapable — Boolean 
+    /// &#10;Disables the default behavior of Kendo UI Mobile apps to be web app capable (open in a chromeless browser). Introduced in Q2 2013.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2021,7 +2497,7 @@ $.fn.kendoActionSheet = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;cancel — String (default: Cancel)
+    /// &#10;cancel — String (default: "Cancel")
     /// &#10;The text of the cancel button.
     /// &#10;
     /// &#10;popup — Object 
@@ -2093,6 +2569,16 @@ kendo.mobile.ui.Button.prototype = {
 
 
 
+    badge: function(value) {
+        /// <summary>
+        /// Introduced in Q1 2013 SP Sets a badge on the Button with the specified value. If invoked without parameters, returns the current badge value. Set the value to false to remove the badge.
+        /// </summary>
+        /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
+        /// <returns type="String|kendo.mobile.ui.Button">Returns the badge value if invoked without parameters, otherwise returns the Button object.</returns>
+
+    },
+
+
     destroy: function() {
         /// <summary>
         /// Prepares the Button for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
@@ -2131,6 +2617,9 @@ $.fn.kendoButton = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
+    /// &#10;badge — String 
+    /// &#10;The badge of the button.
+    /// &#10;
     /// &#10;icon — String 
     /// &#10;The icon of the button. It can be either one of the built-in icons, or a custom one.
     /// &#10;
@@ -2146,6 +2635,17 @@ kendo.mobile.ui.ButtonGroup = function() { };
 kendo.mobile.ui.ButtonGroup.prototype = {
 
 
+
+
+    badge: function(button,value) {
+        /// <summary>
+        /// Introduced in Q1 2013 SP Sets a badge on one of the ButtonGroup buttons with the specified value. If invoked without parameters, returns the button's current badge value. Set the value to false to remove the badge.
+        /// </summary>
+        /// <param name="button" type="Object" >The target button specified either as a jQuery selector/object or as an button index.</param>
+        /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
+        /// <returns type="String|kendo.mobile.ui.Button">Returns the badge value if invoked without parameters, otherwise returns the ButtonGroup object.</returns>
+
+    },
 
 
     current: function() {
@@ -2270,6 +2770,83 @@ $.fn.kendoDetailButton = function(options) {
 };
 
 
+kendo.mobile.ui.Drawer = function() { };
+
+kendo.mobile.ui.Drawer.prototype = {
+
+
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the Drawer for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+
+    },
+
+
+    hide: function() {
+        /// <summary>
+        /// Hide the Drawer
+        /// </summary>
+
+    },
+
+
+    show: function() {
+        /// <summary>
+        /// Show the Drawer
+        /// </summary>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoDrawer = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.mobile.ui.Drawer widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.mobile.ui.Drawer">The kendo.mobile.ui.Drawer instance (if present).</returns>
+};
+
+$.fn.kendoDrawer = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.mobile.ui.Drawer widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;position — String (default: 'left')
+    /// &#10;The position of the drawer. Can be left (default) or right.
+    /// &#10;
+    /// &#10;title — String 
+    /// &#10;The text to display in the navbar title (if present).
+    /// &#10;
+    /// &#10;views — Array 
+    /// &#10;A list of the view ids on which the drawer will appear. If omitted, the drawer can be revealed on any view in the application.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
 kendo.mobile.ui.Layout = function() { };
 
 kendo.mobile.ui.Layout.prototype = {
@@ -2328,6 +2905,52 @@ kendo.mobile.ui.ListView.prototype = {
 
 
 
+    append: function(dataItems) {
+        /// <summary>
+        /// Appends new items generated by rendering the given data items with the listview template to the bottom of the listview.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+
+    },
+
+
+    prepend: function(dataItems) {
+        /// <summary>
+        /// Prepends new items generated by rendering the given data items with the listview template to the top of the listview.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+
+    },
+
+
+    replace: function(dataItems) {
+        /// <summary>
+        /// Replaces the contents of the listview with the passed rendered data items.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+
+    },
+
+
+    remove: function(dataItems) {
+        /// <summary>
+        /// Removes the listview items which are rendered with the passed data items.
+        /// </summary>
+        /// <param name="dataItems" type="Array" ></param>
+
+    },
+
+
+    setDataItem: function(item,dataItem) {
+        /// <summary>
+        /// Re-renders the given listview item with the new dataItem provided. In order for the method to work as expected, the data items should be of type kendo.data.Model.
+        /// </summary>
+        /// <param name="item" type="jQuery" >The listview item to update</param>
+        /// <param name="dataItem" type="kendo.data.Model" >The new dataItem</param>
+
+    },
+
+
     destroy: function() {
         /// <summary>
         /// Prepares the ListView for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
@@ -2358,22 +2981,6 @@ kendo.mobile.ui.ListView.prototype = {
         /// Sets the dataSource of an existing ListView and rebinds it.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" ></param>
-
-    },
-
-
-    stopEndlessScrolling: function() {
-        /// <summary>
-        /// Stops the 'endless scroll' of the ListView.
-        /// </summary>
-
-    },
-
-
-    stopLoadMore: function() {
-        /// <summary>
-        /// Stops the 'load more' functionality of the ListView.
-        /// </summary>
 
     },
 
@@ -2409,7 +3016,7 @@ $.fn.kendoListView = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;appendOnRefresh — Boolean (default: false)
-    /// &#10;Used in combination with pullToRefresh. If set to true, newly loaded data will be appended on top when refershing.
+    /// &#10;Used in combination with pullToRefresh. If set to true, newly loaded data will be appended on top when refershing. Notice: not applicable if ListView is in a virtual mode.
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
     /// &#10;Indicates whether the listview will call read on the DataSource initially.
@@ -2420,46 +3027,39 @@ $.fn.kendoListView = function(options) {
     /// &#10;endlessScroll — Boolean (default: false)
     /// &#10;If set to true, the listview gets the next page of data when the user scrolls near the bottom of the view.
     /// &#10;
-    /// &#10;endlessScrollParameters — Function 
-    /// &#10;A callback function used when the 'endlessScroll' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.
-    /// &#10;
     /// &#10;fixedHeaders — Boolean (default: false)
-    /// &#10;If set to true, the group headers will persist their position when the user scrolls through the listview. Applicable only when the type is set to group, or when binding to grouped datasource.
+    /// &#10;If set to true, the group headers will persist their position when the user scrolls through the listview.
+/// &#10;Applicable only when the type is set to group, or when binding to grouped datasource.Notice: this feature is not available in virtual mode
     /// &#10;
-    /// &#10;headerTemplate — String (default: #:value#)
+    /// &#10;headerTemplate — String|Function (default: "#:value#")
     /// &#10;The header item template (applicable when the type is set to group).
     /// &#10;
     /// &#10;loadMore — Boolean (default: false)
-    /// &#10;If set to true, a button is rendered at the bottom of the listview, which fetch the next page of data when tapped.
+    /// &#10;If set to true, a button is rendered at the bottom of the listview. Tapping it fetches and displayes the items from the next page of the datasource.
     /// &#10;
     /// &#10;loadMoreText — String (default: "Press to load more")
     /// &#10;The text of the rendered load-more button (applies only if loadMore is set to true).
     /// &#10;
-    /// &#10;loadMoreParameters — Function 
-    /// &#10;Check the 'endlessScrollParameters' option.
-    /// &#10;
-    /// &#10;pullTemplate — String (default: "Pull to refresh")
+    /// &#10;pullTemplate — String|Function (default: "Pull to refresh")
     /// &#10;The message template displayed when the user pulls the listView. Applicable only when pullToRefresh is set to true.
     /// &#10;
     /// &#10;pullToRefresh — Boolean (default: false)
     /// &#10;If set to true, the listview will reload its data when the user pulls the view over the top limit.
     /// &#10;
     /// &#10;pullParameters — Function 
-    /// &#10;A callback function used when the 'pullToRefresh' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.
+    /// &#10;A callback function used when the 'pullToRefresh' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.Notice: When the listview is in a virtual mode, the pull to refresh action removes the previously loaded items in the listview (instead of appending new records at the top).
+/// &#10;Previously loaded pages in the datasource are also discarded.
     /// &#10;
-    /// &#10;refreshTemplate — String (default: "Refreshing")
+    /// &#10;refreshTemplate — String|Function (default: "Refreshing")
     /// &#10;The message template displayed during the refresh. Applicable only when pullToRefresh is set to true.
     /// &#10;
-    /// &#10;releaseTemplate — String (default: "Release to refresh")
+    /// &#10;releaseTemplate — String|Function (default: "Release to refresh")
     /// &#10;The message template indicating that pullToRefresh will occur. Applicable only when pullToRefresh is set to true.
-    /// &#10;
-    /// &#10;scrollTreshold — String (default: 30)
-    /// &#10;The distance to the bottom in pixels, after which the listview will start fetching the next page. Applicable only when endlessScroll is set to true.
     /// &#10;
     /// &#10;style — String 
     /// &#10;The style of the control. Can be either empty string(""), or inset.
     /// &#10;
-    /// &#10;template — String (default: #:data#)
+    /// &#10;template — String|Function (default: "#:data#")
     /// &#10;The item template.
     /// &#10;
     /// &#10;type — String 
@@ -2763,7 +3363,7 @@ $.fn.kendoPane = function(options) {
     /// &#10;layout — String 
     /// &#10;The id of the default Pane Layout.
     /// &#10;
-    /// &#10;loading — String (default: Loading...)
+    /// &#10;loading — String (default: "Loading...")
     /// &#10;The text displayed in the loading popup. Setting this value to false will disable the loading popup.
     /// &#10;
     /// &#10;transition — String 
@@ -2860,7 +3460,7 @@ kendo.mobile.ui.ScrollView.prototype = {
 
     content: function(content) {
         /// <summary>
-        /// Update the scrollview HTML content
+        /// Update the scrollview HTML content.
         /// </summary>
         /// <param name="content" type="Object" >the new scrollView content.</param>
 
@@ -2923,17 +3523,38 @@ $.fn.kendoScrollView = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
+    /// &#10;autoBind — Boolean (default: true)
+    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.Applicable only in data bound mode.
+    /// &#10;
     /// &#10;bounceVelocityThreshold — Number (default: 1.6)
     /// &#10;The velocity threshold after which a swipe will result in a bounce effect.
     /// &#10;
+    /// &#10;contentHeight — Number|String (default: "auto")
+    /// &#10;The height of the ScrollView content.
+    /// &#10;
+    /// &#10;dataSource — Object 
+    /// &#10;Instance of DataSource that the mobile ScrollView will be bound to. If DataSource is set, the widget will operate in data bound mode.
+    /// &#10;
     /// &#10;duration — Number (default: 300)
     /// &#10;The milliseconds that take the ScrollView to snap to the current page after released.
+    /// &#10;
+    /// &#10;emptyTemplate — String (default: "")
+    /// &#10;The template which is used to render the pages without content. By default the ScrollView renders a blank page.Applicable only in data bound mode.
+    /// &#10;
+    /// &#10;enablePager — Boolean (default: true)
+    /// &#10;If set to true the ScrollView will display a pager. By default pager is enabled.
+    /// &#10;
+    /// &#10;itemsPerPage — Number (default: 1)
+    /// &#10;Determines how many data items will be passed to the page template.Applicable only in data bound mode.
     /// &#10;
     /// &#10;page — Number (default: 0)
     /// &#10;The initial page to display.
     /// &#10;
     /// &#10;pageSize — Number (default: 1)
-    /// &#10;Multiplier applied to the snap amount of the ScrollView. By default, the widget scrolls to the next screen when swipe. If the pageSize property is set to 0.5, the ScrollView will scroll by half of the widget width.
+    /// &#10;Multiplier applied to the snap amount of the ScrollView. By default, the widget scrolls to the next screen when swipe. If the pageSize property is set to 0.5, the ScrollView will scroll by half of the widget width.Not applicable in data bound mode.
+    /// &#10;
+    /// &#10;template — String (default: "#:data#")
+    /// &#10;The template which is used to render the content of pages. By default the ScrollView renders a div element for every page.Applicable only in data bound mode.
     /// &#10;
     /// &#10;velocityThreshold — Number (default: 0.8)
     /// &#10;The velocity threshold after which a swipe will navigate to the next page (as opposed to snapping back to the current page).
@@ -2956,6 +3577,31 @@ kendo.mobile.ui.Scroller.prototype = {
         /// <summary>
         /// Prepares the Scroller for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
+
+    },
+
+
+    disable: function() {
+        /// <summary>
+        /// Disables the scrolling of the element.
+        /// </summary>
+
+    },
+
+
+    enable: function() {
+        /// <summary>
+        /// Enables the scrolling of the element after it has been disabled by calling disable.
+        /// </summary>
+
+    },
+
+
+    height: function() {
+        /// <summary>
+        /// Returns the viewport height of the scrollable element.
+        /// </summary>
+        /// <returns type="Number">the viewport height in pixels.</returns>
 
     },
 
@@ -3042,7 +3688,7 @@ $.fn.kendoScroller = function(options) {
     /// &#10;The threshold below which a releasing the scroller will trigger the pull event.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
     /// &#10;
-    /// &#10;pullTemplate — String (default: Pull to refresh)
+    /// &#10;pullTemplate — String (default: "Pull to refresh")
     /// &#10;The message template displayed when the user pulls the scroller.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
     /// &#10;
@@ -3050,17 +3696,18 @@ $.fn.kendoScroller = function(options) {
     /// &#10;If set to true, the scroller will display a hint when the user pulls the container beyond its top limit.
 /// &#10;If a pull beyond the specified pullOffset occurs, a pull event will be triggered.
     /// &#10;
-    /// &#10;refreshTemplate — String (default: Refreshing)
+    /// &#10;refreshTemplate — String (default: "Refreshing")
     /// &#10;The message template displayed during the refresh.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
     /// &#10;
-    /// &#10;releaseTemplate — String (default: Release to refresh)
+    /// &#10;releaseTemplate — String (default: "Release to refresh")
     /// &#10;The message template displayed when the user pulls the scroller below the
 /// &#10;pullOffset, indicating that pullToRefresh will occur.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
     /// &#10;
     /// &#10;useNative — Boolean (default: false)
-    /// &#10;If set to true, the scroller will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+    /// &#10;(available since Q1 2013)
+/// &#10; If set to true, the scroller will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
 /// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
     /// &#10;
     /// </summary>
@@ -3115,52 +3762,8 @@ $.fn.kendoSplitView = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;style — String (default: horizontal)
+    /// &#10;style — String (default: "horizontal")
     /// &#10;Defines the SplitView style - horizontal or vertical.
-    /// &#10;
-    /// </summary>
-    /// <param name="options" type="Object">
-    /// The widget configuration options
-    /// </param>
-};
-
-
-kendo.mobile.ui.Swipe = function() { };
-
-kendo.mobile.ui.Swipe.prototype = {
-
-
-
-    bind: function(event, callback) {
-        /// <summary>
-        /// Binds to a widget event.
-        /// </summary>
-        /// <param name="event" type="String">The event name</param>
-        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
-    },
-
-    unbind: function(event, callback) {
-        /// <summary>
-        /// Unbinds a callback from a widget event.
-        /// </summary>
-        /// <param name="event" type="String">The event name</param>
-        /// <param name="callback" type="Function">The callback to be removed.</param>
-    }
-
-};
-
-$.fn.getKendoSwipe = function() {
-    /// <summary>
-    /// Returns a reference to the kendo.mobile.ui.Swipe widget, instantiated on the selector.
-    /// </summary>
-    /// <returns type="kendo.mobile.ui.Swipe">The kendo.mobile.ui.Swipe instance (if present).</returns>
-};
-
-$.fn.kendoSwipe = function(options) {
-    /// <summary>
-    /// Instantiates a kendo.mobile.ui.Swipe widget based the DOM elements that match the selector.
-
-    /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -3235,10 +3838,10 @@ $.fn.kendoSwitch = function(options) {
     /// &#10;checked — Boolean (default: false)
     /// &#10;The checked state of the widget.
     /// &#10;
-    /// &#10;offLabel — String (default: OFF)
+    /// &#10;offLabel — String (default: "OFF")
     /// &#10;The OFF label.
     /// &#10;
-    /// &#10;onLabel — String (default: ON)
+    /// &#10;onLabel — String (default: "ON")
     /// &#10;The ON label.
     /// &#10;
     /// </summary>
@@ -3253,6 +3856,17 @@ kendo.mobile.ui.TabStrip = function() { };
 kendo.mobile.ui.TabStrip.prototype = {
 
 
+
+
+    badge: function(tab,value) {
+        /// <summary>
+        /// Introduced in Q1 2013 SP Sets a badge on one of the tabs with the specified value. If invoked without second parameter, returns the tab's current badge value. Set the value to false to remove the badge.
+        /// </summary>
+        /// <param name="tab" type="Object" >The target tab specified either as a jQuery selector/object or as an item index.</param>
+        /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
+        /// <returns type="String|kendo.mobile.ui.TabStrip">Returns the badge value if invoked without parameters, otherwise returns the TabStrip object.</returns>
+
+    },
 
 
     currentItem: function() {
@@ -3396,7 +4010,8 @@ $.fn.kendoView = function(options) {
     /// &#10;The text to display in the navbar title (if present) and the browser title.
     /// &#10;
     /// &#10;useNativeScrolling — Boolean (default: false)
-    /// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+    /// &#10;(available since Q1 2013)
+/// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
 /// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
     /// &#10;
     /// &#10;zoom — Boolean (default: false)
@@ -3545,7 +4160,7 @@ kendo.ui.AutoComplete.prototype = {
         /// <summary>
         /// Selects the item provided as an argument and updates the value of the widget.
         /// </summary>
-        /// <param name="item" type="Object" >A string, DOM element or jQuery object which represents the item to be selected. A string is provided it would be treated as a jQuery selector.</param>
+        /// <param name="item" type="Object" >A string, DOM element or jQuery object which represents the item to be selected. A string is treated as a jQuery selector.</param>
 
     },
 
@@ -3554,7 +4169,7 @@ kendo.ui.AutoComplete.prototype = {
         /// <summary>
         /// Sets the data source of the widget.
         /// </summary>
-        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
 
     },
 
@@ -3609,15 +4224,14 @@ $.fn.kendoAutoComplete = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the
-/// &#10;suggestion popup will open and close instantly.
+    /// &#10;Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.
     /// &#10;
     /// &#10;dataSource — Object|Array 
     /// &#10;The data source of the widget which is used to display suggestions for the current value. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
 /// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;dataTextField — String (default: null)
-    /// &#10;The field of the data item used when searching for suggestions.
+    /// &#10;The field of the data item used when searching for suggestions.  This is the text that will be displayed in the list of matched results.
     /// &#10;
     /// &#10;delay — Number (default: 200)
     /// &#10;The delay in milliseconds between a keystroke and when the widget displays the suggestion popup.
@@ -3796,7 +4410,7 @@ $.fn.kendoCalendar = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;culture — String (default: en-US)
+    /// &#10;culture — String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
     /// &#10;
     /// &#10;dates — Array 
@@ -3808,7 +4422,7 @@ $.fn.kendoCalendar = function(options) {
     /// &#10;footer — String 
     /// &#10;Template to be used for rendering the footer. If false, the footer will not be rendered.
     /// &#10;
-    /// &#10;format — String (default: MM/dd/yyyy)
+    /// &#10;format — String (default: "MM/dd/yyyy")
     /// &#10;Specifies the format, which is used to parse value set with value() method.
     /// &#10;
     /// &#10;max — Date (default: Date(2099, 11, 31))
@@ -3820,7 +4434,7 @@ $.fn.kendoCalendar = function(options) {
     /// &#10;month — Object 
     /// &#10;Templates for the cells rendered in the "month" view.
     /// &#10;
-    /// &#10;start — String (default: month)
+    /// &#10;start — String (default: "month")
     /// &#10;Specifies the start view.
     /// &#10;
     /// &#10;value — Date (default: null)
@@ -4042,7 +4656,7 @@ $.fn.kendoColorPicker = function(options) {
     /// &#10;messages — Object 
     /// &#10;Allows customization of "Apply" / "Cancel" labels.
     /// &#10;
-    /// &#10;palette — String (default: null)
+    /// &#10;palette — String|Array (default: null)
     /// &#10;When a non-null palette argument is supplied, the drop-down will be
 /// &#10;a simple color picker.  The following are supported:If palette is missing or null, the widget will display the HSV
 /// &#10;selector.
@@ -4159,10 +4773,10 @@ kendo.ui.ComboBox.prototype = {
 
     select: function(li) {
         /// <summary>
-        /// Selects drop-down list item and sets the value and the text of the combobox.
+        /// Selects a dropdown item and sets the value and the text of the combobox, or retrieves the selected item index.
         /// </summary>
         /// <param name="li" type="Object" >LI element or index of the item or predicate function, which defines the item that should be selected.</param>
-        /// <returns type="Number">The index of the selected LI element.</returns>
+        /// <returns type="Number">The index of the selected item, if called with no parameters. If a custom value is entered, the returned selected index is -1. If called with a parameter as a setter.</returns>
 
     },
 
@@ -4292,7 +4906,7 @@ $.fn.kendoComboBox = function(options) {
     /// &#10;suggest — Boolean (default: false)
     /// &#10;Controls whether the ComboBox should automatically auto-type the rest of text.
     /// &#10;
-    /// &#10;template — String 
+    /// &#10;template — String|Function 
     /// &#10;Template to be used for rendering the items in the list.
     /// &#10;
     /// &#10;text — String (default: "")
@@ -4421,7 +5035,10 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;The animation(s) used for opening and/or closing the pop-up. Setting this value to false
 /// &#10;will disable the animation(s).
     /// &#10;
-    /// &#10;culture — String (default: en-US)
+    /// &#10;ARIATemplate — String (default: "Current focused date is #=kendo.toString(data.current, 'D'#"))
+    /// &#10;Specifies a template used to populate value of the aria-label attribute.
+    /// &#10;
+    /// &#10;culture — String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
     /// &#10;
     /// &#10;dates — Array 
@@ -4434,7 +5051,7 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;footer — String 
     /// &#10;Template to be used for rendering the footer of the calendar.
     /// &#10;
-    /// &#10;format — String (default: MM/dd/yyyy)
+    /// &#10;format — String (default: "MM/dd/yyyy")
     /// &#10;Specifies the format, which is used to format the value of the DatePicker displayed in the input. The format also will be used to parse the input.
     /// &#10;
     /// &#10;max — Date (default: Date(2099, 11, 31))
@@ -4449,7 +5066,7 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;parseFormats — Array 
     /// &#10;Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the format will be used. Note that value of the format option is always used.
     /// &#10;
-    /// &#10;start — String (default: month)
+    /// &#10;start — String (default: "month")
     /// &#10;Specifies the start view.
 /// &#10;The following settings are available for the start value:
     /// &#10;
@@ -4587,7 +5204,10 @@ $.fn.kendoDateTimePicker = function(options) {
     /// &#10;The animation(s) used for opening and/or closing the pop-ups. Setting this value to false
 /// &#10;will disable the animation(s).
     /// &#10;
-    /// &#10;culture — String (default: en-US)
+    /// &#10;ARIATemplate — String (default: "Current focused date is #=kendo.toString(data.current, 'G'#"))
+    /// &#10;Specifies a template used to populate value of the aria-label attribute.
+    /// &#10;
+    /// &#10;culture — String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
     /// &#10;
     /// &#10;dates — Array 
@@ -4600,7 +5220,7 @@ $.fn.kendoDateTimePicker = function(options) {
     /// &#10;footer — String 
     /// &#10;Template to be used for rendering the footer of the calendar.
     /// &#10;
-    /// &#10;format — String (default: MM/dd/yyyy h:mm tt)
+    /// &#10;format — String (default: "MM/dd/yyyy h:mm tt")
     /// &#10;Specifies the format, which is used to format the value of the DateTimePicker displayed in the input. The format also will be used to parse the input.
     /// &#10;
     /// &#10;interval — Number (default: 30)
@@ -4618,11 +5238,11 @@ $.fn.kendoDateTimePicker = function(options) {
     /// &#10;parseFormats — Array 
     /// &#10;Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the options.format and options.timeFormat will be used. Note that value of the format option is always used.
     /// &#10;
-    /// &#10;start — String (default: month)
+    /// &#10;start — String (default: "month")
     /// &#10;Specifies the start view of the calendar.
 /// &#10;The following settings are available for the start value:
     /// &#10;
-    /// &#10;timeFormat — String (default: h:mm tt)
+    /// &#10;timeFormat — String (default: "h:mm tt")
     /// &#10;Specifies the format, which is used to format the values in the time drop-down list.
     /// &#10;
     /// &#10;value — Date (default: null)
@@ -4781,10 +5401,10 @@ kendo.ui.DropDownList.prototype = {
 
     select: function(li) {
         /// <summary>
-        /// Selects drop-down list item and sets the value and the text of the dropdownlist.
+        /// Selects a dropdown item and sets the value and the text of the dropdownlist, or retrieves the selected item index.
         /// </summary>
         /// <param name="li" type="Object" >LI element or index of the item or predicate function, which defines the item that should be selected.</param>
-        /// <returns type="Number">The index of the selected LI element.</returns>
+        /// <returns type="Number">The index of the selected item, if called with no parameters. If called with a parameter as a setter.</returns>
 
     },
 
@@ -4894,7 +5514,7 @@ $.fn.kendoDropDownList = function(options) {
     /// &#10;Define the text of the default empty item. If the value is an object, then the widget will use it directly.
 /// &#10; Note that object should have atleast the dataValueField and dataTextField properties. Otherwise, widget will show undefined.
     /// &#10;
-    /// &#10;template — String 
+    /// &#10;template — String|Function 
     /// &#10;Template to be used for rendering the items in the list.
     /// &#10;
     /// &#10;text — String (default: "")
@@ -5102,6 +5722,14 @@ kendo.ui.Editor.prototype = {
     },
 
 
+    refresh: function() {
+        /// <summary>
+        /// Reinitializes the editing area iframe. Should be used after moving the editor in the DOM.
+        /// </summary>
+
+    },
+
+
     selectRange: function(range) {
         /// <summary>
         /// Focuses the editable area and selects the range described by the range parameter.
@@ -5292,7 +5920,7 @@ kendo.ui.Grid.prototype = {
 
     addRow: function() {
         /// <summary>
-        /// Adds a new empty table row in edit mode. The addRow method triggers edit event.
+        /// Adds an empty data item to the grid. In "incell" and "inline" editing mode a table row will be appended. Popup window will be displayed in "popup" editing mode.Fires the edit event.
         /// </summary>
 
     },
@@ -5300,7 +5928,7 @@ kendo.ui.Grid.prototype = {
 
     cancelChanges: function() {
         /// <summary>
-        /// Cancels any pending changes during. Deleted rows are restored. Inserted rows are removed. Updated rows are restored to their original values.
+        /// Cancels any pending changes in the data source. Deleted data items are restored, new data items are removed and updated data items are restored to their initial state.
         /// </summary>
 
     },
@@ -5308,7 +5936,7 @@ kendo.ui.Grid.prototype = {
 
     cancelRow: function() {
         /// <summary>
-        /// Switch the current edited row into display mode and revert changes made to the data
+        /// Cancels editing for the table row which is in edit mode. Reverts any changes made.
         /// </summary>
 
     },
@@ -5316,16 +5944,17 @@ kendo.ui.Grid.prototype = {
 
     cellIndex: function(cell) {
         /// <summary>
-        /// Returns the index of the cell in the grid item skipping group and hierarchy cells.
+        /// Returns the index of the specified table cell. Skips group and detail table cells.
         /// </summary>
-        /// <param name="cell" type="Object" >Target cell.</param>
+        /// <param name="cell" type="Object" >A string, DOM element or jQuery object which represents the table cell. A string is treated as a jQuery selector.</param>
+        /// <returns type="Number">the index of the specified table cell.</returns>
 
     },
 
 
     clearSelection: function() {
         /// <summary>
-        /// Clears currently selected items.
+        /// Clears the currently selected table rows or cells (depending on the current selection mode).
         /// </summary>
 
     },
@@ -5333,42 +5962,43 @@ kendo.ui.Grid.prototype = {
 
     closeCell: function() {
         /// <summary>
-        /// Closes current edited cell.
+        /// Stops editing the table cell which is in edit mode. Requires "incell" edit mode.
         /// </summary>
 
     },
 
 
-    collapseGroup: function(group) {
+    collapseGroup: function(row) {
         /// <summary>
-        /// Collapses specified group.
+        /// Collapses the specified group. This hides the group items.
         /// </summary>
-        /// <param name="group" type="Object" >Target group item to collapse.</param>
+        /// <param name="row" type="Object" >A string, DOM element or jQuery object which represents the group table row. A string is treated as a jQuery selector.</param>
 
     },
 
 
     collapseRow: function(row) {
         /// <summary>
-        /// Collapses specified master row.
+        /// Collapses the specified master table row. This hides its detail table row.
         /// </summary>
-        /// <param name="row" type="Object" >Target master row to collapse.</param>
+        /// <param name="row" type="Object" >A string, DOM element or jQuery object which represents the master table row. A string is treated as a jQuery selector.</param>
 
     },
 
 
-    dataItem: function(tr) {
+    dataItem: function(row) {
         /// <summary>
-        /// Returns the data item to which a given table row (tr DOM element) is bound.
+        /// Returns the data item to which the specified table row is bound.
         /// </summary>
-        /// <param name="tr" type="Object" >Target row.</param>
+        /// <param name="row" type="Object" >A string, DOM element or jQuery object which represents the table row. A string is treated as a jQuery selector.</param>
+        /// <returns type="kendo.data.ObservableObject">the data item to which the specified table row is bound.</returns>
 
     },
 
 
     destroy: function() {
         /// <summary>
-        /// Prepares the Grid for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
 
     },
@@ -5376,52 +6006,52 @@ kendo.ui.Grid.prototype = {
 
     editCell: function(cell) {
         /// <summary>
-        /// Puts the specified table cell in edit mode. It requires a jQuery object representing the cell. The editCell method triggers edit event.
+        /// Switches the specified table cell in edit mode. Requires "incell" edit mode.Fires the edit event.
         /// </summary>
-        /// <param name="cell" type="Object" >Cell to be edited.</param>
+        /// <param name="cell" type="jQuery" >The jQuery object which represents the table cell.</param>
 
     },
 
 
     editRow: function(row) {
         /// <summary>
-        /// Switches the specified row from the grid into edit mode. The editRow method triggers edit event.
+        /// Switches the specified table cell in edit mode. Requires "inline" or "popup" edit mode.Fires the edit event.
         /// </summary>
-        /// <param name="row" type="Object" >Row to be edited.</param>
+        /// <param name="row" type="jQuery" >The jQuery object which represents the table row.</param>
 
     },
 
 
-    expandGroup: function(group) {
+    expandGroup: function(row) {
         /// <summary>
-        /// Expands specified group.
+        /// Expands the specified group. This shows the group items.
         /// </summary>
-        /// <param name="group" type="Object" >Target group item to expand.</param>
+        /// <param name="row" type="Object" >A string, DOM element or jQuery object which represents the group table row. A string is treated as a jQuery selector. Expands specified group.</param>
 
     },
 
 
     expandRow: function(row) {
         /// <summary>
-        /// Expands specified master row.
+        /// Expands the specified master table row. This shows its detail table row.
         /// </summary>
-        /// <param name="row" type="Object" >Target master row to expand.</param>
+        /// <param name="row" type="Object" >A string, DOM element or jQuery object which represents the master table row. A string is treated as a jQuery selector. Expands specified master row.</param>
 
     },
 
 
     hideColumn: function(column) {
         /// <summary>
-        /// Hides the specified column.
+        /// Hides the specified grid column.
         /// </summary>
-        /// <param name="column" type="Object" >The index or the bound field of the column to hide.</param>
+        /// <param name="column" type="Object" >The index of the column or the field to which the columns is bound.</param>
 
     },
 
 
     refresh: function() {
         /// <summary>
-        /// Redraws the grid using the current data of the DataSource.
+        /// Renders all table rows using the current data items.
         /// </summary>
 
     },
@@ -5429,10 +6059,9 @@ kendo.ui.Grid.prototype = {
 
     removeRow: function(row) {
         /// <summary>
-        /// Removes the specified row from the grid. The removeRow method triggers remove event.
-/// (Note: In inline or popup edit modes the changes will be automatically synced)
+        /// Removes the specified table row from the grid. Also removes the corresponding data item from the data source.Fires the remove event.
         /// </summary>
-        /// <param name="row" type="Object" >Row to be removed.</param>
+        /// <param name="row" type="Object" >A string, DOM element or jQuery object which represents the table row. A string is treated as a jQuery selector.</param>
 
     },
 
@@ -5441,15 +6070,15 @@ kendo.ui.Grid.prototype = {
         /// <summary>
         /// Changes the position of the specified column.
         /// </summary>
-        /// <param name="destIndex" type="Number" ></param>
-        /// <param name="column" type="Object" ></param>
+        /// <param name="destIndex" type="Number" >The new position of the column. The destination index should be calculated with regard to all columns, including the hidden ones.</param>
+        /// <param name="column" type="Object" >The column whose position should be changed.</param>
 
     },
 
 
     saveChanges: function() {
         /// <summary>
-        /// Calls DataSource sync to submit any pending changes if state is valid. The saveChanges method triggers saveChanges event.
+        /// Saves any pending changes by calling the sync method.Fires the saveChanges event.
         /// </summary>
 
     },
@@ -5457,28 +6086,27 @@ kendo.ui.Grid.prototype = {
 
     saveRow: function() {
         /// <summary>
-        /// Switch the current edited row into dislay mode and save changes made to the data
-/// (Note: the changes will be automatically synced)
+        /// Switches the table row which is in edit mode and saves any changes made by the user.
         /// </summary>
 
     },
 
 
-    select: function(items) {
+    select: function(rows) {
         /// <summary>
-        /// Gets/Sets the selected rows/cells.
+        /// Gets or sets the table rows (or cells) which are selected.
         /// </summary>
-        /// <param name="items" type="Object" >Items to select.</param>
-        /// <returns type="jQuery">the selected rows or cells.</returns>
+        /// <param name="rows" type="Object" >A string, DOM element or jQuery object which represents the table row(s) or cell(s). A string is treated as a jQuery selector.</param>
+        /// <returns type="jQuery">the selected table rows or cells.</returns>
 
     },
 
 
     setDataSource: function(dataSource) {
         /// <summary>
-        /// Sets the dataSource of an existing Grid and rebinds it.
+        /// Sets the data source of the widget.
         /// </summary>
-        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
 
     },
 
@@ -5487,7 +6115,7 @@ kendo.ui.Grid.prototype = {
         /// <summary>
         /// Shows the specified column.
         /// </summary>
-        /// <param name="column" type="Object" >The index or the bound field of the column to show.</param>
+        /// <param name="column" type="Object" >The index of the column or the field to which the columns is bound.</param>
 
     },
 
@@ -5522,86 +6150,88 @@ $.fn.kendoGrid = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;altRowTemplate — Function 
-    /// &#10;Template to be used for rendering the alternate rows in the grid.
+    /// &#10;altRowTemplate — String|Function 
+    /// &#10;The template which renders the alternating table rows. Be default the grid renders a table row () for every data source item.
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
-    /// &#10;Indicates whether the grid will call read on the DataSource initially.
+    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+/// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
     /// &#10;
     /// &#10;columns — Array 
-    /// &#10;A collection of column objects or collection of strings that represents the name of the fields.
+    /// &#10;The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
+/// &#10;field to which the column is bound. The grid will create a column for every item of the array.
     /// &#10;
-    /// &#10;columnMenu — Boolean 
-    /// &#10;Enables column header menu
+    /// &#10;columnMenu — Boolean (default: false)
+    /// &#10;If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+/// &#10;By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
     /// &#10;
     /// &#10;columnMenu — Object 
-    /// &#10;Enables column header menu
+    /// &#10;If set to true the grid will display the column menu when the user clicks the chevron icon in the column headers. The column menu allows the user to show and hide columns, filter and sort (if filtering and sorting are enabled).
+/// &#10;By default the column menu is not enabled.Can be set to a JavaScript object which represents the column menu configuration.
     /// &#10;
-    /// &#10;dataSource — Object 
-    /// &#10;Instance of DataSource or Object with DataSource configuration.
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which is used render table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
-    /// &#10;detailTemplate — Function 
-    /// &#10;Template to be used for rendering the detail rows in the grid.
-/// &#10;See the Detail Template example.
+    /// &#10;detailTemplate — String|Function 
+    /// &#10;The template which renders the detail rows.
     /// &#10;
     /// &#10;editable — Boolean (default: false)
-    /// &#10;Indicates whether editing is enabled/disabled.
+    /// &#10;If set to true the user would be able to edit the data to which the grid is bound to. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.
     /// &#10;
     /// &#10;editable — Object 
-    /// &#10;Indicates whether editing is enabled/disabled.
+    /// &#10;If set to true the user would be able to edit the data to which the grid is bound to. By default editing is disabled.Can be set to a string ("inline", "incell" or "popup") to specify the editing mode. The default editing mode is "incell".Can be set to a JavaScript object which represents the editing configuration.
     /// &#10;
     /// &#10;filterable — Boolean (default: false)
-    /// &#10;Indicates whether filtering is enabled/disabled.
+    /// &#10;If set to true the user can filter the data source using the grid filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
     /// &#10;
     /// &#10;filterable — Object 
-    /// &#10;Indicates whether filtering is enabled/disabled.
-    /// &#10;
-    /// &#10;reorderable — Boolean (default: false)
-    /// &#10;Indicates whether column reordering is enabled/disable.
-    /// &#10;
-    /// &#10;resizable — Boolean (default: false)
-    /// &#10;Indicates whether column resizing is enabled/disable.
+    /// &#10;If set to true the user can filter the data source using the grid filter menu. Filtering is disabled by default.Can be set to a JavaScript object which represents the filter menu configuration.
     /// &#10;
     /// &#10;groupable — Boolean (default: false)
-    /// &#10;Indicates whether grouping is enabled/disabled.
+    /// &#10;If set to true the user could group the grid by dragging the column header cells. By default grouping is disabled.Can be set to a JavaScript object which represents the grouping configuration.
     /// &#10;
     /// &#10;groupable — Object 
-    /// &#10;Indicates whether grouping is enabled/disabled.
+    /// &#10;If set to true the user could group the grid by dragging the column header cells. By default grouping is disabled.Can be set to a JavaScript object which represents the grouping configuration.
     /// &#10;
     /// &#10;height — Number|String 
-    /// &#10;Sets the height of the grid.
+    /// &#10;The height of the grid. Numeric values are treated as pixels.
     /// &#10;
     /// &#10;navigatable — Boolean (default: false)
-    /// &#10;Indicates whether keyboard navigation is enabled/disabled.
+    /// &#10;If set to true the use could navigate the widget using the keyboard navigation. By default keyboard navigation is disabled.
     /// &#10;
     /// &#10;pageable — Boolean (default: false)
-    /// &#10;Indicates whether paging is enabled/disabled.
+    /// &#10;If set to true the grid will display a pager. By default paging is disabled.Can be set to a JavaScript object which represents the pager configuration.
     /// &#10;
     /// &#10;pageable — Object 
-    /// &#10;Indicates whether paging is enabled/disabled.
+    /// &#10;If set to true the grid will display a pager. By default paging is disabled.Can be set to a JavaScript object which represents the pager configuration.
     /// &#10;
-    /// &#10;rowTemplate — Function 
-    /// &#10;Template to be used for rendering the rows in the grid.
+    /// &#10;reorderable — Boolean (default: false)
+    /// &#10;If set to true the user could reorder the columns by dragging their header cells. By default reordering is disabled.
+    /// &#10;
+    /// &#10;resizable — Boolean (default: false)
+    /// &#10;If set to true the user could resize the columns by dragging the edges of their header cells. By default resizing is disabled.
+    /// &#10;
+    /// &#10;rowTemplate — String|Function 
+    /// &#10;The template which renders rows. Be default renders a table row () for every data source item.
     /// &#10;
     /// &#10;scrollable — Boolean (default: true)
-    /// &#10;Enable/disable grid scrolling.
+    /// &#10;If set to true the grid will display a scrollbar when the total row height (or width) exceeds the grid height (or width). By default scrolling is enabled.Can be set to a JavaScript object which represents the scrolling configuration.
     /// &#10;
     /// &#10;scrollable — Object 
-    /// &#10;Enable/disable grid scrolling.
+    /// &#10;If set to true the grid will display a scrollbar when the total row height (or width) exceeds the grid height (or width). By default scrolling is enabled.Can be set to a JavaScript object which represents the scrolling configuration.
     /// &#10;
-    /// &#10;selectable — String (default: undefined)
-    /// &#10;Indicates whether selection is enabled/disabled. Possible values:
+    /// &#10;selectable — Boolean|String (default: false)
+    /// &#10;If set to true the user would be able to select grid rows. By default selection is disabled.Can also be set to the following string values:
     /// &#10;
-    /// &#10;sortable — Boolean 
-    /// &#10;Defines whether grid columns are sortable.
+    /// &#10;sortable — Boolean (default: false)
+    /// &#10;If set to true the user could sort the grid by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
     /// &#10;
     /// &#10;sortable — Object 
-    /// &#10;Defines whether grid columns are sortable.
+    /// &#10;If set to true the user could sort the grid by clicking the column header cells. By default sorting is disabled.Can be set to a JavaScript object which represents the sorting configuration.
     /// &#10;
     /// &#10;toolbar — Array 
-    /// &#10;This is a list of commands for which the corresponding buttons will be rendered.
-/// &#10;The supported built-in commands are: "create", "cancel", "save", "destroy".
-/// &#10;Or template to be used for rendering the toolbar content.
+    /// &#10;The list of commands displayed in the grid toolbar. Commands can be custom or built-in ("cancel", "create", "save").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -5744,7 +6374,7 @@ $.fn.kendoListView = function(options) {
     /// &#10;navigatable — Boolean (default: false)
     /// &#10;Indicates whether keyboard navigation is enabled/disabled.
     /// &#10;
-    /// &#10;selectable — String (default: false)
+    /// &#10;selectable — Boolean|String (default: false)
     /// &#10;Indicates whether selection is enabled/disabled. Possible values:
     /// &#10;
     /// &#10;template — Function 
@@ -6223,16 +6853,16 @@ $.fn.kendoNumericTextBox = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;culture — String (default: en-US)
+    /// &#10;culture — String (default: "en-US")
     /// &#10;Specifies the culture info used by the NumericTextBox widget.
     /// &#10;
     /// &#10;decimals — Number (default: null)
     /// &#10;Specifies the number precision. If not set precision defined by current culture is used.
     /// &#10;
-    /// &#10;downArrowText — String (default: Decrease value)
+    /// &#10;downArrowText — String (default: "Decrease value")
     /// &#10;Specifies the text of the tooltip on the down arrow.
     /// &#10;
-    /// &#10;format — String (default: n)
+    /// &#10;format — String (default: "n")
     /// &#10;Specifies the format of the number. Any valid number format is allowed.
     /// &#10;
     /// &#10;max — Number (default: null)
@@ -6250,7 +6880,7 @@ $.fn.kendoNumericTextBox = function(options) {
     /// &#10;step — Number (default: 1)
     /// &#10;Specifies the increment/decrement step.
     /// &#10;
-    /// &#10;upArrowText — String (default: Increase value)
+    /// &#10;upArrowText — String (default: "Increase value")
     /// &#10;Specifies the text of the tooltip on the up arrow.
     /// &#10;
     /// &#10;value — Number (default: null)
@@ -6364,7 +6994,7 @@ $.fn.kendoPager = function(options) {
     /// &#10;numeric — Boolean (default: true)
     /// &#10;Defines if numeric portion of the pager will be shown.
     /// &#10;
-    /// &#10;pageSizes — Boolean|Array (default: false | [5,10,20])
+    /// &#10;pageSizes — Boolean|Array (default: false)
     /// &#10;Displays a list with predefined page sizes. An array of values to be displayed can be provided. If pageSize option is provided for DataSource then this pageSize value will be automaticaly selected in created selectbox.
     /// &#10;
     /// &#10;previousNext — Boolean (default: true)
@@ -6644,6 +7274,195 @@ $.fn.kendoRangeSlider = function(options) {
 };
 
 
+kendo.ui.Scheduler = function() { };
+
+kendo.ui.Scheduler.prototype = {
+
+
+
+
+    addEvent: function(data) {
+        /// <summary>
+        /// Adds a new scheduler event and opens the edit form.
+        /// </summary>
+        /// <param name="data" type="Object" >The object containing the scheduler event fields.</param>
+
+    },
+
+
+    cancelEvent: function() {
+        /// <summary>
+        /// Cancels the scheduler event editing. Closes the edit form.
+        /// </summary>
+
+    },
+
+
+    date: function(value) {
+        /// <summary>
+        /// Gets or sets the current scheduler date.
+        /// </summary>
+        /// <param name="value" type="Date" >The new date to set.</param>
+        /// <returns type="Date">the current date.</returns>
+
+    },
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+
+    },
+
+
+    editEvent: function(event) {
+        /// <summary>
+        /// Opens the specified scheduler event in the edit form.
+        /// </summary>
+        /// <param name="event" type="Object" >The event which should be put in edit mode. Also accepts a string which is the uid of the event which should be edited.</param>
+
+    },
+
+
+    removeEvent: function(event) {
+        /// <summary>
+        /// Removes the specified scheduler event.
+        /// </summary>
+        /// <param name="event" type="Object" >The event which should be removed. Also accepts a string which is the uid of the event which should be removed.</param>
+
+    },
+
+
+    saveEvent: function() {
+        /// <summary>
+        /// Saves the scheduler event which is open in the edit form and closes it.
+        /// </summary>
+
+    },
+
+
+    setDataSource: function(dataSource) {
+        /// <summary>
+        /// Sets the data source of the widget.
+        /// </summary>
+        /// <param name="dataSource" type="kendo.data.SchedulerDataSource" >The data source to which the widget should be bound.</param>
+
+    },
+
+
+    view: function(type) {
+        /// <summary>
+        /// Gets or sets the current scheduler view.
+        /// </summary>
+        /// <param name="type" type="String" >The view type to select.</param>
+        /// <returns type="kendo.ui.SchedulerView">the current scheduler view.</returns>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoScheduler = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.ui.Scheduler widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.ui.Scheduler">The kendo.ui.Scheduler instance (if present).</returns>
+};
+
+$.fn.kendoScheduler = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.ui.Scheduler widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;allDayEventTemplate — String|Function 
+    /// &#10;The template used to render the "all day" scheduler events.The fields which can be used in the template are:
+    /// &#10;
+    /// &#10;allDaySlot — Boolean (default: true)
+    /// &#10;If set to true the scheduler will display a slot for "all day" events.
+    /// &#10;
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which contains the scheduler events. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.SchedulerDataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.SchedulerDataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.SchedulerDataSource instance the widget will use that instance and will not initialize a new one.
+    /// &#10;
+    /// &#10;date — Date 
+    /// &#10;The current date of the scheduler. Used to determine the period which is displayed by the widget.
+    /// &#10;
+    /// &#10;dateHeaderTemplate — String|Function 
+    /// &#10;The template used to render the date header cells.By default the scheduler renders the date using the current culture date format.The fields which can be used in the template are:
+    /// &#10;
+    /// &#10;editable — Boolean (default: true)
+    /// &#10;If set to true the user would be able to create new scheduler events and modify or delete existing ones.
+    /// &#10;
+    /// &#10;editable — Object 
+    /// &#10;If set to true the user would be able to create new scheduler events and modify or delete existing ones.
+    /// &#10;
+    /// &#10;endTime — Date 
+    /// &#10;The end time of the week and day views. The scheduler will display events ending before the endTime.
+    /// &#10;
+    /// &#10;eventTemplate — String|Function 
+    /// &#10;The template used to render the scheduler events.The fields which can be used in the template are:
+    /// &#10;
+    /// &#10;group — Object 
+    /// &#10;The configuration of the scheduler resource(s) grouping.
+    /// &#10;
+    /// &#10;height — Number|String 
+    /// &#10;The height of the widget. Numeric values are treated as pixels.
+    /// &#10;
+    /// &#10;majorTick — Number (default: 60)
+    /// &#10;The number of minutes represented by a major tick.
+    /// &#10;
+    /// &#10;majorTimeHeaderTemplate — String|Function 
+    /// &#10;The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:
+    /// &#10;
+    /// &#10;minorTickCount — Number (default: 2)
+    /// &#10;The number of time slots to display per major tick.
+    /// &#10;
+    /// &#10;minorTimeHeaderTemplate — String|Function 
+    /// &#10;The template used to render the minor ticks.By default the scheduler renders a "&nbsp;".The fields which can be used in the template are:
+    /// &#10;
+    /// &#10;resources — Array 
+    /// &#10;The configuration of the scheduler resource(s). A scheduler resource is optional metadata that can be associated
+/// &#10;with a scheduler event.
+    /// &#10;
+    /// &#10;startTime — Date 
+    /// &#10;The start time of the week and day views. The scheduler will display events starting after the startTime.
+    /// &#10;
+    /// &#10;timezone — String 
+    /// &#10;The timezone which the scheduler will use to display the scheduler appointment dates. By default the current system timezone is used. This is an acceptable default when the
+/// &#10;scheduler widget is bound to local array of events. It is advisable to specify a timezone if the scheduler is bound to a remote service.
+/// &#10;That way all users would see the same dates and times no matter their configured system timezone.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
+    /// &#10;
+    /// &#10;views — Array 
+    /// &#10;The views displayed by the scheduler and their configuration. The array items can be either objects specifying the view configuration or strings representing the view types (assuming default configuration).
+/// &#10;By default the Kendo UI Scheduler widget displays "day" and "week" view.
+    /// &#10;
+    /// &#10;width — Number|String 
+    /// &#10;The width of the widget. Numeric values are treated as pixels.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
 kendo.ui.Slider = function() { };
 
 kendo.ui.Slider.prototype = {
@@ -6873,7 +7692,7 @@ $.fn.kendoSplitter = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
-    /// &#10;orientation — String (default: horizontal)
+    /// &#10;orientation — String (default: "horizontal")
     /// &#10;Specifies the orientation of the Splitter.
     /// &#10;
     /// &#10;panes — Array 
@@ -6891,16 +7710,6 @@ kendo.ui.TabStrip = function() { };
 kendo.ui.TabStrip.prototype = {
 
 
-
-
-    activateTab: function(item) {
-        /// <summary>
-        /// Activates a tab specified as a selector. Note: Invoking this method will not trigger any events.
-        /// </summary>
-        /// <param name="item" type="Selector" >The target tab, specified as a selector, to be activated.</param>
-        /// <returns type="Boolean">Returns true if successful; otherwise, false.</returns>
-
-    },
 
 
     append: function(tab) {
@@ -6994,11 +7803,20 @@ kendo.ui.TabStrip.prototype = {
     },
 
 
+    items: function() {
+        /// <summary>
+        /// Gets the list of DOM elements that represent the tabs.
+        /// </summary>
+        /// <returns type="HTMLCollection">the tabs as jQuery objects.</returns>
+
+    },
+
+
     reload: function(element) {
         /// <summary>
         /// Reloads TabStrip tab(s) via AJAX.
         /// </summary>
-        /// <param name="element" type="Selector" >The target tab(s), specified as a selector, to be reloaded via AJAX.</param>
+        /// <param name="element" type="Selector" >The target tab(s), specified as a selector or jQuery object, to be reloaded via AJAX.</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -7008,7 +7826,7 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Removes a specified tab from a TabStrip.
         /// </summary>
-        /// <param name="element" type="Selector" >The target tab(s), specified as a selector, to be removed.</param>
+        /// <param name="element" type="Object" >The target tab(s), specified as a selector or jQuery object, to be removed.</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -7019,7 +7837,7 @@ kendo.ui.TabStrip.prototype = {
         /// Get/set the selected tab. If called without arguments, it returns the
 /// currently selected tab.
         /// </summary>
-        /// <param name="element" type="Object" >The target tab(s), specified as a selector or index in the tab group.</param>
+        /// <param name="element" type="Object" >The target tab(s), specified as a selector, jQuery object or index in the tab group.</param>
         /// <returns type="jQuery">the selected tab if called without arguments. kendo.ui.TabStrip if called with arguments.</returns>
 
     },
@@ -7204,22 +8022,22 @@ $.fn.kendoTimePicker = function(options) {
     /// &#10;animation — Object 
     /// &#10;Animations to be used for opening/closing the popup. Setting to false will turn of the animation.
     /// &#10;
-    /// &#10;culture — String (default: en-US)
+    /// &#10;culture — String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
     /// &#10;
     /// &#10;dates — Array 
     /// &#10;Specifies a list of dates, which are shown in the time drop-down list. If not set, the DateTimePicker will auto-generate the available times.
     /// &#10;
-    /// &#10;format — String (default: h:mm tt)
+    /// &#10;format — String (default: "h:mm tt")
     /// &#10;Specifies the format, which is used to format the value of the TimePicker displayed in the input. The format also will be used to parse the input.
     /// &#10;
-    /// &#10;interval — Number (default: 30)
+    /// &#10;interval — Number (default: "30")
     /// &#10;Specifies the interval, between values in the popup list, in minutes.
     /// &#10;
-    /// &#10;max — Date (default: 00:00)
+    /// &#10;max — Date (default: "00:00")
     /// &#10;Specifies the end value in the popup list.
     /// &#10;
-    /// &#10;min — Date (default: 00:00)
+    /// &#10;min — Date (default: "00:00")
     /// &#10;Specifies the start value in the popup list.
     /// &#10;
     /// &#10;parseFormats — Array 
@@ -7254,6 +8072,14 @@ kendo.ui.Tooltip.prototype = {
     hide: function() {
         /// <summary>
         /// Hides the tooltip.
+        /// </summary>
+
+    },
+
+
+    refresh: function() {
+        /// <summary>
+        /// Refresh the tooltip content.
         /// </summary>
 
     },
@@ -7299,7 +8125,7 @@ $.fn.kendoTooltip = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;autoHide — Boolean (default: true)
-    /// &#10;Specifies if the tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within tooltip.
+    /// &#10;Specifies if the tooltip will be hidden when mouse leaves the target element. If set to false a close button will be shown within tooltip. If set to false, showAfter is specified and the showOn is set to "mouseenter" the Tooltip will be displayed after the given timeout even if the element is no longer hovered.
     /// &#10;
     /// &#10;animation — Object 
     /// &#10;A collection of {Animation} objects, used to change default animations. A value of false
@@ -7328,13 +8154,13 @@ $.fn.kendoTooltip = function(options) {
     /// &#10;width — Number (default: Infinity)
     /// &#10;The width (in pixels) of the tooltip.
     /// &#10;
-    /// &#10;position — String (default: bottom)
+    /// &#10;position — String (default: "bottom")
     /// &#10;The position relative to the target element, at which the tooltip will be shown. Predefined values are "bottom", "top", "left", "right", "center".
     /// &#10;
     /// &#10;showAfter — Number (default: 100)
     /// &#10;Specify the delay in milliseconds before the tooltip is shown. This option is ignored if showOn is set to "click" or "focus".
     /// &#10;
-    /// &#10;showOn — String (default: mouseenter)
+    /// &#10;showOn — String (default: "mouseenter")
     /// &#10;The event on which the tooltip will be shown. Predefined values are "mouseenter", "click" and "focus".
     /// &#10;
     /// </summary>
@@ -7433,7 +8259,7 @@ kendo.ui.TreeView.prototype = {
 /// TreeView.
         /// </summary>
         /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be appended.</param>
-        /// <param name="parentNode" type="Element" >The node that will contain the newly appended node. If not specified, the new node will be appended to the root group of the TreeView.</param>
+        /// <param name="parentNode" type="jQuery" >The node that will contain the newly appended node. If not specified, the new node will be appended to the root group of the TreeView.</param>
 
     },
 
@@ -7469,7 +8295,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Removes a node from a TreeView, but keeps its jQuery.data() objects.
         /// </summary>
-        /// <param name="node" type="Selector" >The node that is to be detached.</param>
+        /// <param name="node" type="Object" >The node that is to be detached.</param>
         /// <returns type="jQuery">The node that has been detached.</returns>
 
     },
@@ -7479,7 +8305,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Enables or disables nodes.
         /// </summary>
-        /// <param name="nodes" type="Selector" >The nodes that are to be enabled/disabled.</param>
+        /// <param name="nodes" type="Object" >The nodes that are to be enabled/disabled.</param>
         /// <param name="enable" type="Boolean" >Whether the nodes should be enabled or disabled.</param>
 
     },
@@ -7489,7 +8315,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Expands nodes.
         /// </summary>
-        /// <param name="nodes" type="Object" >The nodes that are to be collapsed.</param>
+        /// <param name="nodes" type="Object" >The nodes that are to be expanded.</param>
 
     },
 
@@ -7521,7 +8347,7 @@ kendo.ui.TreeView.prototype = {
 /// TreeView.
         /// </summary>
         /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be inserted.</param>
-        /// <param name="referenceNode" type="Element" >The node that will be preceed the newly-appended node.</param>
+        /// <param name="referenceNode" type="jQuery" >The node that will be preceed the newly-appended node.</param>
 
     },
 
@@ -7532,7 +8358,7 @@ kendo.ui.TreeView.prototype = {
 /// TreeView.
         /// </summary>
         /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be inserted.</param>
-        /// <param name="referenceNode" type="Element" >The node that follows the inserted node.</param>
+        /// <param name="referenceNode" type="jQuery" >The node that follows the inserted node.</param>
 
     },
 
@@ -7541,7 +8367,8 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Gets the parent node of the item
         /// </summary>
-        /// <param name="node" type="Element" >The child node whose parent will be returned.</param>
+        /// <param name="node" type="Object" >The child node whose parent will be returned.</param>
+        /// <returns type="jQuery">The parent node of the given parameter node.</returns>
 
     },
 
@@ -7550,7 +8377,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Removes a node from a TreeView.
         /// </summary>
-        /// <param name="node" type="Selector" >The node that is to be removed.</param>
+        /// <param name="node" type="Object" >The node that is to be removed.</param>
 
     },
 
@@ -7578,7 +8405,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Gets or sets the text of a node in a TreeView.
         /// </summary>
-        /// <param name="node" type="Selector" >The node of which the text is being retrieved.</param>
+        /// <param name="node" type="String" >The node of which the text is being retrieved.</param>
         /// <param name="newText" type="String" >Optional. When passed, sets the node text to the specified string</param>
         /// <returns type="String">The text of a node.</returns>
 
@@ -7589,7 +8416,16 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Toggles the node of a TreeView between its expanded and collapsed states.
         /// </summary>
-        /// <param name="node" type="Selector" >The node that should be toggled.</param>
+        /// <param name="node" type="String" >The node that should be toggled.</param>
+
+    },
+
+
+    updateIndeterminate: function(node) {
+        /// <summary>
+        /// Updates the indeterminate state of the treeview checkboxes. Should be used for better performance when checking multiple checkboxes through code.
+        /// </summary>
+        /// <param name="node" type="jQuery" >Optional. The root of the hierarchy that will be looped through. Allows only a subtree to be processed. The default value is the treeview root.</param>
 
     },
 
@@ -7627,6 +8463,10 @@ $.fn.kendoTreeView = function(options) {
     /// &#10;animation — Object 
     /// &#10;A collection of visual animations used when items are expanded or collapsed through user interaction.
 /// &#10;Setting this option to false will disable all animations.
+    /// &#10;
+    /// &#10;autoBind — Boolean (default: true)
+    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+/// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
     /// &#10;
     /// &#10;checkboxes — Boolean 
     /// &#10;If true or an object, renders checkboxes within each treeview item.
@@ -7753,6 +8593,9 @@ $.fn.kendoUpload = function(options) {
     /// &#10;Enables (true) or disables (false) an Upload. A disabled
 /// &#10;Upload may be re-enabled via enable().
     /// &#10;
+    /// &#10;files — Array 
+    /// &#10;List of files to be initially rendered in the Upload widget files list.
+    /// &#10;
     /// &#10;localization — Object 
     /// &#10;Sets the strings rendered by the Upload.
     /// &#10;
@@ -7765,6 +8608,9 @@ $.fn.kendoUpload = function(options) {
     /// &#10;Enables (true) or disables (false) the ability to display a file listing
 /// &#10;for uploading a file(s). Disabling a file listing may be useful you wish to customize the UI; use the
 /// &#10;client-side events to build your own UI.
+    /// &#10;
+    /// &#10;template — String|Function 
+    /// &#10;The template used to render the files in the list
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -7810,7 +8656,7 @@ kendo.ui.Validator.prototype = {
         /// <summary>
         /// Validates the input element against the declared validation rules.
         /// </summary>
-        /// <param name="input" type="Element" >Input element to be validated.</param>
+        /// <param name="input" type="Object" >Input element to be validated.</param>
         /// <returns type="Boolean">true if all validation rules passed successfully.</returns>
 
     },
@@ -8008,9 +8854,18 @@ kendo.ui.Window.prototype = {
     },
 
 
+    pin: function() {
+        /// <summary>
+        /// Pins the Window at its current position with a position:fixed style, i.e. the widget stops moving together with the other page content when the page is scrolled.
+/// The user will still be able to move the Window with the mouse or keyboard.
+        /// </summary>
+
+    },
+
+
     refresh: function(options) {
         /// <summary>
-        /// Refreshes the content of a Window from a remote URL.
+        /// Refreshes the content of a Window from a remote URL or the initially defined content template.
         /// </summary>
         /// <param name="options" type="String" >Options for requesting data from the server. If omitted, the window uses the content property that was supplied when the window was created. Any options specified here are passed to jQuery.ajax().</param>
         /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
@@ -8062,6 +8917,14 @@ kendo.ui.Window.prototype = {
 
     },
 
+
+    unpin: function() {
+        /// <summary>
+        /// Disables the Window's pinned state, so that the widget will move together with the other page content when the page is scrolled.
+        /// </summary>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -8102,7 +8965,7 @@ $.fn.kendoWindow = function(options) {
 /// &#10;will disable all animations in the widget.
     /// &#10;
     /// &#10;appendTo — Object|String (default: document.body)
-    /// &#10;The element that the Window will be appended to.
+    /// &#10;The element that the Window will be appended to. Beneficial if the Window is used together with a form.
 /// &#10;Note that this does not constrain the window dragging within the given element.
     /// &#10;
     /// &#10;content — String 
@@ -8137,6 +9000,12 @@ $.fn.kendoWindow = function(options) {
     /// &#10;modal — Boolean (default: false)
     /// &#10;Specifies whether the window should show a modal overlay over the page.
     /// &#10;
+    /// &#10;pinned — Boolean (default: false)
+    /// &#10;Specifies whether the window should be pinned, i.e. it will not move together with the page content during scrolling.
+    /// &#10;
+    /// &#10;position — Object 
+    /// &#10;A collection of one or two members, which define the initial Window's top and/or left position on the page.
+    /// &#10;
     /// &#10;resizable — Boolean (default: true)
     /// &#10;Enables (true) or disables (false) the ability for users to resize a
 /// &#10;Window.
@@ -8147,10 +9016,10 @@ $.fn.kendoWindow = function(options) {
     /// &#10;visible — Boolean (default: true)
     /// &#10;Specifies whether the window will be initially visible.
     /// &#10;
-    /// &#10;width — Number 
+    /// &#10;width — Number|String 
     /// &#10;Specifies width of the window.
     /// &#10;
-    /// &#10;height — Number 
+    /// &#10;height — Number|String 
     /// &#10;Specifies height of the window.
     /// &#10;
     /// </summary>

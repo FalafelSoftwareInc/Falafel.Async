@@ -238,6 +238,60 @@ define([
 
         toJquery: function (selector) {
             return selector instanceof $ ? selector : $(selector);
+        },
+
+        getCookie: function (key) {
+            if ($.cookie) {
+                //GET COOKIE VALUE AND CONVERT TO JSON
+                var value = $.cookie(key);
+                return value ? JSON.parse(value) : null;
+            }
+        },
+
+        setCookie: function (key, values, options) {
+            if ($.cookie) {
+                //ASSIGN DEFAULT OPTIONS
+                options = $.extend({
+                    expires: 365,
+                    path: '/'
+                }, options);
+
+                //HANDLE EXISTING COOKIE IF APPLICABLE
+                if ($.cookie(key)) {
+                    //GET EXISTING VALUES AND MERGE TO NEW VALUES
+                    values = $.extend(JSON.parse($.cookie(key)), values);
+                } else { //HANDLE NEW COOKIE
+                    //ASSIGN DEFAULT VALUES
+                    values = $.extend({
+                        createDate: new Date()
+                    }, values);
+                }
+
+                //SAVE COOKIE AND STORE AS JSON
+                $.cookie(key, JSON.stringify(values), options);
+            }
+        },
+
+        removeCookie: function (key, options) {
+            if ($.cookie) {
+                //ASSIGN DEFAULT OPTIONS
+                options = $.extend({
+                    path: '/',
+                    expires: -1
+                }, options);
+
+                //USE NATIVE FUNCTION IF APPLICABLE
+                if ($.removeCookie) {
+                    //REMOVE COOKIE VALUE
+                    return $.removeCookie(key, options);
+                } else {
+                    if ($.cookie(key) !== undefined) {
+                        $.cookie(key, '', options);
+                        return true;
+                    }
+                    return false;
+                }
+            }
         }
-    }
+    };
 });
