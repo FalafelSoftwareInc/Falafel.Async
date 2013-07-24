@@ -115,8 +115,11 @@
 
                     //HANDLE MODAL HEADER IF APPLICABLE
                     var headerEl = el.find('> .modal-header');
-                    if (options.title) headerEl.find('> h3').html(options.title);
-                    else headerEl.hide();
+                    if (options.title) {
+                        headerEl.find('> h3').html(options.title);
+                        if (options.headerClose === false)
+                            headerEl.find('.close').hide();
+                    } else headerEl.hide();
 
                     //HANDLE MODAL FOOTER IF APPLICABLE
                     var footerEl = el.find('> .modal-footer');
@@ -160,7 +163,10 @@
                     }).on('hidden', function () {
                         //REMOVE CONTENT AND BINDINGS
                         $(this).unbind().remove();
-                    }).modal('show').css(css);
+                    }).modal({
+                        backdrop: Helpers.getValueOrDefault(options.backdrop, true),
+                        keyboard: Helpers.getValueOrDefault(options.keyboard, true)
+                    }).css(css);
                 });
         },
 
