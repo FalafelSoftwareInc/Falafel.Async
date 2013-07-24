@@ -10,19 +10,19 @@ Library collection to be used with require.js asynchronous loading:
 
 ### /backbone
 * Description: Provides models with key-value binding, collections with an API and view in a JSON interface.
-* Version: `0.9.2`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://backbonejs.org/](http://backbonejs.org/)
 
 ### /bootstrap
 * Description: Containing both .less & .css and minified .js
-* Version: `2.3.1`
+* Version: `0.0.0`
 * Status: `Customized`
 * Source: [https://github.com/twitter/bootstrap](https://github.com/twitter/bootstrap)
 
 ### /bxslider
 * Description: Responsive jQuery Content Slider.
-* Version: `4.0.0`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://bxslider.com/](http://bxslider.com/)
 
@@ -40,13 +40,13 @@ Library collection to be used with require.js asynchronous loading:
 
 ### /jquery
 * Description: Customized for Sitefinity v5.4 compatibility.
-* Version: `1.8.3`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://blog.jquery.com/2012/11/13/jquery-1-8-3-released/](http://blog.jquery.com/2012/11/13/jquery-1-8-3-released/)
 
 ### /jquery-ui
 * Description: Customized for Sitefinity v5.4 compatibility.
-* Version: `1.9.2`
+* Version: `0.0.0`
 * Status: `Customized`
 * Source: [http://jqueryui.com/](http://jqueryui.com/)
 
@@ -58,31 +58,31 @@ Library collection to be used with require.js asynchronous loading:
 
 ### /kendoui/all
 * Description: Combined version of Kendo UI DataViz, Web & Mobile
-* Version: `2012.3.1315`
+* Version: `0.0.0`
 * Status: `Customized`
 * Source: [http://www.kendoui.com](http://www.kendoui.com)
 
 ### /kendoui/dataviz
 * Description: Kendo UI DataViz
-* Version: `2012.3.1315`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://www.kendoui.com](http://www.kendoui.com)
 
 ### /kendoui/mobile
 * Description: Kendo UI Mobile
-* Version: `2012.3.1315`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://www.kendoui.com](http://www.kendoui.com)
 
 ### /kendoui/mvc
 * Description: Kendo UI Server Side Wrappers
-* Version: `2012.3.1315`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://www.kendoui.com](http://www.kendoui.com)
 
 ### /kendoui/web
 * Description: Kendo UI Web
-* Version: `2012.3.1315`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://www.kendoui.com](http://www.kendoui.com)
 
@@ -94,13 +94,13 @@ Library collection to be used with require.js asynchronous loading:
 
 ### /modernizr
 * Description: Feature detection library for HTML5/CSS3
-* Version: `2.6.2`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [http://modernizr.com/](http://modernizr.com/)
 
 ### /moment
 * Description: library for parsing, validating, manipulating, and formatting dates
-* Version: `2.0.0`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [https://github.com/timrwood/moment/](https://github.com/timrwood/moment/)
 
@@ -131,13 +131,13 @@ Library collection to be used with require.js asynchronous loading:
 
 ### /sitefinity
 * Description: Less & css version of minimal reset styles, and web services API
-* Version: `5.4.4010`
+* Version: `0.0.0`
 * Status: `Customized`
 * Source: n/a
 
 ### /toastr
 * Description: library for Gnome / Growl type non-blocking notifications
-* Version: `1.2.2`
+* Version: `0.0.0`
 * Status: `Fork`
 * Source: [https://github.com/CodeSeven/toastr](https://github.com/CodeSeven/toastr)
 
@@ -159,6 +159,9 @@ after "require.js" and "main.js" on the page.
 
 Follow this sample for your custom file if needed:
 <pre>
+/**
+* Extend root main.js with this file
+*/
 ; (function () {
     //DETERMINE BASE URL FROM CURRENT SCRIPT PATH
     var scripts = document.getElementsByTagName('script');
@@ -167,38 +170,36 @@ Follow this sample for your custom file if needed:
 
     //EXTEND REQUIREJS CONFIG
     require.config({
-        //Require.js allows us to configure shortcut alias
         paths: {
-            toastr: [
-                'https://raw.github.com/CodeSeven/toastr/master/toastr.min.js',
-                //If the CDN location fails, load from this location
-                currentUrl + '/libs/toastr/toastr.min'
-            ]
+            exampleplugin: currentUrl + '/libs/example/example.min'
         },
-        //The shim config allows us to configure dependencies for
-    	//scripts that do not call define() to register a module
         shim: {
-            toastr: {
-                deps: ['jquery'],
-                exports: 'toastr'
-            }
+            exampleplugin: ['jquery']
         }
     });
-    
+
     //INITIALIZE MY APP
     require([
         'jquery',
-        'bootstrap' //LETS TWITTER BOOTSTRAP DO ITS THING
+        'bootstrap',
+        'kendoui/kendo.core.min'
     ], function ($) {
-        //DO WHAT YOU LIKE TO INIT YOUR APP ON EVERY PAGE, SUCH AS:
-        
-		//DISABLE CACHING FOR IE9 AND BELOW SINCE IT OVERLY CACHES
-		//WHICH IS NOT GOOD FOR REAL TIME APPLICATIONS
-		if ($.browser.msie && parseInt($.browser.version, 10) < 10)
-			$.ajaxSetup({ cache: false });
-            
-        //ETC.
+
+        var init = function () {
+            //INITIALIZE APP PARTS
+            initElements();
+        };
+
+        var initElements = function () {
+            //ON DOC READY
+            $(function () {
+                //PLACEHOLDER FOR DOM ELEMENTS UPDATES
+            });
+        };
+
+        //INITIALIZE APP
+        init();
     });
-})(); 
+})();
 </pre>
 --------------------------------------------------

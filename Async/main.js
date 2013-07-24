@@ -110,9 +110,6 @@
                 deps: ['jquery'],
                 exports: 'moment'
             },
-            mustache: {
-                exports: 'Mustache'
-            },
             parse: {
                 exports: 'Parse'
             },
