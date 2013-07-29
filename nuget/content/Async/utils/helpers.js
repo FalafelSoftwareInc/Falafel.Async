@@ -292,6 +292,16 @@ define([
                     return false;
                 }
             }
+        },
+
+        pushUnique: function (arr, value) {
+            if ($.inArray(value, arr) < 0)
+                arr.push(value);
+        },
+
+        remove: function (arr, value) {
+            if ($.inArray(value, arr) >= 0)
+                arr.splice($.inArray(value, arr), 1);
         }
     };
 });
