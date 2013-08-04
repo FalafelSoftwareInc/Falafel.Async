@@ -64,6 +64,7 @@
             photobox: 'libs/photobox/js/photobox.min',
             respond: 'libs/respond/js/respond.min',
             sitefinityapi: 'libs/sitefinity/js/api',
+            lostorage: 'libs/lostorage/js/loStorage.min',
             taffy: 'libs/taffy/js/taffy-min',
             text: 'libs/require/js/text',
             tinysort: 'libs/tinysort/js/jquery.tinysort.min',
