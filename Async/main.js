@@ -51,6 +51,7 @@
             innerfade: 'libs/innerfade/js/jquery.innerfade.min',
             jplayer: 'libs/jplayer/js/jquery.jplayer.min',
             jqparse: 'libs/parse/js/jquery.parse',
+            jqplaceholder: 'libs/jquery-placeholder/js/jquery.placeholder',
             jqueryui: 'libs/jquery-ui/js/jquery-ui.min',
             jsurl: 'libs/js-url/js/js-url.min',
             kendoall: 'libs/kendoui/js/kendo.all.min',
@@ -89,6 +90,7 @@
             imagefill: ['jquery'],
             innerfade: ['jquery'],
             jqparse: ['jquery'],
+			jqplaceholder: ['jquery'],
             jsurl: {
                 deps: ['jquery'],
                 exports: 'url'
