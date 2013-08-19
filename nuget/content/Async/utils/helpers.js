@@ -311,8 +311,19 @@ define([
         },
 
         remove: function (arr, value) {
-            if ($.inArray(value, arr) >= 0)
-                arr.splice($.inArray(value, arr), 1);
+            if (_.isObject(value)) {
+                //FIND OBJECT TO SPLICE
+                $.each(arr, function (i, item) {
+                    if (_.isEqual(item, value)) {
+                        arr.splice(i, 1);
+                        return false;
+                    }
+                });
+            } else {
+                //FIND ELEMENT TO SPLICE
+                if ($.inArray(value, arr) >= 0)
+                    arr.splice($.inArray(value, arr), 1);
+            }
         }
     };
 });
