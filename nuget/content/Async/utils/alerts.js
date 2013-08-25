@@ -1,9 +1,10 @@
 ﻿define([
 	'jquery',
 	'toastr',
-    	'utils/helpers',
+	'nprogress',
+	'utils/helpers',
 	'blockui',
-    	'bootstrap'
+	'bootstrap'
 ], function ($, toastr, Helpers) {
 
     return {
@@ -33,6 +34,14 @@
             //DEACTIVATE LOADING PANEL
             $.unblockUI();
         },
+		
+		initProgress: function () {
+			NProgress.start();
+		},
+		
+		exitProgress: function () {
+			NProgress.done();
+		},
 
         success: function (message, title) {
             this.exitLoading();

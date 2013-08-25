@@ -181,9 +181,10 @@ Follow this sample for your custom file if needed:
     //INITIALIZE MY APP
     require([
         'jquery',
-        'bootstrap',
+		'underscore',
+        'bootstrap3',
         'kendoui/kendo.core.min'
-    ], function ($) {
+    ], function ($, _) {
 
         var init = function () {
             //INITIALIZE APP PARTS
@@ -191,6 +192,11 @@ Follow this sample for your custom file if needed:
         };
 
         var initElements = function () {
+			//ADD TITLE TO HTML TAG AS CLASS
+			if (document.title)
+			  $(document.documentElement)
+				.addClass(_.slugify(document.title));
+			  
             //ON DOC READY
             $(function () {
                 //PLACEHOLDER FOR DOM ELEMENTS UPDATES

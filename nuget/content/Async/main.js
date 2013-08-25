@@ -65,6 +65,7 @@
             modernizr: 'libs/modernizr/js/modernizr.min',
             moment: 'libs/moment/js/moment.min',
             mustache: 'libs/mustache/js/mustache.min',
+			nprogress: 'libs/nprogress/js/nprogress',
             parse: 'libs/parse/js/parse.min',
             photobox: 'libs/photobox/js/photobox.min',
             respond: 'libs/respond/js/respond.min',
@@ -120,6 +121,7 @@
                 deps: ['jquery'],
                 exports: 'moment'
             },
+            tinysort: ['jquery'],
             parse: {
                 exports: 'Parse'
             },
@@ -127,7 +129,7 @@
             taffy: {
                 exports: 'TAFFY'
             },
-            tinysort: ['jquery'],
+            nprogress: ['jquery'],
             toastr: {
                 deps: ['jquery'],
                 exports: 'toastr'
