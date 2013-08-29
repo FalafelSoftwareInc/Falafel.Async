@@ -42,4 +42,15 @@ define([
 
         return defer.promise();
     };
+
+    //MODIFY QUERY STRING OF LINKS
+    $.fn.queryString = function (data) {
+        //UPDATE LINKS BASED ON DATA PROPERTIES
+        for (var prop in data) {
+            this.each(function() {
+                var value = $(this).attr('href');
+                $(this).attr('href', Helpers.updateQueryString(value, prop, data[prop]));
+            });
+        }
+    };
 });
