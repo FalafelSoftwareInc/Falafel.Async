@@ -117,7 +117,7 @@ define([
 
         convertToBoolean: function (value) {
             //VALIDATE INPUT
-            if (!this.isNullOrEmpty(value)) return false;
+            if (this.isNullOrEmpty(value)) return false;
 
             //DETERMINE BOOLEAN VALUE FROM STRING
             if (typeof value === 'string') {
