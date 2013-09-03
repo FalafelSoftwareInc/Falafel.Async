@@ -142,7 +142,8 @@
                     _.mixin(_s.exports());
                     return _;
                 }
-            }
+            },
+            'utils/plugins': ['jquery']
         }
     });
 })();
