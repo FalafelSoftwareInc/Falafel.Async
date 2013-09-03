@@ -53,4 +53,16 @@ define([
             });
         }
     };
+	
+	//HANDLE ENTER KEY FOR FORM INPUT
+	$.fn.enterKey = function (options) {
+		this.keyup(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+				
+				//SUBMIT FORM
+                Helpers.toJquery(options.button).click();
+            }
+        });
+	};
 });
