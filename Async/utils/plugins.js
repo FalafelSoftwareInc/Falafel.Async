@@ -61,7 +61,7 @@ define([
                 e.preventDefault();
 				
 				//SUBMIT FORM
-                Helpers.toJquery(options.button).click();
+                Helpers.toJquery(options.target).click();
             }
         });
 	};
