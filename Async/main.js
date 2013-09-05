@@ -70,6 +70,7 @@
             photobox: 'libs/photobox/js/photobox.min',
             respond: 'libs/respond/js/respond.min',
             sitefinityapi: 'libs/sitefinity/js/api',
+            spin: 'libs/spin/js/spin.min',
             lostorage: 'libs/lostorage/js/loStorage.min',
             taffy: 'libs/taffy/js/taffy-min',
             text: 'libs/require/js/text',

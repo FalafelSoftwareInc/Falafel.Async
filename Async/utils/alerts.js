@@ -1,32 +1,37 @@
 ﻿define([
 	'jquery',
 	'toastr',
+    'spin',
 	'nprogress',
 	'utils/helpers',
 	'blockui',
 	'bootstrap'
-], function ($, toastr, Helpers) {
+], function ($, toastr, Spinner, Helpers) {
+    var spinner;
 
     return {
+        loadingCssDefaults: {
+            backgroundColor: '#000',
+            border: 'none',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            borderRadius: '10px',
+            opacity: 0.8,
+            padding: '25px',
+            color: '#fff',
+            fontSize: '42px;',
+            fontFamily: '"Arial Black", Gadget, sans-serif',
+            fontWeight: 'bold',
+            zIndex: 99999
+        },
+        spinnerDefaults: {},
+
         initLoading: function (message, timeout) {
             //ACTIVATE LOADING PANEL
             $.blockUI({
                 message: message || 'Loading...',
                 timeout: timeout || 30000,
-                css: {
-                    backgroundColor: '#000',
-                    border: 'none',
-                    '-webkit-border-radius': '10px',
-                    '-moz-border-radius': '10px',
-                    borderRadius: '10px',
-                    opacity: 0.8,
-                    padding: '25px',
-                    color: '#fff',
-                    fontSize: '42px;',
-                    fontFamily: '"Arial Black", Gadget, sans-serif',
-                    fontWeight: 'bold',
-                    zIndex: 99999
-                }
+                css: this.loadingCssDefaults
             });
         },
 
@@ -41,6 +46,29 @@
 		
 		exitProgress: function () {
 			NProgress.done();
+		},
+
+		initSpinner: function () {
+		    //ASSIGN DEFAULT VALUES
+		    var settings = $.extend(this.spinnerDefaults, {
+		        top: $(document).height() / 2 + 'px'
+		    });
+
+		    //CREATE SPINNER CONTAINER IF APPLICABLE
+		    if (!$('#spinner-container').length)
+		        $('body').prepend('<div id="spinner-container"></div>');
+
+            //CREATE CUSTOM SPINNER IF NEEDED:
+		    //http://fgnass.github.io/spin.js/
+		    if (!spinner)
+		        spinner = new Spinner(settings).spin(document.getElementById('spinner-container'));
+		},
+
+		exitSpinner: function () {
+		    if (spinner) {
+		        spinner.stop();
+		        spinner = null;
+		    }
 		},
 
         success: function (message, title) {
