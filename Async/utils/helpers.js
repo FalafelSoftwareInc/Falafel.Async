@@ -61,8 +61,12 @@ define([
 
         getCurrentPage: function () {
             var file = window.location.pathname;
-            var n = file.lastIndexOf('/');
-            return n >= 0 ? file.substring(n + 1).toLowerCase() : '';
+            var index = file.lastIndexOf('/');
+            var page = index >= 0 ? file.substring(index + 1).toLowerCase() : '';
+			//REMVE VIRTUAL APP PATH IF APPLICABLE
+			if (baseUrl && baseUrl != '/' && page == _.trim(baseUrl.toLowerCase(), '/'))
+				page = '';
+			return page;
         },
 
         getCurrentPageUrl: function () {
