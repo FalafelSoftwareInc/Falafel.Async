@@ -233,7 +233,7 @@ define([
         },
 
         isNullOrEmpty: function (value) {
-            return typeof value === 'undefined' || value === null || value.length === 0;
+            return _.isUndefined(value) || _.isNull(value) || _.isEmpty(value);
         },
 
         getValueOrDefault: function (value, defaultValue) {
