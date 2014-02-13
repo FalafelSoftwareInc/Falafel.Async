@@ -67,9 +67,22 @@ define([
         return defer.promise();
     };
 
+    var localStorageUsed = function () {
+        var allStrings = '';
+        for (var key in window.localStorage) {
+            if (window.localStorage.hasOwnProperty(key)) {
+                allStrings += window.localStorage[key];
+            }
+        }
+
+        //CALCULATE KB OF SPACE USE
+        return allStrings ? 3 + ((allStrings.length * 16) / (8 * 1024)) : 0;
+    };
+
     //PUBLIC PROPERTIES
     return {
         get: get,
-        getAll: getAll
+        getAll: getAll,
+		localStorageUsed: localStorageUsed
     };
 });

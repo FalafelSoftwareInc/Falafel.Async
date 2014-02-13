@@ -48,6 +48,69 @@ return wrapper;
 
 
 intellisense.annotate(kendo, {
+    Color: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.Color</summary>
+        /// </signature>
+    }
+});
+
+kendo.Color = (function() {
+var original = kendo.Color;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    diff: function() {
+        /// <signature>
+        /// <summary>
+        /// Computes the relative luminance between two colors.
+        /// </summary>
+        /// <returns type="Number">The relative luminance.</returns>
+        /// </signature>
+    },
+    equals: function() {
+        /// <signature>
+        /// <summary>
+        /// Compares two color objects for equality.
+        /// </summary>
+        /// <returns type="Boolean">returns true if the two colors are the same. Otherwise, false</returns>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+intellisense.annotate(kendo, {
     Layout: function() {
         /// <signature>
         /// <summary>Constructor of kendo.Layout</summary>
@@ -149,7 +212,7 @@ intellisense.annotate(instance, {
         /// Remove a previously attached event handler.
         /// </summary>
         /// <param name="eventName" type="String" >The name of the event. If not specified all handlers of all events will be removed.</param>
-        /// <param name="handler" type="Function" >The handler which should no loger be executed. If not specified all handlers listening to that event will be removed.</param>
+        /// <param name="handler" type="Function" >The handler which should no longer be executed. If not specified all handlers listening to that event will be removed.</param>
         /// </signature>
     }
 
@@ -188,18 +251,11 @@ intellisense.annotate(instance, {
         /// </summary>
         /// </signature>
     },
-    Example: function() {
-        /// <signature>
-        /// <summary>
-        /// 
-        /// </summary>
-        /// </signature>
-    },
     route: function(route,callback) {
         /// <signature>
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -281,7 +337,7 @@ intellisense.annotate(instance, {
         /// Renders the view contents. Accepts a jQuery selector (or jQuery object) to which the contents will be appended.
 /// Alternatively, the render method can be called without parameters in order to retrieve the View element for manual insertion/further manipulation.
         /// </summary>
-        /// <param name="container" type="jQuery" >(Optional) the element in which the view element will be appended.</param>
+        /// <param name="container" type="jQuery" >(optional) the element in which the view element will be appended.</param>
         /// <returns type="jQuery">the view element.</returns>
         /// </signature>
     },
@@ -332,6 +388,13 @@ var original = kendo.data.Binder;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    refresh: function() {
+        /// <signature>
+        /// <summary>
+        /// Invoked by the Kendo UI MVVM framework when the bound view model value is changed. The binder should update the UI (HTML element or Kendo UI widget) to reflect the view model change.
+        /// </summary>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -684,7 +747,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
         /// </signature>
     },
@@ -694,12 +757,13 @@ intellisense.annotate(instance, {
         /// Determines if the specified field is editable or not.
         /// </summary>
         /// <param name="field" type="String" >The field to check.</param>
+        /// <returns type="Boolean">true if the field is editable; false otherwise.</returns>
         /// </signature>
     },
     get: function() {
         /// <signature>
         /// <summary>
-        /// Gets the value of the specified field. Inherited from ObservableObject. More info can be found in the get section of the
+        /// Gets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the get section of the
 /// ObservableObject API reference.
         /// </summary>
         /// </signature>
@@ -708,14 +772,15 @@ intellisense.annotate(instance, {
         /// <signature>
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
+        /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
         /// </signature>
     },
     set: function() {
         /// <signature>
         /// <summary>
-        /// Sets the value of the specified field. Inherited from ObservableObject. More info can be found in the set section of the
+        /// Sets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the set section of the
 /// ObservableObject API reference.
         /// </summary>
         /// </signature>
@@ -723,7 +788,7 @@ intellisense.annotate(instance, {
     toJSON: function() {
         /// <signature>
         /// <summary>
-        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from ObservableObject. More info can be found in the toJSON section of the
+        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the toJSON section of the
 /// ObservableObject API reference.
         /// </summary>
         /// </signature>
@@ -769,7 +834,7 @@ intellisense.annotate(instance, {
     append: function(model) {
         /// <signature>
         /// <summary>
-        /// Appends a new item to the children datasource, and initializes the datasource, if necessary.
+        /// Appends a new item to the children data source, and initializes it if necessary.
         /// </summary>
         /// <param name="model" type="Object" >The data for the new item</param>
         /// </signature>
@@ -777,14 +842,15 @@ intellisense.annotate(instance, {
     level: function() {
         /// <signature>
         /// <summary>
-        /// Gets the current nesting level of the Node within the HierarchicalDataSource.
+        /// Gets the current nesting level of the node within the data source.
         /// </summary>
+        /// <returns type="Number">the zero based level of the node.</returns>
         /// </signature>
     },
     load: function() {
         /// <signature>
         /// <summary>
-        /// Loads the child nodes in the child datasource, supplying the id of the Node to the request.
+        /// Loads the child nodes in the child data source, supplying the id of the Node to the request.
         /// </summary>
         /// </signature>
     },
@@ -798,8 +864,9 @@ intellisense.annotate(instance, {
     parentNode: function() {
         /// <signature>
         /// <summary>
-        /// Gets the parent node of the Node, if any.
+        /// Gets the parent node.
         /// </summary>
+        /// <returns type="kendo.data.Node">the parent of the node; null if the node is a root node or doesn't have a parent.</returns>
         /// </signature>
     },
 
@@ -870,26 +937,26 @@ intellisense.annotate(instance, {
     parent: function() {
         /// <signature>
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableArray is not nested
-/// returns undefined.
+        /// Gets the parent of the array if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the array; undefined if the array is not nested and doesn't have a parent.</returns>
         /// </signature>
     },
     pop: function() {
         /// <signature>
         /// <summary>
-        /// Removes the last item from an array and returns that item. Equivalent of
-/// Array.prototype.pop.
+        /// Removes the last item from an array and returns that item. Equivalent of Array.prototype.pop.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
         /// </signature>
     },
     push: function() {
         /// <signature>
         /// <summary>
-        /// Appends the given items to the array and returns the new length of the array. Equivalent of
-/// Array.prototype.push.
+        /// Appends the given items to the array and returns the new length of the array. Equivalent of Array.prototype.push.
 /// The new items are wrapped as ObservableObject if they are complex objects.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
         /// </signature>
     },
     slice: function(begin,end) {
@@ -898,7 +965,6 @@ intellisense.annotate(instance, {
         /// Returns a one-level deep copy of a portion of an array. Equivalent of
 /// Array.prototype.slice.
 /// The result of the slice method is not an instance of ObvservableArray. It is a regular JavaScript Array object.
-/// > Important: The slice method does not modify the original ObservableArray.
         /// </summary>
         /// <param name="begin" type="Number" >Zero-based index at which to begin extraction.</param>
         /// <param name="end" type="Number" >Zero-based index at which to end extraction. If end is omitted, slice extracts to the end of the sequence.</param>
@@ -911,16 +977,16 @@ intellisense.annotate(instance, {
 /// Array.prototype.splice
         /// </summary>
         /// <param name="index" type="Number" >Index at which to start changing the array. If negative, will begin that many elements from the end.</param>
-        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If howMany is 0, no items are removed. In this case, you should specify at least one new item.</param>
-        /// <returns type="Array">An Array containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
+        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If set to 0, no items are removed. In this case, you should specify at least one new item.</param>
+        /// <returns type="Array">containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
         /// </signature>
     },
     shift: function() {
         /// <signature>
         /// <summary>
-        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of
-/// Array.prototype.shift.
+        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of Array.prototype.shift.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
         /// </signature>
     },
     toJSON: function() {
@@ -933,9 +999,9 @@ intellisense.annotate(instance, {
     unshift: function() {
         /// <signature>
         /// <summary>
-        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.
-/// Equivalent of Array.prototype.unshift.
+        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.  Equivalent of Array.prototype.unshift.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
         /// </signature>
     },
 
@@ -979,7 +1045,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the
 /// kendo.Observable API reference.
         /// </summary>
         /// </signature>
@@ -990,15 +1056,15 @@ intellisense.annotate(instance, {
         /// Gets the value of the specified field.
         /// </summary>
         /// <param name="name" type="String" >The name of the field whose value is going to be returned.</param>
-        /// <returns type="Object">The value of the specified field.</returns>
+        /// <returns type="Object">the value of the specified field.</returns>
         /// </signature>
     },
     parent: function() {
         /// <signature>
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableObject is not
-/// nested returns undefined;
+        /// Gets the parent of the object if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the object; undefined if the object is not nested and doesn't have a parent.</returns>
         /// </signature>
     },
     set: function(name,value) {
@@ -1015,7 +1081,7 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Creates a plain JavaScript object which contains all fields of the ObservableObject.
         /// </summary>
-        /// <returns type="Object">An Object which contains only the fields of the ObservableObject.</returns>
+        /// <returns type="Object">which contains only the fields of the ObservableObject.</returns>
         /// </signature>
     },
 
@@ -1056,6 +1122,16 @@ var original = kendo.data.SchedulerDataSource;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    expand: function(start,end) {
+        /// <signature>
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1103,6 +1179,34 @@ var original = kendo.data.SchedulerEvent;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    clone: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+        /// </signature>
+    },
+    duration: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+        /// </signature>
+    },
+    expand: function(start,end,timeZoneId) {
+        /// <signature>
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1150,6 +1254,14 @@ var original = kendo.mobile.Application;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    changeLoadingMessage: function(text) {
+        /// <signature>
+        /// <summary>
+        /// Changes the loading message.
+        /// </summary>
+        /// <param name="text" type="String" >New text of the loading animation.</param>
+        /// </signature>
+    },
     hideLoading: function() {
         /// <signature>
         /// <summary>
@@ -1163,7 +1275,7 @@ intellisense.annotate(instance, {
         /// Navigate to local or to remote view.
         /// </summary>
         /// <param name="url" type="String" >The id or url of the view.</param>
-        /// <param name="transition" type="String" >The transition to apply when navigating. See View Transitions section for more information.</param>
+        /// <param name="transition" type="String" >Optional. The transition to apply when navigating. See View Transitions section for more information.</param>
         /// </signature>
     },
     scroller: function() {
@@ -1186,7 +1298,7 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Change the current skin of the mobile application. When used without parameters, returns the currently used skin. Available as of Q2 2013.
         /// </summary>
-        /// <param name="skin" type="String" >The skin name to switch to or empty string to return to native.</param>
+        /// <param name="skin" type="String" >The skin name to switch to or empty string ("") to return to native.</param>
         /// <returns type="String">Current skin in effect.</returns>
         /// </signature>
     },
@@ -1439,7 +1551,7 @@ intellisense.annotate(instance, {
         /// Introduced in Q1 2013 SP Sets a badge on the Button with the specified value. If invoked without parameters, returns the current badge value. Set the value to false to remove the badge.
         /// </summary>
         /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
-        /// <returns type="String|kendo.mobile.ui.Button">Returns the badge value if invoked without parameters, otherwise returns the Button object.</returns>
+        /// <returns type="String | kendo.mobile.ui.Button">the badge value if invoked without parameters, otherwise the Button object.</returns>
         /// </signature>
     },
     destroy: function() {
@@ -1447,6 +1559,14 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Prepares the Button for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
+        /// </signature>
+    },
+    enable: function(enable) {
+        /// <signature>
+        /// <summary>
+        /// Changes the enabled state of the widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >Whether to enable or disable the widget.</param>
         /// </signature>
     },
 
@@ -1507,6 +1627,9 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;badge — String 
         /// &#10;The badge of the button.
         /// &#10;
+        /// &#10;enable — Boolean (default: true)
+        /// &#10;If set to false the widget will be disabled and will not allow the user to click it. The widget is enabled by default.
+        /// &#10;
         /// &#10;icon — String 
         /// &#10;The icon of the button. It can be either one of the built-in icons, or a custom one.
         /// &#10;
@@ -1538,7 +1661,7 @@ intellisense.annotate(instance, {
         /// </summary>
         /// <param name="button" type="Object" >The target button specified either as a jQuery selector/object or as an button index.</param>
         /// <param name="value" type="Object" >The target value to be set or false to be removed.</param>
-        /// <returns type="String|kendo.mobile.ui.Button">Returns the badge value if invoked without parameters, otherwise returns the ButtonGroup object.</returns>
+        /// <returns type="String|kendo.mobile.ui.Button">the badge value if invoked without parameters, otherwise the ButtonGroup object.</returns>
         /// </signature>
     },
     current: function() {
@@ -1620,7 +1743,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
         /// &#10;index — Number 
-        /// &#10;Defines the initially selected Button.
+        /// &#10;Defines the initially selected Button (zero based index).
         /// &#10;
         /// &#10;selectOn — String (default: default "down")
         /// &#10;Sets the DOM event used to select the button. Accepts "up" as an alias for touchend, mouseup and MSPointerUp vendor specific events.By default, buttons are selected immediately after the user presses the button (on touchstart or mousedown or MSPointerDown, depending on the mobile device).
@@ -1809,11 +1932,14 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;position — String (default: 'left')
         /// &#10;The position of the drawer. Can be left (default) or right.
         /// &#10;
+        /// &#10;swipeToOpen — Boolean (default: true)
+        /// &#10;If set to false, swiping the view will not activate the drawer. In this case, the drawer will only be open by a designated button
+        /// &#10;
         /// &#10;title — String 
-        /// &#10;The text to display in the navbar title (if present).
+        /// &#10;The text to display in the Navbar title (if present).
         /// &#10;
         /// &#10;views — Array 
-        /// &#10;A list of the view ids on which the drawer will appear. If omitted, the drawer can be revealed on any view in the application.
+        /// &#10;A list of the view ids on which the drawer will appear. If omitted, the drawer will work on any view in the application.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -1892,7 +2018,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
         /// &#10;id — String (default: null)
-        /// &#10;The id of the layout. Required.
+        /// &#10;The id of the layout. Required
         /// &#10;
         /// &#10;platform — String 
         /// &#10;The specific platform this layout targets. By default, layouts are displayed
@@ -1978,14 +2104,14 @@ intellisense.annotate(instance, {
     refresh: function() {
         /// <signature>
         /// <summary>
-        /// repaints the listview (works only in databound mode).
+        /// Repaints the listview (works only in databound mode).
         /// </summary>
         /// </signature>
     },
     setDataSource: function(dataSource) {
         /// <signature>
         /// <summary>
-        /// Sets the dataSource of an existing ListView and rebinds it.
+        /// Sets the DataSource of an existing ListView and rebinds it.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" ></param>
         /// </signature>
@@ -2046,10 +2172,10 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
         /// &#10;appendOnRefresh — Boolean (default: false)
-        /// &#10;Used in combination with pullToRefresh. If set to true, newly loaded data will be appended on top when refershing. Notice: not applicable if ListView is in a virtual mode.
+        /// &#10;Used in combination with pullToRefresh. If set to true, newly loaded data will be appended on top when refreshing. Notice: not applicable if ListView is in a virtual mode.
         /// &#10;
         /// &#10;autoBind — Boolean (default: true)
-        /// &#10;Indicates whether the listview will call read on the DataSource initially.
+        /// &#10;Indicates whether the listview will call read on the DataSource initially. If set to false, the listview will be bound after the DataSource instance fetch method is called.
         /// &#10;
         /// &#10;dataSource — Object 
         /// &#10;Instance of DataSource or the data that the mobile ListView will be bound to.
@@ -2059,40 +2185,31 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;fixedHeaders — Boolean (default: false)
         /// &#10;If set to true, the group headers will persist their position when the user scrolls through the listview.
-/// &#10;Applicable only when the type is set to group, or when binding to grouped datasource.Notice: this feature is not available in virtual mode
+/// &#10;Applicable only when the type is set to group, or when binding to grouped DataSource.Notice: fixed headers are not supported in virtual mode.
         /// &#10;
         /// &#10;headerTemplate — String|Function (default: "#:value#")
         /// &#10;The header item template (applicable when the type is set to group).
         /// &#10;
         /// &#10;loadMore — Boolean (default: false)
-        /// &#10;If set to true, a button is rendered at the bottom of the listview. Tapping it fetches and displayes the items from the next page of the datasource.
+        /// &#10;If set to true, a button is rendered at the bottom of the listview. Tapping it fetches and displays the items from the next page of the DataSource.
         /// &#10;
         /// &#10;loadMoreText — String (default: "Press to load more")
         /// &#10;The text of the rendered load-more button (applies only if loadMore is set to true).
-        /// &#10;
-        /// &#10;pullTemplate — String|Function (default: "Pull to refresh")
-        /// &#10;The message template displayed when the user pulls the listView. Applicable only when pullToRefresh is set to true.
         /// &#10;
         /// &#10;pullToRefresh — Boolean (default: false)
         /// &#10;If set to true, the listview will reload its data when the user pulls the view over the top limit.
         /// &#10;
         /// &#10;pullParameters — Function 
         /// &#10;A callback function used when the 'pullToRefresh' option is enabled. The result of the function will be send as additional parameters to the DataSource's next method.Notice: When the listview is in a virtual mode, the pull to refresh action removes the previously loaded items in the listview (instead of appending new records at the top).
-/// &#10;Previously loaded pages in the datasource are also discarded.
+/// &#10;Previously loaded pages in the DataSource are also discarded.
         /// &#10;
-        /// &#10;refreshTemplate — String|Function (default: "Refreshing")
-        /// &#10;The message template displayed during the refresh. Applicable only when pullToRefresh is set to true.
-        /// &#10;
-        /// &#10;releaseTemplate — String|Function (default: "Release to refresh")
-        /// &#10;The message template indicating that pullToRefresh will occur. Applicable only when pullToRefresh is set to true.
-        /// &#10;
-        /// &#10;style — String 
-        /// &#10;The style of the control. Can be either empty string(""), or inset.
+        /// &#10;style — String (default: "")
+        /// &#10;The style of the widget. Can be either empty string(""), or inset.
         /// &#10;
         /// &#10;template — String|Function (default: "#:data#")
         /// &#10;The item template.
         /// &#10;
-        /// &#10;type — String 
+        /// &#10;type — String (default: "flat")
         /// &#10;The type of the control. Can be either flat (default) or group. Determined automatically in databound mode.
         /// &#10;
         /// &#10;filterable — Boolean (default: false)
@@ -2430,7 +2547,7 @@ intellisense.annotate(instance, {
         /// Navigate the local or remote view.
         /// </summary>
         /// <param name="url" type="String" >The id or URL of the view.</param>
-        /// <param name="transition" type="String" >The transition to apply when navigating. See View Transitions section for more information.</param>
+        /// <param name="transition" type="String" >The transition to apply when navigating. See View Transitions for more information.</param>
         /// </signature>
     },
     showLoading: function() {
@@ -2503,6 +2620,9 @@ intellisense.annotate(jQuery.fn, {
         /// Instantiates a kendo.mobile.ui.Pane widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
+        /// &#10;collapsible — Boolean (default: false)
+        /// &#10;Applicable when the pane is inside a SplitView. If set to true, the pane will be hidden when the device is in portrait position. The expandPanes SplitView method displays the hidden panes.The id of the initial mobile View to display.
+        /// &#10;
         /// &#10;initial — String 
         /// &#10;The id of the initial mobile View to display.
         /// &#10;
@@ -2511,6 +2631,9 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;loading — String (default: "Loading...")
         /// &#10;The text displayed in the loading popup. Setting this value to false will disable the loading popup.
+        /// &#10;
+        /// &#10;portraitWidth — Number 
+        /// &#10;Sets the pane width in pixels when the device is in portrait position.
         /// &#10;
         /// &#10;transition — String 
         /// &#10;The default View transition.
@@ -2643,9 +2766,9 @@ intellisense.annotate(instance, {
     content: function(content) {
         /// <signature>
         /// <summary>
-        /// Update the scrollview HTML content.
+        /// Update the ScrollView HTML content.
         /// </summary>
-        /// <param name="content" type="Object" >the new scrollView content.</param>
+        /// <param name="content" type="Object" >The new ScrollView content.</param>
         /// </signature>
     },
     destroy: function() {
@@ -2668,7 +2791,15 @@ intellisense.annotate(instance, {
         /// Scroll to the given page. Pages are zero-based indexed.
         /// </summary>
         /// <param name="page" type="Number" >The page to scroll to.</param>
-        /// <param name="instant" type="Boolean" >If set to true, the scrollview will jump instantly to the given page without any animation effects.</param>
+        /// <param name="instant" type="Boolean" >If set to true, the ScrollView will jump instantly to the given page without any animation effects.</param>
+        /// </signature>
+    },
+    setDataSource: function(dataSource) {
+        /// <signature>
+        /// <summary>
+        /// Sets the DataSource of an existing ScrollView and rebinds it.
+        /// </summary>
+        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
         /// </signature>
     },
 
@@ -2727,18 +2858,18 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;Accepts an object with the following configuration options:
         /// &#10;
         /// &#10;autoBind — Boolean (default: true)
-        /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the data source specified in the configuration.Applicable only in data bound mode.
+        /// &#10;If set to false the widget will not bind to the DataSource during initialization. In this case data binding will occur when the change event of the data source is fired. By default the widget will bind to the DataSource specified in the configuration.Applicable only in data bound mode.
         /// &#10;
         /// &#10;bounceVelocityThreshold — Number (default: 1.6)
         /// &#10;The velocity threshold after which a swipe will result in a bounce effect.
         /// &#10;
         /// &#10;contentHeight — Number|String (default: "auto")
-        /// &#10;The height of the ScrollView content.
+        /// &#10;The height of the ScrollView content. Supports 100% if the ScrollView is embedded in a stretched view and the ScrollView element is an immediate child of the view element.
         /// &#10;
         /// &#10;dataSource — Object 
         /// &#10;Instance of DataSource that the mobile ScrollView will be bound to. If DataSource is set, the widget will operate in data bound mode.
         /// &#10;
-        /// &#10;duration — Number (default: 300)
+        /// &#10;duration — Number (default: 400)
         /// &#10;The milliseconds that take the ScrollView to snap to the current page after released.
         /// &#10;
         /// &#10;emptyTemplate — String (default: "")
@@ -2783,6 +2914,15 @@ var original = kendo.mobile.ui.Scroller;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    animatedScrollTo: function(x,y) {
+        /// <signature>
+        /// <summary>
+        /// Scrolls the scroll container to the specified location with animation. The arguments should be negative numbers.
+        /// </summary>
+        /// <param name="x" type="Number" >The horizontal offset in pixels to scroll to.</param>
+        /// <param name="y" type="Number" >The vertical offset in pixels to scroll to.</param>
+        /// </signature>
+    },
     destroy: function() {
         /// <signature>
         /// <summary>
@@ -2927,13 +3067,11 @@ intellisense.annotate(jQuery.fn, {
 /// &#10;Has effect only when the pullToRefresh option is set to true.
         /// &#10;
         /// &#10;releaseTemplate — String (default: "Release to refresh")
-        /// &#10;The message template displayed when the user pulls the scroller below the
-/// &#10;pullOffset, indicating that pullToRefresh will occur.
+        /// &#10;The message template displayed when the user pulls the scroller below the pullOffset, indicating that pullToRefresh will occur.
 /// &#10;Has effect only when the pullToRefresh option is set to true.
         /// &#10;
         /// &#10;useNative — Boolean (default: false)
-        /// &#10;(available since Q1 2013)
-/// &#10; If set to true, the scroller will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+        /// &#10;If set to true, the scroller will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
 /// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
         /// &#10;
         /// </summary>
@@ -2961,6 +3099,20 @@ intellisense.annotate(instance, {
         /// <signature>
         /// <summary>
         /// Prepares the SplitView for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+        /// </signature>
+    },
+    expandPanes: function() {
+        /// <signature>
+        /// <summary>
+        /// Displays the collapsible panes; has effect only when the device is in portrait orientation.
+        /// </summary>
+        /// </signature>
+    },
+    collapsePanes: function() {
+        /// <signature>
+        /// <summary>
+        /// Collapses back the collapsible panes (displayed previously with expandPanes); has effect only when the device is in portrait orientation.
         /// </summary>
         /// </signature>
     },
@@ -3059,6 +3211,14 @@ intellisense.annotate(instance, {
         /// </summary>
         /// </signature>
     },
+    enable: function(enable) {
+        /// <signature>
+        /// <summary>
+        /// Changes the enabled state of the widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >Whether to enable or disable the widget.</param>
+        /// </signature>
+    },
     toggle: function() {
         /// <signature>
         /// <summary>
@@ -3124,6 +3284,9 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;checked — Boolean (default: false)
         /// &#10;The checked state of the widget.
         /// &#10;
+        /// &#10;enable — Boolean (default: true)
+        /// &#10;If set to false the widget will be disabled and will not allow the user to change its checked state. The widget is enabled by default.
+        /// &#10;
         /// &#10;offLabel — String (default: "OFF")
         /// &#10;The OFF label.
         /// &#10;
@@ -3179,9 +3342,17 @@ intellisense.annotate(instance, {
     switchTo: function(url) {
         /// <signature>
         /// <summary>
-        /// Set the mobile TabStrip active tab to the tab with the specified url. This method doesn't change the current View. To change the View, use Application's navigate method instead.
+        /// Set the mobile TabStrip active tab to the tab with the specified URL. This method doesn't change the current View. To change the View, use Application's navigate method instead.
         /// </summary>
-        /// <param name="url" type="String" >The url of the tab.</param>
+        /// <param name="url" type="Object" >The URL or zero based index of the tab.</param>
+        /// </signature>
+    },
+    switchByFullUrl: function(url) {
+        /// <signature>
+        /// <summary>
+        /// Set the mobile TabStrip active tab to the tab with the specified full URL. This method doesn't change the current View. To change the View, use Application's navigate method instead.
+        /// </summary>
+        /// <param name="url" type="String" >The URL of the tab.</param>
         /// </signature>
     },
     clear: function() {
@@ -3270,6 +3441,13 @@ var original = kendo.mobile.ui.View;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    contentElement: function() {
+        /// <signature>
+        /// <summary>
+        /// Retrieves the current content holder of the View - this is the content element if the View is stretched or the scroll container otherwise.
+        /// </summary>
+        /// </signature>
+    },
     destroy: function() {
         /// <signature>
         /// <summary>
@@ -3277,11 +3455,12 @@ intellisense.annotate(instance, {
         /// </summary>
         /// </signature>
     },
-    contentElement: function() {
+    enable: function(enable) {
         /// <signature>
         /// <summary>
-        /// Retrieves the current content holder of the View - this is the content element if the View is stretched or the scroll container otherwise.
+        /// Enables or disables the user interaction with the view and its contents.
         /// </summary>
+        /// <param name="enable" type="Boolean" >Omitting the parameter or passing true enables the view. Passing false disables the view.</param>
         /// </signature>
     },
 
@@ -3342,7 +3521,7 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;model — String (default: null)
         /// &#10;The MVVM model to bind to. If a string is passed, The view will try to resolve a reference to the view model variable in the global scope.
         /// &#10;
-        /// &#10;reload — Boolean (default: null)
+        /// &#10;reload — Boolean (default: false)
         /// &#10;Applicable to remote views only. If set to true, the remote view contents will be reloaded from the server (using Ajax) each time the view is navigated to.
         /// &#10;
         /// &#10;stretch — Boolean (default: false)
@@ -3350,12 +3529,11 @@ intellisense.annotate(jQuery.fn, {
 /// &#10;Useful if the view contains an image or a map.
         /// &#10;
         /// &#10;title — String 
-        /// &#10;The text to display in the navbar title (if present) and the browser title.
+        /// &#10;The text to display in the NavBar title (if present) and the browser title.
         /// &#10;
         /// &#10;useNativeScrolling — Boolean (default: false)
-        /// &#10;(available since Q1 2013)
-/// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
-/// &#10;Native scrolling is only enabled on platforms that support it: iOS > 4, Android > 2, WP8. BlackBerry devices do support it, but the native scroller is flaky.
+        /// &#10;If set to true, the view will use the native scrolling available in the current platform. This should help with form issues on some platforms (namely Android and WP8).
+/// &#10;Native scrolling is only enabled on platforms that support it: iOS > 5+, Android > 3+, WP8. BlackBerry devices do support it, but the native scroller is flaky.
         /// &#10;
         /// &#10;zoom — Boolean (default: false)
         /// &#10;If set to true, the user can zoom in/out the contents of the view using the pinch/zoom gesture.
@@ -3384,7 +3562,7 @@ intellisense.annotate(instance, {
     view: function() {
         /// <signature>
         /// <summary>
-        /// Returns the kendo.mobile.ui.View which contains the widget.
+        /// Returns the kendo.mobile.ui.View which contains the widget. If the widget is contained in a splitview, modalview, or drawer, the respective widget instance is returned.
         /// </summary>
         /// </signature>
     },
@@ -3464,6 +3642,13 @@ var original = kendo.ui.Draggable;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    cancelHold: function() {
+        /// <signature>
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -3534,6 +3719,9 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;hint — Function 
         /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+        /// &#10;
+        /// &#10;holdToDrag — Boolean (default: false)
+        /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -3700,8 +3888,8 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;group — String (default: "default")
         /// &#10;Used to group sets of draggable and drop targets. A draggable with the same group value as a drop target will be accepted by the drop target.
         /// &#10;
-        /// &#10;filter — String (default: ")
-        /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea.
+        /// &#10;filter — String (default: null)
+        /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea. Specifying the filter is mandatory.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -3785,9 +3973,6 @@ intellisense.annotate(jQuery.fn, {
         /// <summary>
         /// Instantiates a kendo.ui.Touch widget based the DOM elements that match the selector.
         /// &#10;Accepts an object with the following configuration options:
-        /// &#10;
-        /// &#10;global — Boolean (default: false)
-        /// &#10;If set to true, the document element will be used a s surface for the user drags.
         /// &#10;
         /// &#10;multiTouch — Boolean (default: false)
         /// &#10;If set to true, the widget will capture and trigger the gesturestart, gesturechange, and gestureend events when the user touches the element with two fingers.
@@ -3952,8 +4137,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
-/// kendo.Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
         /// </signature>
     },
@@ -3967,7 +4151,7 @@ intellisense.annotate(instance, {
     one: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. The handler is executed only once. More info can be found in the one section of the
+        /// Attaches a handler to an event. The handler is executed only once. Examples and more info can be found in the one section of the
 /// kendo.Observable API reference.
         /// </summary>
         /// </signature>

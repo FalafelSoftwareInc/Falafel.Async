@@ -157,6 +157,68 @@ $.fn.kendoClass = function(options) {
 };
 
 
+kendo.Color = function() { };
+
+kendo.Color.prototype = {
+
+
+
+
+    diff: function() {
+        /// <summary>
+        /// Computes the relative luminance between two colors.
+        /// </summary>
+        /// <returns type="Number">The relative luminance.</returns>
+
+    },
+
+
+    equals: function() {
+        /// <summary>
+        /// Compares two color objects for equality.
+        /// </summary>
+        /// <returns type="Boolean">returns true if the two colors are the same. Otherwise, false</returns>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoColor = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.Color widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.Color">The kendo.Color instance (if present).</returns>
+};
+
+$.fn.kendoColor = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.Color widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
 kendo.Layout = function() { };
 
 kendo.Layout.prototype = {
@@ -253,7 +315,7 @@ kendo.Observable.prototype = {
         /// Remove a previously attached event handler.
         /// </summary>
         /// <param name="eventName" type="String" >The name of the event. If not specified all handlers of all events will be removed.</param>
-        /// <param name="handler" type="Function" >The handler which should no loger be executed. If not specified all handlers listening to that event will be removed.</param>
+        /// <param name="handler" type="Function" >The handler which should no longer be executed. If not specified all handlers listening to that event will be removed.</param>
 
     },
 
@@ -297,18 +359,10 @@ kendo.Router.prototype = {
     },
 
 
-    Example: function() {
-        /// <summary>
-        /// 
-        /// </summary>
-
-    },
-
-
     route: function(route,callback) {
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -391,7 +445,7 @@ kendo.View.prototype = {
         /// Renders the view contents. Accepts a jQuery selector (or jQuery object) to which the contents will be appended.
 /// Alternatively, the render method can be called without parameters in order to retrieve the View element for manual insertion/further manipulation.
         /// </summary>
-        /// <param name="container" type="jQuery" >(Optional) the element in which the view element will be appended.</param>
+        /// <param name="container" type="jQuery" >(optional) the element in which the view element will be appended.</param>
         /// <returns type="jQuery">the view element.</returns>
 
     },
@@ -445,6 +499,14 @@ kendo.data.Binder = function() { };
 kendo.data.Binder.prototype = {
 
 
+
+
+    refresh: function() {
+        /// <summary>
+        /// Invoked by the Kendo UI MVVM framework when the bound view model value is changed. The binder should update the UI (HTML element or Kendo UI widget) to reflect the view model change.
+        /// </summary>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -779,7 +841,7 @@ $.fn.kendoDataSource = function(options) {
     /// &#10;The number of data items per page.
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;The configuration used to parse the remote sevice response.
+    /// &#10;The configuration used to parse the remote service response.
     /// &#10;
     /// &#10;serverAggregates — Boolean (default: false)
     /// &#10;If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
@@ -851,7 +913,7 @@ $.fn.kendoHierarchicalDataSource = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;The schema configuration of the HierarchicalDataSource.
+    /// &#10;The schema configuration. See the DataSource.schema configuration for all available options.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -869,7 +931,7 @@ kendo.data.Model.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
 
     },
@@ -880,13 +942,14 @@ kendo.data.Model.prototype = {
         /// Determines if the specified field is editable or not.
         /// </summary>
         /// <param name="field" type="String" >The field to check.</param>
+        /// <returns type="Boolean">true if the field is editable; false otherwise.</returns>
 
     },
 
 
     get: function() {
         /// <summary>
-        /// Gets the value of the specified field. Inherited from ObservableObject. More info can be found in the get section of the
+        /// Gets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the get section of the
 /// ObservableObject API reference.
         /// </summary>
 
@@ -896,15 +959,16 @@ kendo.data.Model.prototype = {
     isNew: function() {
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
+        /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
 
     },
 
 
     set: function() {
         /// <summary>
-        /// Sets the value of the specified field. Inherited from ObservableObject. More info can be found in the set section of the
+        /// Sets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the set section of the
 /// ObservableObject API reference.
         /// </summary>
 
@@ -913,7 +977,7 @@ kendo.data.Model.prototype = {
 
     toJSON: function() {
         /// <summary>
-        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from ObservableObject. More info can be found in the toJSON section of the
+        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the toJSON section of the
 /// ObservableObject API reference.
         /// </summary>
 
@@ -959,7 +1023,7 @@ kendo.data.Node.prototype = {
 
     append: function(model) {
         /// <summary>
-        /// Appends a new item to the children datasource, and initializes the datasource, if necessary.
+        /// Appends a new item to the children data source, and initializes it if necessary.
         /// </summary>
         /// <param name="model" type="Object" >The data for the new item</param>
 
@@ -968,15 +1032,16 @@ kendo.data.Node.prototype = {
 
     level: function() {
         /// <summary>
-        /// Gets the current nesting level of the Node within the HierarchicalDataSource.
+        /// Gets the current nesting level of the node within the data source.
         /// </summary>
+        /// <returns type="Number">the zero based level of the node.</returns>
 
     },
 
 
     load: function() {
         /// <summary>
-        /// Loads the child nodes in the child datasource, supplying the id of the Node to the request.
+        /// Loads the child nodes in the child data source, supplying the id of the Node to the request.
         /// </summary>
 
     },
@@ -992,8 +1057,9 @@ kendo.data.Node.prototype = {
 
     parentNode: function() {
         /// <summary>
-        /// Gets the parent node of the Node, if any.
+        /// Gets the parent node.
         /// </summary>
+        /// <returns type="kendo.data.Node">the parent of the node; null if the node is a root node or doesn't have a parent.</returns>
 
     },
 
@@ -1064,28 +1130,28 @@ kendo.data.ObservableArray.prototype = {
 
     parent: function() {
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableArray is not nested
-/// returns undefined.
+        /// Gets the parent of the array if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the array; undefined if the array is not nested and doesn't have a parent.</returns>
 
     },
 
 
     pop: function() {
         /// <summary>
-        /// Removes the last item from an array and returns that item. Equivalent of
-/// Array.prototype.pop.
+        /// Removes the last item from an array and returns that item. Equivalent of Array.prototype.pop.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
 
     },
 
 
     push: function() {
         /// <summary>
-        /// Appends the given items to the array and returns the new length of the array. Equivalent of
-/// Array.prototype.push.
+        /// Appends the given items to the array and returns the new length of the array. Equivalent of Array.prototype.push.
 /// The new items are wrapped as ObservableObject if they are complex objects.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
 
     },
 
@@ -1095,7 +1161,6 @@ kendo.data.ObservableArray.prototype = {
         /// Returns a one-level deep copy of a portion of an array. Equivalent of
 /// Array.prototype.slice.
 /// The result of the slice method is not an instance of ObvservableArray. It is a regular JavaScript Array object.
-/// > Important: The slice method does not modify the original ObservableArray.
         /// </summary>
         /// <param name="begin" type="Number" >Zero-based index at which to begin extraction.</param>
         /// <param name="end" type="Number" >Zero-based index at which to end extraction. If end is omitted, slice extracts to the end of the sequence.</param>
@@ -1109,17 +1174,17 @@ kendo.data.ObservableArray.prototype = {
 /// Array.prototype.splice
         /// </summary>
         /// <param name="index" type="Number" >Index at which to start changing the array. If negative, will begin that many elements from the end.</param>
-        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If howMany is 0, no items are removed. In this case, you should specify at least one new item.</param>
-        /// <returns type="Array">An Array containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
+        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If set to 0, no items are removed. In this case, you should specify at least one new item.</param>
+        /// <returns type="Array">containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
 
     },
 
 
     shift: function() {
         /// <summary>
-        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of
-/// Array.prototype.shift.
+        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of Array.prototype.shift.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
 
     },
 
@@ -1134,9 +1199,9 @@ kendo.data.ObservableArray.prototype = {
 
     unshift: function() {
         /// <summary>
-        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.
-/// Equivalent of Array.prototype.unshift.
+        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.  Equivalent of Array.prototype.unshift.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
 
     },
 
@@ -1180,7 +1245,7 @@ kendo.data.ObservableObject.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the
 /// kendo.Observable API reference.
         /// </summary>
 
@@ -1192,16 +1257,16 @@ kendo.data.ObservableObject.prototype = {
         /// Gets the value of the specified field.
         /// </summary>
         /// <param name="name" type="String" >The name of the field whose value is going to be returned.</param>
-        /// <returns type="Object">The value of the specified field.</returns>
+        /// <returns type="Object">the value of the specified field.</returns>
 
     },
 
 
     parent: function() {
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableObject is not
-/// nested returns undefined;
+        /// Gets the parent of the object if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the object; undefined if the object is not nested and doesn't have a parent.</returns>
 
     },
 
@@ -1220,7 +1285,7 @@ kendo.data.ObservableObject.prototype = {
         /// <summary>
         /// Creates a plain JavaScript object which contains all fields of the ObservableObject.
         /// </summary>
-        /// <returns type="Object">An Object which contains only the fields of the ObservableObject.</returns>
+        /// <returns type="Object">which contains only the fields of the ObservableObject.</returns>
 
     },
 
@@ -1260,6 +1325,17 @@ kendo.data.SchedulerDataSource = function() { };
 kendo.data.SchedulerDataSource.prototype = {
 
 
+
+
+    expand: function(start,end) {
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -1308,6 +1384,37 @@ kendo.data.SchedulerEvent.prototype = {
 
 
 
+
+    clone: function(options) {
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+
+    },
+
+
+    duration: function() {
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+
+    },
+
+
+    expand: function(start,end,timeZoneId) {
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1343,28 +1450,28 @@ $.fn.kendoSchedulerEvent = function(options) {
     /// &#10;The optional event description.
     /// &#10;
     /// &#10;end — Date 
-    /// &#10;The date at which the scheduler event ends.
+    /// &#10;The date at which the scheduler event ends. The end date is mandatory.
     /// &#10;
     /// &#10;endTimezone — String (default: undefined)
     /// &#10;The timezone of the end date. If not specified the timezone will be used.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
     /// &#10;
     /// &#10;id — String|Number|Object 
-    /// &#10;The unique identifier of the event.
+    /// &#10;The mandatory unique identifier of the event.
     /// &#10;
     /// &#10;isAllDay — Boolean (default: false)
-    /// &#10;If set to true the event is "all day".
+    /// &#10;If set to true the event is "all day". By default events are not all day.
     /// &#10;
     /// &#10;recurrenceException — String (default: undefined)
-    /// &#10;The recurrence exceptions. A list of colon separated dates formatted using the yyyyMMddTHHmmssZ format string.
+    /// &#10;The recurrence exceptions. A list of semicolon separated dates formatted using the yyyyMMddTHHmmssZ format string.
     /// &#10;
     /// &#10;recurrenceId — String|Number|Object (default: undefined)
-    /// &#10;The id of the recurrence parent event.
+    /// &#10;The id of the recurrence parent event. Required for events that are recurrence exceptions.
     /// &#10;
     /// &#10;recurrenceRule — String (default: undefined)
-    /// &#10;The recurrence rule describing the recurring pattern of the event.
+    /// &#10;The recurrence rule describing the recurring pattern of the event. The format follows the iCal specification.
     /// &#10;
     /// &#10;start — Date 
-    /// &#10;The date at which the scheduler event starts.
+    /// &#10;The date at which the scheduler event starts. The start date is mandatory.
     /// &#10;
     /// &#10;startTimezone — String (default: undefined)
     /// &#10;The timezone of the start date. If not specified the timezone will be used.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
@@ -1388,7 +1495,7 @@ kendo.mobile.ui.Widget.prototype = {
 
     view: function() {
         /// <summary>
-        /// Returns the kendo.mobile.ui.View which contains the widget.
+        /// Returns the kendo.mobile.ui.View which contains the widget. If the widget is contained in a splitview, modalview, or drawer, the respective widget instance is returned.
         /// </summary>
 
     },
@@ -1477,19 +1584,19 @@ kendo.ui.AutoComplete.prototype = {
     },
 
 
+    focus: function() {
+        /// <summary>
+        /// Focuses the widget.
+        /// </summary>
+
+    },
+
+
     readonly: function(readonly) {
         /// <summary>
         /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
         /// <param name="readonly" type="Boolean" >If set to true the widget will not allow user input. If set to false the widget will allow user input.</param>
-
-    },
-
-
-    focus: function() {
-        /// <summary>
-        /// Focuses the widget.
-        /// </summary>
 
     },
 
@@ -1619,8 +1726,82 @@ $.fn.kendoAutoComplete = function(options) {
     /// &#10;suggest — Boolean (default: false)
     /// &#10;If set to true the widget will automatically use the first suggestion as its value.
     /// &#10;
+    /// &#10;headerTemplate — String|Function 
+    /// &#10;Specifies a static HTML content, which will be rendered as a header of the popup element.
+    /// &#10;
     /// &#10;template — String|Function 
     /// &#10;The template used to render the suggestions. By default the widget displays only the text of the suggestion (configured via dataTextField).
+    /// &#10;
+    /// &#10;valuePrimitive — Boolean (default: false)
+    /// &#10;Spcifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item text field. If set to false, the View-Model field will be updated with the selected item.
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.ui.Button = function() { };
+
+kendo.ui.Button.prototype = {
+
+
+
+
+    enable: function(toggle) {
+        /// <summary>
+        /// Enables or disables the Button.
+        /// </summary>
+        /// <param name="toggle" type="Boolean" >Indicates whether the Button should be enabled or disabled. Truthy and falsy arguments are accepted. If no argument is supplied, the Button will assume true and will be enabled.</param>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoButton = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.ui.Button widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.ui.Button">The kendo.ui.Button instance (if present).</returns>
+};
+
+$.fn.kendoButton = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.ui.Button widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;enable — Boolean (default: true)
+    /// &#10;Indicates whether the Button should be enabled or disabled. By default, it is enabled, unless a disabled="disabled" attribute is detected.
+    /// &#10;
+    /// &#10;icon — String 
+    /// &#10;Defines a name of an existing icon in the Kendo UI theme sprite. The icon will be applied as background image of a span element inside the Button.
+/// &#10;The span element can be added automatically by the widget, or an existing element can be used, if it has a k-icon CSS class applied.
+/// &#10;For a list of available icon names, please refer to the Icons demo.
+    /// &#10;
+    /// &#10;imageUrl — String 
+    /// &#10;Defines a URL, which will be used for an img element inside the Button. The URL can be relative or absolute. In case it is relative, it will be evaluated with relation to the web page URL.The img element can be added automatically by the widget, or an existing element can be used, if it has a k-image CSS class applied.
+    /// &#10;
+    /// &#10;spriteCssClass — String 
+    /// &#10;Defines a CSS class (or multiple classes separated by spaces), which will be used for applying a background image to a span element inside the Button.
+/// &#10;In case you want to use an icon from the Kendo UI theme sprite background image, it is easier to use the icon property.The span element can be added automatically by the widget, or an existing element can be used, if it has a k-sprite CSS class applied.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -1634,6 +1815,15 @@ kendo.ui.Calendar = function() { };
 kendo.ui.Calendar.prototype = {
 
 
+
+
+    current: function() {
+        /// <summary>
+        /// Gets currently focused date.
+        /// </summary>
+        /// <returns type="Date">The current focused date shown in the calendar.</returns>
+
+    },
 
 
     destroy: function() {
@@ -1666,26 +1856,26 @@ kendo.ui.Calendar.prototype = {
 
     navigate: function(value,view) {
         /// <summary>
-        /// Navigates to view
+        /// Navigates to view.
         /// </summary>
-        /// <param name="value" type="Date" >Desired date</param>
-        /// <param name="view" type="String" >Desired view</param>
+        /// <param name="value" type="Date" >Desired date.</param>
+        /// <param name="view" type="String" >Desired view.</param>
 
     },
 
 
     navigateDown: function(value) {
         /// <summary>
-        /// Navigates to the lower view
+        /// Navigates to the lower view.
         /// </summary>
-        /// <param name="value" type="Date" >Desired date</param>
+        /// <param name="value" type="Date" >Desired date.</param>
 
     },
 
 
     navigateToFuture: function() {
         /// <summary>
-        /// Navigates to the future
+        /// Navigates to the future.
         /// </summary>
 
     },
@@ -1693,7 +1883,7 @@ kendo.ui.Calendar.prototype = {
 
     navigateToPast: function() {
         /// <summary>
-        /// Navigates to the past
+        /// Navigates to the past.
         /// </summary>
 
     },
@@ -1701,7 +1891,7 @@ kendo.ui.Calendar.prototype = {
 
     navigateUp: function() {
         /// <summary>
-        /// Navigates to the upper view
+        /// Navigates to the upper view.
         /// </summary>
 
     },
@@ -1713,15 +1903,6 @@ kendo.ui.Calendar.prototype = {
         /// </summary>
         /// <param name="value" type="Object" >The date to set.</param>
         /// <returns type="Date">The value of the calendar.</returns>
-
-    },
-
-
-    current: function() {
-        /// <summary>
-        /// Gets currently focused date.
-        /// </summary>
-        /// <returns type="Date">The current focused date shown in the calendar.</returns>
 
     },
 
@@ -1772,10 +1953,11 @@ $.fn.kendoCalendar = function(options) {
     /// &#10;Specifies a list of dates, which will be passed to the month template.
     /// &#10;
     /// &#10;depth — String 
-    /// &#10;Specifies the navigation depth.
+    /// &#10;Specifies the navigation depth. The following
+/// &#10;settings are available for the depth value:
     /// &#10;
-    /// &#10;footer — String 
-    /// &#10;Template to be used for rendering the footer. If false, the footer will not be rendered.
+    /// &#10;footer — String|Function 
+    /// &#10;The template which renders the footer. If false, the footer will not be rendered.
     /// &#10;
     /// &#10;format — String (default: "MM/dd/yyyy")
     /// &#10;Specifies the format, which is used to parse value set with value() method.
@@ -1787,10 +1969,11 @@ $.fn.kendoCalendar = function(options) {
     /// &#10;Specifies the minimum date, which the calendar can show.
     /// &#10;
     /// &#10;month — Object 
-    /// &#10;Templates for the cells rendered in the "month" view.
+    /// &#10;Templates for the cells rendered in "month" view.
     /// &#10;
     /// &#10;start — String (default: "month")
     /// &#10;Specifies the start view.
+/// &#10;The following settings are available for the start value:
     /// &#10;
     /// &#10;value — Date (default: null)
     /// &#10;Specifies the selected date.
@@ -1811,11 +1994,7 @@ kendo.ui.ColorPalette.prototype = {
 
     value: function(color) {
         /// <summary>
-        /// Get or set the selected color. If no argument is given, this returns the
-/// currently selected color as a string in format #FFFFFF when the opacity
-/// option is off, or rgba(255, 255, 255, 1) when opacity is requested.If one argument is given, it selects the new color and updates the UI.  The
-/// argument can be a string in hex, rgb or rgba format, or a Color object.
-/// This does not trigger the "change" event.
+        /// Get or set the selected color. If no argument is given, this returns the currently selected color as a string in format #FFFFFF.If one argument is given, it selects the new color and updates the UI. The argument can be a string in hex, rgb or rgba format, or a kendo.Color object object.
         /// </summary>
         /// <param name="color" type="String" ></param>
         /// <returns type="String">the string representation of the current color.</returns>
@@ -1823,19 +2002,21 @@ kendo.ui.ColorPalette.prototype = {
     },
 
 
-    color: function() {
+    color: function(color) {
         /// <summary>
-        /// Like value(), but it returns a Color object.
+        /// Get or set the selected color. If no argument is given, this returns the currently selected color as a kendo.Color object.
         /// </summary>
+        /// <param name="color" type="kendo.Color" >The color that should be set as the current value</param>
+        /// <returns type="kendo.Color">the current value</returns>
 
     },
 
 
-    enable: function() {
+    enable: function(enable) {
         /// <summary>
-        /// Enables or disables the widget.  It will enable it with no arguments
-/// or with a true argument, or disable with a false argument.
+        /// Enables or disables the widget.
         /// </summary>
+        /// <param name="enable" type="Boolean" >Whether the widget should be enabled (true) or disabled (false). If not specified, the method will enable the widget.</param>
 
     },
 
@@ -1871,15 +2052,11 @@ $.fn.kendoColorPalette = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;palette — String|Array (default: "basic")
-    /// &#10;Specifies the color palette to display.  It can be a string with
-/// &#10;comma-separated colors in hex representation, an array of Color
-/// &#10;objects or of strings that parseColor understands.  As a shortcut,
-/// &#10;you can pass "basic" to get the simple palette (this is the default)
-/// &#10;or "websafe" to get the Web-safe palette.
+    /// &#10;Specifies the color palette to display.
+/// &#10;It can be a string with comma-separated colors in hex representation, an array of kendo.Color object objects or of strings that parseColor understands.  As a shortcut, you can pass "basic" to get the simple palette (this is the default) or "websafe" to get the Web-safe palette.
     /// &#10;
     /// &#10;columns — Number (default: 10)
-    /// &#10;The number of columns to display.  When you pass "websafe" this will
-/// &#10;automatically default to 18.
+    /// &#10;The number of columns to display.  When you use the "websafe" palette, this will automatically default to 18.
     /// &#10;
     /// &#10;tileSize — Number (default: 14)
     /// &#10;The size of a color cell.
@@ -1942,21 +2119,21 @@ kendo.ui.ColorPicker.prototype = {
     },
 
 
-    color: function() {
+    color: function(color) {
         /// <summary>
-        /// Like value(), but it returns a Color object.
+        /// Get or set the selected color. If no argument is given, this returns the currently selected color as a kendo.Color object.
         /// </summary>
+        /// <param name="color" type="kendo.Color" >The color that should be set as the current value</param>
+        /// <returns type="kendo.Color">the current value</returns>
 
     },
 
 
-    enable: function(color) {
+    enable: function(enable) {
         /// <summary>
-        /// Set the widget's enabled state.  Called with no arguments, this
-/// method will ensure that the widget gets enabled.  Pass a false
-/// argument to disable it.
+        /// Enables or disables the widget.
         /// </summary>
-        /// <param name="color" type="String" >The color should be either a Color object or a string that parseColor can understand (the CSS hex, rgb or rgba notations).</param>
+        /// <param name="enable" type="Boolean" >Whether the widget should be enabled (true) or disabled (false). If not specified, the method will enable the widget.</param>
 
     },
 
@@ -1992,15 +2169,12 @@ $.fn.kendoColorPicker = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;buttons — Boolean (default: true)
-    /// &#10;Applicable only for the HSV selector (that is, when pallete is
-/// &#10;null).  This specifies whether the "Apply" / "Cancel" buttons are to
-/// &#10;be displayed in the drop-down HSV picker.
+    /// &#10;Specifies whether the widget should display the Apply / Cancel buttons.Applicable only for the HSV selector, when a pallete is not specified.
     /// &#10;
     /// &#10;columns — Number 
-    /// &#10;The number of columns to show in the simple color dropdown.  For the
-/// &#10;"basic" and "websafe" palettes this is automatically initialized; if
-/// &#10;you pass a custom palette then you can set this to some value that
-/// &#10;makes sense for your colors.
+    /// &#10;The number of columns to show in the color dropdown when a pallete is specified.
+/// &#10;This is automatically initialized for the "basic" and "websafe" palettes.
+/// &#10;If you use a custom palette then you can set this to some value that makes sense for your colors.
     /// &#10;
     /// &#10;tileSize — Number (default: 14)
     /// &#10;The size of a color cell.
@@ -2013,27 +2187,23 @@ $.fn.kendoColorPicker = function(options) {
     /// &#10;
     /// &#10;palette — String|Array (default: null)
     /// &#10;When a non-null palette argument is supplied, the drop-down will be
-/// &#10;a simple color picker.  The following are supported:If palette is missing or null, the widget will display the HSV
+/// &#10;a simple color picker that lists the colors. The following are supported:If palette is missing or null, the widget will display the HSV
 /// &#10;selector.
     /// &#10;
     /// &#10;opacity — Boolean (default: false)
-    /// &#10;Only for the HSV selector.  If true, the widget will display the
-/// &#10;opacity slider.  Note that currently in HTML5 the  does not support opacity.
+    /// &#10;Only for the HSV selector.  If true, the widget will display the opacity slider.
+/// &#10;Note that currently in HTML5 the  does not support opacity.
     /// &#10;
     /// &#10;preview — Boolean (default: true)
-    /// &#10;Only for the HSV selector.  Displays the color preview element, along
-/// &#10;with an input field where the end user can paste a color in a
-/// &#10;CSS-supported notation.
+    /// &#10;Only applicable for the HSV selector.Displays the color preview element, along with an input field where the end user can paste a color in a CSS-supported notation.
     /// &#10;
     /// &#10;toolIcon — String (default: null)
     /// &#10;A CSS class name to display an icon in the color picker button.  If
 /// &#10;specified, the HTML for the element will look like this:
     /// &#10;
     /// &#10;value — String (default: null)
-    /// &#10;The initially selected color.  This can be a string supported by
-/// &#10;parseColor or a Color object.  Note that when initializing the
-/// &#10;widget from an  element, the initial color will be decided by the
-/// &#10;field instead.
+    /// &#10;The initially selected color.
+/// &#10;Note that when initializing the widget from an  element, the initial color will be decided by the field instead.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2051,7 +2221,7 @@ kendo.ui.ComboBox.prototype = {
 
     close: function() {
         /// <summary>
-        /// Closes the drop-down list.
+        /// Closes the widget popup.
         /// </summary>
 
     },
@@ -2059,9 +2229,9 @@ kendo.ui.ComboBox.prototype = {
 
     dataItem: function(index) {
         /// <summary>
-        /// Returns the raw data record at the specified index. If the index is not specified, the selected index will be used.
+        /// Returns the data item at the specified index. If the index is not specified, the selected index will be used.
         /// </summary>
-        /// <param name="index" type="Number" >The zero-based index of the data record</param>
+        /// <param name="index" type="Number" >The zero-based index of the data record.</param>
         /// <returns type="Object">The raw data record. Returns undefined if no data.</returns>
 
     },
@@ -2077,18 +2247,18 @@ kendo.ui.ComboBox.prototype = {
 
     enable: function(enable) {
         /// <summary>
-        /// Enables/disables the combobox widget
+        /// Enables or disables the widget.
         /// </summary>
-        /// <param name="enable" type="Boolean" >Desired state</param>
+        /// <param name="enable" type="Boolean" >If set to true the widget will be enabled. If set to false the widget will be disabled.</param>
 
     },
 
 
     readonly: function(readonly) {
         /// <summary>
-        /// Controls whether the widget is editable or readonly.
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
-        /// <param name="readonly" type="Boolean" >The argument, which defines whether the combobox should be readonly or editable.</param>
+        /// <param name="readonly" type="Boolean" >If set to true the widget will not allow user input. If set to false the widget will allow user input.</param>
 
     },
 
@@ -2103,7 +2273,7 @@ kendo.ui.ComboBox.prototype = {
 
     open: function() {
         /// <summary>
-        /// Opens the drop-down list.
+        /// Opens the popup.
         /// </summary>
 
     },
@@ -2111,7 +2281,7 @@ kendo.ui.ComboBox.prototype = {
 
     refresh: function() {
         /// <summary>
-        /// Re-render the items of the drop-down list.
+        /// Refresh the popup by rendering all items again.
         /// </summary>
 
     },
@@ -2119,7 +2289,7 @@ kendo.ui.ComboBox.prototype = {
 
     search: function(word) {
         /// <summary>
-        /// Filters dataSource using the provided parameter and rebinds drop-down list.
+        /// Searches the data source for the provided value and displays any matches as suggestions.
         /// </summary>
         /// <param name="word" type="String" >The filter value.</param>
 
@@ -2128,9 +2298,9 @@ kendo.ui.ComboBox.prototype = {
 
     select: function(li) {
         /// <summary>
-        /// Selects a dropdown item and sets the value and the text of the combobox, or retrieves the selected item index.
+        /// Selects the item provided as an argument and updates the value and text of the widget.
         /// </summary>
-        /// <param name="li" type="Object" >LI element or index of the item or predicate function, which defines the item that should be selected.</param>
+        /// <param name="li" type="Object" >A string, DOM element or jQuery object which represents the item to be selected. A string is treated as a jQuery selector. A number representing the index of the item or function predicate which returns the correct data item.</param>
         /// <returns type="Number">The index of the selected item, if called with no parameters. If a custom value is entered, the returned selected index is -1. If called with a parameter as a setter.</returns>
 
     },
@@ -2147,7 +2317,7 @@ kendo.ui.ComboBox.prototype = {
 
     suggest: function(value) {
         /// <summary>
-        /// Forces a suggestion onto the text of the ComboBox.
+        /// Sets the value of the widget to the specified argument and visually selects the text.
         /// </summary>
         /// <param name="value" type="String" >Characters to force a suggestion.</param>
 
@@ -2156,7 +2326,8 @@ kendo.ui.ComboBox.prototype = {
 
     text: function(text) {
         /// <summary>
-        /// Gets/Sets the text of the ComboBox.
+        /// Gets or sets the text of the ComboBox. Widget will select the item with same text. If
+/// there are no matches then the text will be considered as a custom value of the widget.
         /// </summary>
         /// <param name="text" type="String" >The text to set.</param>
         /// <returns type="String">The text of the combobox.</returns>
@@ -2166,7 +2337,7 @@ kendo.ui.ComboBox.prototype = {
 
     toggle: function(toggle) {
         /// <summary>
-        /// Toggles the drop-down list between opened and closed state.
+        /// Opens or closes the widget popup.
         /// </summary>
         /// <param name="toggle" type="Boolean" >Defines the whether to open/close the drop-down list.</param>
 
@@ -2175,7 +2346,7 @@ kendo.ui.ComboBox.prototype = {
 
     value: function(value) {
         /// <summary>
-        /// Gets/Sets the value of the combobox. If the value is undefined, text of the data item will be used.
+        /// Gets or sets the value of the combobox.
         /// </summary>
         /// <param name="value" type="String" >The value to set.</param>
         /// <returns type="String">The value of the combobox.</returns>
@@ -2214,61 +2385,74 @@ $.fn.kendoComboBox = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;Animations to be used for opening/closing the popup. Setting to false will turn off the animation.
+    /// &#10;Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
-    /// &#10;Controls whether to bind the widget to the DataSource on initialization.
+    /// &#10;Controls whether to bind the widget to the data source on initialization.
     /// &#10;
     /// &#10;cascadeFrom — String 
-    /// &#10;Use it to set the Id of the parent DropDownList.
+    /// &#10;Use it to set the Id of the parent ComboBox widget.
+/// &#10;Help topic showing how cascading functionality works
     /// &#10;
-    /// &#10;dataSource — Object 
-    /// &#10;A local JavaScript object or instance of DataSource or the data that the ComboBox will be bound to.
+    /// &#10;cascadeFromField — String 
+    /// &#10;Defines the field to be used to filter the data source. If not defiend the parent's dataValueField option will be used.
+/// &#10;Help topic showing how cascading functionality works
+    /// &#10;
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;dataTextField — String (default: "")
-    /// &#10;Sets the field of the data item that provides the text content of the list items.
+    /// &#10;The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
     /// &#10;
     /// &#10;dataValueField — String (default: "")
-    /// &#10;Sets the field of the data item that provides the value content of the list items.
+    /// &#10;The field of the data item that provides the value of the widget.
     /// &#10;
     /// &#10;delay — Number (default: 200)
-    /// &#10;Specifies the delay in ms after which the ComboBox will start filtering dataSource.
+    /// &#10;The delay in milliseconds between a keystroke and when the widget displays the popup.
     /// &#10;
     /// &#10;enable — Boolean (default: true)
-    /// &#10;Controls whether the ComboBox should be initially enabled.
+    /// &#10;If set to false the widget will be disabled and will not allow user input. The widget is enabled by default and allows user input.
     /// &#10;
     /// &#10;filter — String (default: "none")
-    /// &#10;Defines the type of filtration. If "none" the ComboBox will not filter the items.
+    /// &#10;The filtering method used to determine the suggestions for the current value. Filtration is turned of by default.
+/// &#10;The supported filter values are startswith, endswith and contains.
     /// &#10;
     /// &#10;height — Number (default: 200)
-    /// &#10;Define the height of the drop-down list in pixels.
+    /// &#10;The height of the suggestion popup in pixels. The default value is 200 pixels.
     /// &#10;
     /// &#10;highlightFirst — Boolean (default: true)
-    /// &#10;Controls whether the first item will be automatically highlighted.
+    /// &#10;If set to true the first suggestion will be automatically highlighted.
     /// &#10;
     /// &#10;ignoreCase — String (default: true)
-    /// &#10;Defines whether the filtration should be case sensitive.
+    /// &#10;If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.
     /// &#10;
     /// &#10;index — Number (default: -1)
-    /// &#10;Defines the initial selected item.
+    /// &#10;The index of the initially selected item. The index is 0 based.
     /// &#10;
     /// &#10;minLength — Number (default: 1)
-    /// &#10;Specifies the minimum characters that should be typed before the ComboBox activates
+    /// &#10;The minimum number of characters the user must type before a search is performed. Set to higher value than 1 if the search could match a lot of items.
     /// &#10;
     /// &#10;placeholder — String (default: "")
-    /// &#10;A string that appears in the textbox when the combobox has no value.
+    /// &#10;The hint displayed by the widget when it is empty. Not set by default.
     /// &#10;
     /// &#10;suggest — Boolean (default: false)
-    /// &#10;Controls whether the ComboBox should automatically auto-type the rest of text.
+    /// &#10;If set to true the widget will automatically use the first suggestion as its value.
+    /// &#10;
+    /// &#10;headerTemplate — String|Function 
+    /// &#10;Specifies a static HTML content, which will be rendered as a header of the popup element.
     /// &#10;
     /// &#10;template — String|Function 
-    /// &#10;Template to be used for rendering the items in the list.
+    /// &#10;The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).
     /// &#10;
     /// &#10;text — String (default: "")
-    /// &#10;Define the text of the widget, when the autoBind is set to false.
+    /// &#10;The text of the widget used when the autoBind is set to false.
     /// &#10;
     /// &#10;value — String (default: "")
-    /// &#10;Define the value of the widget
+    /// &#10;The value of the widget.
+    /// &#10;
+    /// &#10;valuePrimitive — Boolean (default: false)
+    /// &#10;Specifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2302,16 +2486,16 @@ kendo.ui.DatePicker.prototype = {
 
     enable: function(enable) {
         /// <summary>
-        /// Enable/Disable the datePicker widget.
+        /// Enable/Disable the DatePicker widget.
         /// </summary>
-        /// <param name="enable" type="Boolean" >The argument, which defines whether to enable/disable the datePicker.</param>
+        /// <param name="enable" type="Boolean" >The argument, which defines whether to enable/disable the DatePicker.</param>
 
     },
 
 
     readonly: function(readonly) {
         /// <summary>
-        /// Controls whether the widget is editable or readonly.
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
         /// <param name="readonly" type="Boolean" >The argument, which defines whether the datepicker should be readonly or editable.</param>
 
@@ -2320,20 +2504,20 @@ kendo.ui.DatePicker.prototype = {
 
     max: function(value) {
         /// <summary>
-        /// Gets/Sets the max value of the datePicker.
+        /// Gets/Sets the max value of the DatePicker.
         /// </summary>
         /// <param name="value" type="Object" >The max date to set.</param>
-        /// <returns type="Date">The max value of the datePicker.</returns>
+        /// <returns type="Date">The max value of the DatePicker.</returns>
 
     },
 
 
     min: function(value) {
         /// <summary>
-        /// Gets/Sets the min value of the datePicker.
+        /// Gets/Sets the min value of the DatePicker.
         /// </summary>
         /// <param name="value" type="Object" >The min date to set.</param>
-        /// <returns type="Date">The min value of the datePicker.</returns>
+        /// <returns type="Date">The min value of the DatePicker.</returns>
 
     },
 
@@ -2348,10 +2532,10 @@ kendo.ui.DatePicker.prototype = {
 
     value: function(value) {
         /// <summary>
-        /// Gets/Sets the value of the datePicker.
+        /// Gets/Sets the value of the DatePicker.
         /// </summary>
         /// <param name="value" type="Object" >The value to set.</param>
-        /// <returns type="Date">The value of the datePicker.</returns>
+        /// <returns type="Date">The value of the DatePicker.</returns>
 
     },
 
@@ -2387,8 +2571,7 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;The animation(s) used for opening and/or closing the pop-up. Setting this value to false
-/// &#10;will disable the animation(s).
+    /// &#10;Configures the opening and closing animations of the calendar popup. Setting the animation option to false will disable the opening and closing animations. As a result the calendar popup will open and close instantly.
     /// &#10;
     /// &#10;ARIATemplate — String (default: "Current focused date is #=kendo.toString(data.current, 'D'#"))
     /// &#10;Specifies a template used to populate value of the aria-label attribute.
@@ -2403,8 +2586,8 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;Specifies the navigation depth. The following
 /// &#10;settings are available for the depth value:
     /// &#10;
-    /// &#10;footer — String 
-    /// &#10;Template to be used for rendering the footer of the calendar.
+    /// &#10;footer — String|Function 
+    /// &#10;The template which renders the footer of the calendar. If false, the footer will not be rendered.
     /// &#10;
     /// &#10;format — String (default: "MM/dd/yyyy")
     /// &#10;Specifies the format, which is used to format the value of the DatePicker displayed in the input. The format also will be used to parse the input.
@@ -2419,7 +2602,8 @@ $.fn.kendoDatePicker = function(options) {
     /// &#10;Templates for the cells rendered in the calendar "month" view.
     /// &#10;
     /// &#10;parseFormats — Array 
-    /// &#10;Specifies the formats, which are used to parse the value set with value() method or by direct input. If not set the value of the format will be used. Note that value of the format option is always used.
+    /// &#10;Specifies a lis of date formats used to parse the value set with value() method or by direct user input. If not set the value of the format will be used.
+/// &#10; Note that format option is always used parsing process.
     /// &#10;
     /// &#10;start — String (default: "month")
     /// &#10;Specifies the start view.
@@ -2470,7 +2654,7 @@ kendo.ui.DateTimePicker.prototype = {
 
     readonly: function(readonly) {
         /// <summary>
-        /// Controls whether the widget is editable or readonly.
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
         /// <param name="readonly" type="Boolean" >The argument, which defines whether the datetimepicker should be readonly or editable.</param>
 
@@ -2556,8 +2740,7 @@ $.fn.kendoDateTimePicker = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;The animation(s) used for opening and/or closing the pop-ups. Setting this value to false
-/// &#10;will disable the animation(s).
+    /// &#10;Configures the opening and closing animations of the popups. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.
     /// &#10;
     /// &#10;ARIATemplate — String (default: "Current focused date is #=kendo.toString(data.current, 'G'#"))
     /// &#10;Specifies a template used to populate value of the aria-label attribute.
@@ -2573,7 +2756,7 @@ $.fn.kendoDateTimePicker = function(options) {
 /// &#10;settings are available for the depth value:
     /// &#10;
     /// &#10;footer — String 
-    /// &#10;Template to be used for rendering the footer of the calendar.
+    /// &#10;The template which renders the footer of the calendar. If false, the footer will not be rendered.
     /// &#10;
     /// &#10;format — String (default: "MM/dd/yyyy h:mm tt")
     /// &#10;Specifies the format, which is used to format the value of the DateTimePicker displayed in the input. The format also will be used to parse the input.
@@ -2595,7 +2778,7 @@ $.fn.kendoDateTimePicker = function(options) {
     /// &#10;
     /// &#10;start — String (default: "month")
     /// &#10;Specifies the start view of the calendar.
-/// &#10;The following settings are available for the start value:
+/// &#10; The following settings are available for the start value:
     /// &#10;
     /// &#10;timeFormat — String (default: "h:mm tt")
     /// &#10;Specifies the format, which is used to format the values in the time drop-down list.
@@ -2615,6 +2798,14 @@ kendo.ui.Draggable = function() { };
 kendo.ui.Draggable.prototype = {
 
 
+
+
+    cancelHold: function() {
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -2663,6 +2854,9 @@ $.fn.kendoDraggable = function(options) {
     /// &#10;hint — Function 
     /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
     /// &#10;
+    /// &#10;holdToDrag — Boolean (default: false)
+    /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
+    /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
     /// The widget configuration options
@@ -2679,7 +2873,7 @@ kendo.ui.DropDownList.prototype = {
 
     close: function() {
         /// <summary>
-        /// Closes the drop-down list.
+        /// Closes the widget popup.
         /// </summary>
 
     },
@@ -2687,9 +2881,9 @@ kendo.ui.DropDownList.prototype = {
 
     dataItem: function(index) {
         /// <summary>
-        /// Returns the raw data record at the specified index. If the index is not specified, the selected index will be used.
+        /// Returns the data item at the specified index. If the index is not specified, the selected index will be used.
         /// </summary>
-        /// <param name="index" type="Number" >The zero-based index of the data record</param>
+        /// <param name="index" type="Number" >The zero-based index of the data record.</param>
         /// <returns type="Object">The raw data record. Returns undefined if no data.</returns>
 
     },
@@ -2699,24 +2893,6 @@ kendo.ui.DropDownList.prototype = {
         /// <summary>
         /// Prepares the DropDownList for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
-
-    },
-
-
-    enable: function(enable) {
-        /// <summary>
-        /// Enables/disables the dropdownlist widget
-        /// </summary>
-        /// <param name="enable" type="Boolean" >Desired state</param>
-
-    },
-
-
-    readonly: function(readonly) {
-        /// <summary>
-        /// Controls whether the widget is editable or readonly.
-        /// </summary>
-        /// <param name="readonly" type="Boolean" >The argument, which defines whether the timepicker should be readonly or editable.</param>
 
     },
 
@@ -2731,15 +2907,33 @@ kendo.ui.DropDownList.prototype = {
 
     open: function() {
         /// <summary>
-        /// Opens the drop-down list.
+        /// Opens the popup.
         /// </summary>
+
+    },
+
+
+    enable: function(enable) {
+        /// <summary>
+        /// Enables or disables the widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >If set to true the widget will be enabled. If set to false the widget will be disabled.</param>
+
+    },
+
+
+    readonly: function(readonly) {
+        /// <summary>
+        /// Controls whether the widget is editable or readonly.
+        /// </summary>
+        /// <param name="readonly" type="Boolean" >The argument, which defines whether the datepicker should be readonly or editable.</param>
 
     },
 
 
     refresh: function() {
         /// <summary>
-        /// Re-render the items in drop-down list.
+        /// Refresh the popup by rendering all items again.
         /// </summary>
 
     },
@@ -2747,7 +2941,7 @@ kendo.ui.DropDownList.prototype = {
 
     search: function(word) {
         /// <summary>
-        /// Selects item, which starts with the provided parameter.
+        /// Selects an item, which starts with the provided value.
         /// </summary>
         /// <param name="word" type="String" >The search value.</param>
 
@@ -2756,10 +2950,10 @@ kendo.ui.DropDownList.prototype = {
 
     select: function(li) {
         /// <summary>
-        /// Selects a dropdown item and sets the value and the text of the dropdownlist, or retrieves the selected item index.
+        /// Gets or sets the selected item. Selects the item provided as an argument and updates the value and text of the widget.
         /// </summary>
-        /// <param name="li" type="Object" >LI element or index of the item or predicate function, which defines the item that should be selected.</param>
-        /// <returns type="Number">The index of the selected item, if called with no parameters. If called with a parameter as a setter.</returns>
+        /// <param name="li" type="Object" >A string, DOM element or jQuery object which represents the item to be selected. A string is treated as a jQuery selector. A number representing the index of the item or function predicate which returns the correct data item.</param>
+        /// <returns type="Number">The index of the selected item, if called with no parameters. If a custom value is entered, the returned selected index is -1. If called with a parameter as a setter.</returns>
 
     },
 
@@ -2775,7 +2969,7 @@ kendo.ui.DropDownList.prototype = {
 
     text: function(text) {
         /// <summary>
-        /// Gets/Sets the text of the dropdownlist.
+        /// Gets or sets the text of the dropdownlist.
         /// </summary>
         /// <param name="text" type="String" >The text to set.</param>
         /// <returns type="String">The text of the dropdownlist.</returns>
@@ -2785,7 +2979,7 @@ kendo.ui.DropDownList.prototype = {
 
     toggle: function(toggle) {
         /// <summary>
-        /// Toggles the drop-down list between opened and closed state.
+        /// Opens or closes the widget popup.
         /// </summary>
         /// <param name="toggle" type="Boolean" >Defines the whether to open/close the drop-down list.</param>
 
@@ -2794,7 +2988,7 @@ kendo.ui.DropDownList.prototype = {
 
     value: function(value) {
         /// <summary>
-        /// Gets/Sets the value of the dropdownlist. The value will not be set if there is no item with such value. If value is undefined, text of the data item is used.
+        /// Gets or sets the value of the dropdownlist. The value will not be set if there is no item with such value. If value is undefined, text of the data item is used.
         /// </summary>
         /// <param name="value" type="String" >The value to set.</param>
         /// <returns type="String">The value of the dropdownlist.</returns>
@@ -2833,50 +3027,65 @@ $.fn.kendoDropDownList = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;Animations to be used for opening/closing the popup. Setting to false will turn of the animation.
+    /// &#10;Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
-    /// &#10;Controls whether to bind the widget on initialization.
+    /// &#10;Controls whether to bind the widget to the data source on initialization.
     /// &#10;
     /// &#10;cascadeFrom — String 
-    /// &#10;Use it to set the Id of the parent DropDownList.
+    /// &#10;Use it to set the Id of the parent dropdownlist widget.
+/// &#10;Help topic showing how cascading functionality works
     /// &#10;
-    /// &#10;dataSource — Object 
-    /// &#10;Instance of DataSource or the data that the DropDownList will be bound to.
+    /// &#10;cascadeFromField — String 
+    /// &#10;Defines the field to be used to filter the data source. If not defiend the parent's dataValueField option will be used.
+/// &#10;Help topic showing how cascading functionality works
+    /// &#10;
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;dataTextField — String (default: "")
-    /// &#10;Sets the field of the data item that provides the text content of the list items.
+    /// &#10;The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
     /// &#10;
     /// &#10;dataValueField — String (default: "")
-    /// &#10;Sets the field of the data item that provides the value content of the list items.
+    /// &#10;The field of the data item that provides the value of the widget.
     /// &#10;
     /// &#10;delay — Number (default: 500)
-    /// &#10;Specifies the delay in ms before the search text typed by the end user is cleared.
+    /// &#10;Specifies the delay in milliseconds before the search-text typed by the end user is cleared.
     /// &#10;
     /// &#10;enable — Boolean (default: true)
-    /// &#10;Controls whether the DropDownList should be initially enabled.
+    /// &#10;If set to false the widget will be disabled and will not allow user input. The widget is enabled by default and allows user input.
     /// &#10;
     /// &#10;height — Number (default: 200)
-    /// &#10;Define the height of the drop-down list in pixels.
+    /// &#10;The height of the suggestion popup in pixels. The default value is 200 pixels.
     /// &#10;
     /// &#10;ignoreCase — String (default: true)
-    /// &#10;Controls whether the search should be case sensitive.
+    /// &#10;If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.
     /// &#10;
     /// &#10;index — Number (default: 0)
-    /// &#10;Defines the initial selected item.
+    /// &#10;The index of the initially selected item. The index is 0 based.
     /// &#10;
     /// &#10;optionLabel — String|Object (default: "")
-    /// &#10;Define the text of the default empty item. If the value is an object, then the widget will use it directly.
-/// &#10; Note that object should have atleast the dataValueField and dataTextField properties. Otherwise, widget will show undefined.
+    /// &#10;Define the text of the default empty item. If the value is an object, then the widget will use it a valid data item.
+/// &#10; Note that the optionLabel will not be available if the widget is empty.
+    /// &#10;
+    /// &#10;headerTemplate — String|Function 
+    /// &#10;Specifies a static HTML content, which will be rendered as a header of the popup element.
     /// &#10;
     /// &#10;template — String|Function 
-    /// &#10;Template to be used for rendering the items in the list.
+    /// &#10;The template used to render the items. By default the widget displays only the text of the data item (configured via dataTextField).
+    /// &#10;
+    /// &#10;valueTemplate — String|Function 
+    /// &#10;The valueTemplate used to render the selected value. By default the widget displays only the text of the data item (configured via dataTextField).
     /// &#10;
     /// &#10;text — String (default: "")
-    /// &#10;Define the text of the widget, when the autoBind is set to false.
+    /// &#10;The text of the widget used when the autoBind is set to false.
     /// &#10;
     /// &#10;value — String (default: "")
-    /// &#10;Define the value of the widget
+    /// &#10;The value of the widget.
+    /// &#10;
+    /// &#10;valuePrimitive — Boolean (default: false)
+    /// &#10;Spcifies the value binding behavior for the widget when the initial model value is null. If set to true, the View-Model field will be updated with the selected item value field. If set to false, the View-Model field will be updated with the selected item.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2980,8 +3189,8 @@ $.fn.kendoDropTargetArea = function(options) {
     /// &#10;group — String (default: "default")
     /// &#10;Used to group sets of draggable and drop targets. A draggable with the same group value as a drop target will be accepted by the drop target.
     /// &#10;
-    /// &#10;filter — String (default: ")
-    /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea.
+    /// &#10;filter — String (default: null)
+    /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea. Specifying the filter is mandatory.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -3001,7 +3210,7 @@ kendo.ui.Editor.prototype = {
         /// <summary>
         /// Creates a W3C-compatible Range object.
         /// </summary>
-        /// <param name="document" type="Document" >The document that the range is associated with. If ommited, the document of the editor editing area will be used.</param>
+        /// <param name="document" type="Document" >The document that the range is associated with. If omitted, the document of the editor editing area will be used.</param>
         /// <returns type="Range">The created Range object.</returns>
 
     },
@@ -3009,7 +3218,7 @@ kendo.ui.Editor.prototype = {
 
     destroy: function() {
         /// <summary>
-        /// Prepares the Editor for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
 
     },
@@ -3061,7 +3270,7 @@ kendo.ui.Editor.prototype = {
 
     paste: function(html) {
         /// <summary>
-        /// Pastes HTML into the editable area.
+        /// Pastes HTML into the editable area. Cleans up MS Word formatting.
         /// </summary>
         /// <param name="html" type="String" >The HTML to be pasted.</param>
 
@@ -3099,6 +3308,16 @@ kendo.ui.Editor.prototype = {
         /// Serializes the current state of the editable area to the <textarea> element.
 /// This method should be called after modifying the editor content through the DOM.
         /// </summary>
+
+    },
+
+
+    state: function(toolName) {
+        /// <summary>
+        /// Get the state of a given tool. Introduced in the 2013.2.923 internal build.
+        /// </summary>
+        /// <param name="toolName" type="String" >The name of the tool that will be tested if formatted.</param>
+        /// <returns type="Boolean">The state of the tool.</returns>
 
     },
 
@@ -3144,7 +3363,7 @@ $.fn.kendoEditor = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;encoded — Boolean (default: true)
-    /// &#10;Indicates whether the Editor should submit encoded HTML tags.
+    /// &#10;Indicates whether the Editor should submit encoded HTML tags. By default, the submitted value is encoded.
     /// &#10;
     /// &#10;messages — Object 
     /// &#10;Defines the text of the labels that are shown within the editor. Used primarily for localization.
@@ -3153,8 +3372,9 @@ $.fn.kendoEditor = function(options) {
     /// &#10;Allows custom stylesheets to be included within the editing area.
     /// &#10;
     /// &#10;tools — Array 
-    /// &#10;A collection of tools that should render a button, combobox, etc, to interact with the Editor. Custom tools are defined
-/// &#10;as a collection of required properties, while the insertHtml tool requires a collection of text-value pairs. A separator may be included multiple times.
+    /// &#10;A collection of tools that are used to interact with the Editor.
+/// &#10;Tools may be switched on by specifying their name.
+/// &#10;Custom tools and tools that require configuration are defined as objects.The available editor commands are:
     /// &#10;
     /// &#10;imageBrowser — Object 
     /// &#10;Configuration for image browser dialog.
@@ -3195,19 +3415,21 @@ kendo.ui.FlatColorPicker.prototype = {
     },
 
 
-    color: function() {
+    color: function(color) {
         /// <summary>
-        /// Like value(), but it returns a Color object.
+        /// Get or set the selected color. If no argument is given, this returns the currently selected color as a kendo.Color object.
         /// </summary>
+        /// <param name="color" type="kendo.Color" >The color that should be set as the current value</param>
+        /// <returns type="kendo.Color">the current value</returns>
 
     },
 
 
-    enable: function() {
+    enable: function(enable) {
         /// <summary>
-        /// Enables or disables the widget.  It will enable it with no arguments
-/// or with a true argument, or disable with a false argument.
+        /// Enables or disables the widget.
         /// </summary>
+        /// <param name="enable" type="Boolean" >Whether the widget should be enabled (true) or disabled (false). If not specified, the method will enable the widget.</param>
 
     },
 
@@ -3246,8 +3468,8 @@ $.fn.kendoFlatColorPicker = function(options) {
     /// &#10;Specifies whether we should display the opacity slider to allow
 /// &#10;selection of transparency.
     /// &#10;
-    /// &#10;buttons — Boolean (default: true)
-    /// &#10;Specifies whether we should display the Apply / Cancel buttons.
+    /// &#10;buttons — Boolean (default: false)
+    /// &#10;Specifies whether the widget should display the Apply / Cancel buttons.
     /// &#10;
     /// &#10;value — String (default: null)
     /// &#10;Specifies the initially selected color.
@@ -3255,6 +3477,11 @@ $.fn.kendoFlatColorPicker = function(options) {
     /// &#10;preview — Boolean (default: true)
     /// &#10;Specifies whether we should display the preview bar which displays the
 /// &#10;current color and the input field.
+    /// &#10;
+    /// &#10;autoupdate — Boolean (default: true)
+    /// &#10;Specifies whether the UI should be updated while the user is typing in
+/// &#10;the input field, whenever a valid color can be parsed.  If you pass
+/// &#10;false for this, the widget will update only when ENTER is pressed.
     /// &#10;
     /// &#10;messages — Object 
     /// &#10;Allows customization of "Apply" / "Cancel" labels.
@@ -3341,6 +3568,15 @@ kendo.ui.Grid.prototype = {
     },
 
 
+    current: function(cell) {
+        /// <summary>
+        /// Selects cell for keyboard navigation. This set the current position of the keyboard navigation.
+        /// </summary>
+        /// <param name="cell" type="Object" >DOM element or jQuery object which represents the navigatable cell.</param>
+
+    },
+
+
     dataItem: function(row) {
         /// <summary>
         /// Returns the data item to which the specified table row is bound.
@@ -3370,7 +3606,7 @@ kendo.ui.Grid.prototype = {
 
     editRow: function(row) {
         /// <summary>
-        /// Switches the specified table cell in edit mode. Requires "inline" or "popup" edit mode.Fires the edit event.
+        /// Switches the specified table row in edit mode. Requires "inline" or "popup" edit mode.Fires the edit event.
         /// </summary>
         /// <param name="row" type="jQuery" >The jQuery object which represents the table row.</param>
 
@@ -3512,6 +3748,9 @@ $.fn.kendoGrid = function(options) {
     /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
 /// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
     /// &#10;
+    /// &#10;columnResizeHandleWidth — Number (default: 3)
+    /// &#10;Defines the width of the column resize handle in pixels. Apply a larger value for easier grasping.
+    /// &#10;
     /// &#10;columns — Array 
     /// &#10;The configuration of the grid columns. An array of JavaScript objects or strings. A JavaScript objects are interpreted as column configurations. Strings are interpreted as the
 /// &#10;field to which the column is bound. The grid will create a column for every item of the array.
@@ -3588,6 +3827,10 @@ $.fn.kendoGrid = function(options) {
     /// &#10;toolbar — Array 
     /// &#10;The list of commands displayed in the grid toolbar. Commands can be custom or built-in ("cancel", "create", "save").The "cancel" built-in command reverts any data changes done by the end user.The "create" command adds an empty data item to the grid.The "save" command persists any data changes done by the end user.
     /// &#10;
+    /// &#10;mobile — Boolean|String (default: false)
+    /// &#10;If set to true and the grid is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.
+/// &#10;The grid uses same layout for both phone and tablet.
+    /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
     /// The widget configuration options
@@ -3636,9 +3879,9 @@ kendo.ui.ListView.prototype = {
 
     edit: function(item) {
         /// <summary>
-        /// Edit specified ListView item. Triggers edit event.
+        /// Edit specified ListView item. Fires the edit event.
         /// </summary>
-        /// <param name="item" type="Object" >jQuery object containing the item to be edited.</param>
+        /// <param name="item" type="jQuery" >jQuery object which represents the item to be edited.</param>
 
     },
 
@@ -3655,14 +3898,14 @@ kendo.ui.ListView.prototype = {
         /// <summary>
         /// Removes specified ListView item. Triggers remove event and if not prevented calls DataSource sync method.
         /// </summary>
-        /// <param name="item" type="Object" >jQuery object containing the item to be removed.</param>
+        /// <param name="item" type="Object" >jQuery object which represents the item to be removed.</param>
 
     },
 
 
     save: function() {
         /// <summary>
-        /// Saves edited ListView item. If validation succeeds will call DataSource sync method.
+        /// Saves edited ListView item. Triggers save event. If save event is not prevented and validation succeeds will call DataSource sync method.
         /// </summary>
 
     },
@@ -3682,7 +3925,7 @@ kendo.ui.ListView.prototype = {
         /// <summary>
         /// Sets the dataSource of an existing ListView and rebinds it.
         /// </summary>
-        /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+        /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
 
     },
 
@@ -3718,10 +3961,12 @@ $.fn.kendoListView = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
-    /// &#10;Indicates whether the list view will call read on the DataSource initially.
+    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+/// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
     /// &#10;
-    /// &#10;dataSource — Object 
-    /// &#10;Instance of DataSource or Object with DataSource configuration.
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which is used render table rows. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;editTemplate — Function 
     /// &#10;Specifies ListView item template in edit mode.
@@ -3907,7 +4152,7 @@ kendo.ui.MultiSelect.prototype = {
 
     close: function() {
         /// <summary>
-        /// Closes the drop-down list.
+        /// Closes the widget popup.
         /// </summary>
 
     },
@@ -3924,7 +4169,7 @@ kendo.ui.MultiSelect.prototype = {
 
     destroy: function() {
         /// <summary>
-        /// Prepares the multiselect for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// Prepares the MultiSelect for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
 
     },
@@ -3932,18 +4177,18 @@ kendo.ui.MultiSelect.prototype = {
 
     enable: function(enable) {
         /// <summary>
-        /// Enables/disables the multiselect widget
+        /// Enables or disables the widget.
         /// </summary>
-        /// <param name="enable" type="Boolean" >Desired state</param>
+        /// <param name="enable" type="Boolean" >If set to true the widget will be enabled. If set to false the widget will be disabled.</param>
 
     },
 
 
     readonly: function(readonly) {
         /// <summary>
-        /// Controls whether the widget is editable or readonly.
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
-        /// <param name="readonly" type="Boolean" >The argument, which defines whether the multiselect should be readonly or editable.</param>
+        /// <param name="readonly" type="Boolean" >If set to true the widget will not allow user input. If set to false the widget will allow user input.</param>
 
     },
 
@@ -3958,7 +4203,7 @@ kendo.ui.MultiSelect.prototype = {
 
     open: function() {
         /// <summary>
-        /// Opens the drop-down list.
+        /// Opens the popup.
         /// </summary>
 
     },
@@ -3966,7 +4211,7 @@ kendo.ui.MultiSelect.prototype = {
 
     refresh: function() {
         /// <summary>
-        /// Re-render the items of the drop-down list.
+        /// Refresh the popup by rendering all items again.
         /// </summary>
 
     },
@@ -3974,7 +4219,7 @@ kendo.ui.MultiSelect.prototype = {
 
     search: function(word) {
         /// <summary>
-        /// Filters dataSource using the provided parameter and rebinds drop-down list.
+        /// Searches the data source for the provided value and displays any matches as suggestions.
         /// </summary>
         /// <param name="word" type="String" >The filter value.</param>
 
@@ -3983,7 +4228,7 @@ kendo.ui.MultiSelect.prototype = {
 
     setDataSource: function(dataSource) {
         /// <summary>
-        /// Sets the dataSource of an existing multiselect and rebinds it.
+        /// Sets the dataSource of an existing DropDownList and rebinds it.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" ></param>
 
@@ -3992,7 +4237,7 @@ kendo.ui.MultiSelect.prototype = {
 
     toggle: function(toggle) {
         /// <summary>
-        /// Toggles the drop-down list between opened and closed state.
+        /// Opens or closes the widget popup.
         /// </summary>
         /// <param name="toggle" type="Boolean" >Defines the whether to open/close the drop-down list.</param>
 
@@ -4001,7 +4246,7 @@ kendo.ui.MultiSelect.prototype = {
 
     value: function(value) {
         /// <summary>
-        /// Gets/Sets the value of the multiselect. Accepts string value or Array of strings.
+        /// Gets or sets the value of the multiselect. Accepts string value or Array of strings.
         /// </summary>
         /// <param name="value" type="Object" >The value to set.</param>
         /// <returns type="Array">The value of the multiselect.</returns>
@@ -4040,52 +4285,60 @@ $.fn.kendoMultiSelect = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;Animations to be used for opening/closing the popup. Setting to false will turn off the animation.
+    /// &#10;Configures the opening and closing animations of the suggestion popup. Setting the animation option to false will disable the opening and closing animations. As a result the suggestion popup will open and close instantly.
     /// &#10;
     /// &#10;autoBind — Boolean (default: true)
-    /// &#10;Controls whether to bind the widget to the DataSource on initialization.
+    /// &#10;Controls whether to bind the widget to the data source on initialization.
     /// &#10;
-    /// &#10;dataSource — Object 
-    /// &#10;A local JavaScript object or instance of DataSource or the data that the multiselect will be bound to.
+    /// &#10;autoClose — Boolean (default: true)
+    /// &#10;Controls whether to close the widget suggestion list on item selection.
+    /// &#10;
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which is used to display a list of values. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.DataSource
+/// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.DataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.DataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;dataTextField — String (default: "")
-    /// &#10;Sets the field of the data item that provides the text content of the list items.
+    /// &#10;The field of the data item that provides the text content of the list items. The widget will filter the data source based on this field.
     /// &#10;
     /// &#10;dataValueField — String (default: "")
-    /// &#10;Sets the field of the data item that provides the value content of the list items.
+    /// &#10;The field of the data item that provides the value of the widget.
     /// &#10;
     /// &#10;delay — Number (default: 200)
-    /// &#10;Specifies the delay in ms after which the multiselect will start filtering dataSource.
+    /// &#10;Specifies the delay in milliseconds after which the multiselect will start filtering dataSource.
     /// &#10;
     /// &#10;enable — Boolean (default: true)
-    /// &#10;Controls whether the multiselect should be initially enabled.
+    /// &#10;If set to false the widget will be disabled and will not allow user input. The widget is enabled by default and allows user input.
     /// &#10;
     /// &#10;filter — String (default: "none")
-    /// &#10;Defines the type of filtration.
+    /// &#10;The filtering method used to determine the suggestions for the current value. Filtration is turned of by default.
+/// &#10;The supported filter values are startswith, endswith and contains.
     /// &#10;
     /// &#10;height — Number (default: 200)
-    /// &#10;Define the height of the drop-down list in pixels.
+    /// &#10;The height of the suggestion popup in pixels. The default value is 200 pixels.
     /// &#10;
     /// &#10;highlightFirst — Boolean (default: true)
-    /// &#10;Controls whether the first item will be automatically highlighted.
+    /// &#10;If set to true the first suggestion will be automatically highlighted.
     /// &#10;
     /// &#10;ignoreCase — String (default: true)
-    /// &#10;Defines whether the filtration should be case sensitive.
+    /// &#10;If set to false case-sensitive search will be performed to find suggestions. The widget performs case-insensitive searching by default.
     /// &#10;
     /// &#10;minLength — Number (default: 1)
-    /// &#10;Specifies the minimum characters that should be typed before the multiselect activates
+    /// &#10;The minimum number of characters the user must type before a search is performed. Set to higher value than 1 if the search could match a lot of items.
     /// &#10;
     /// &#10;maxSelectedItems — Number (default: null)
     /// &#10;Defines the limit of the selected items. If set to null widget will not limit number of the selected items.
     /// &#10;
     /// &#10;placeholder — String (default: "")
-    /// &#10;A string that appears in the textbox when the multiselect has no value.
+    /// &#10;The hint displayed by the widget when it is empty. Not set by default.
     /// &#10;
-    /// &#10;itemTemplate — String 
-    /// &#10;Template to be used for rendering the items in the list.
+    /// &#10;headerTemplate — String|Function 
+    /// &#10;Specifies a static HTML content, which will be rendered as a header of the popup element.
+    /// &#10;
+    /// &#10;itemTemplate — String|Function 
+    /// &#10;The template used to render the items in the popup list.
     /// &#10;
     /// &#10;tagTemplate — String 
-    /// &#10;Template to be used for rendering the tags of the selected items.
+    /// &#10;The template used to render the tags.
     /// &#10;
     /// &#10;value — Array (default: [])
     /// &#10;Define the value of the widget
@@ -4114,25 +4367,25 @@ kendo.ui.NumericTextBox.prototype = {
 
     enable: function(enable) {
         /// <summary>
-        /// Enable/Disable the numerictextbox widget.
+        /// Enables or disables the widget.
         /// </summary>
-        /// <param name="enable" type="Boolean" >The argument, which defines whether to enable/disable tha numerictextbox.</param>
+        /// <param name="enable" type="Boolean" >If set to true the widget will be enabled. If set to false the widget will be disabled.</param>
 
     },
 
 
     readonly: function(readonly) {
         /// <summary>
-        /// Controls whether the widget is editable or readonly.
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
-        /// <param name="readonly" type="Boolean" >The argument, which defines whether the numerictextbox should be readonly or editable.</param>
+        /// <param name="readonly" type="Boolean" >If set to true the widget will not allow user input. If set to false the widget will allow user input.</param>
 
     },
 
 
     focus: function() {
         /// <summary>
-        /// Focuses the numerictextbox widget.
+        /// Focuses the widget.
         /// </summary>
 
     },
@@ -4140,40 +4393,40 @@ kendo.ui.NumericTextBox.prototype = {
 
     max: function(value) {
         /// <summary>
-        /// Gets/Sets the max value of the NumericTextBox.
+        /// Gets or sets the max value of the widget.
         /// </summary>
         /// <param name="value" type="Object" >The max value to set.</param>
-        /// <returns type="Number">The max value of the NumericTextBox.</returns>
+        /// <returns type="Number">The max value of the widget.</returns>
 
     },
 
 
     min: function(value) {
         /// <summary>
-        /// Gets/Sets the min value of the NumericTextBox.
+        /// Gets or sets the min value of the widget.
         /// </summary>
         /// <param name="value" type="Object" >The min value to set.</param>
-        /// <returns type="Number">The min value of the NumericTextBox.</returns>
+        /// <returns type="Number">The min value of the widget.</returns>
 
     },
 
 
     step: function(value) {
         /// <summary>
-        /// Gets/Sets the step value of the NumericTextBox.
+        /// Gets or sets the step value of the widget.
         /// </summary>
         /// <param name="value" type="Object" >The step value to set.</param>
-        /// <returns type="Number">The step value of the NumericTextBox.</returns>
+        /// <returns type="Number">The step value of the widget.</returns>
 
     },
 
 
     value: function(value) {
         /// <summary>
-        /// Gets/Sets the value of the numerictextbox.
+        /// Gets or sets the value of the numerictextbox.
         /// </summary>
         /// <param name="value" type="Object" >The value to set.</param>
-        /// <returns type="Number">The value of the numerictextbox.</returns>
+        /// <returns type="Number">The value of the widget.</returns>
 
     },
 
@@ -4209,7 +4462,7 @@ $.fn.kendoNumericTextBox = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;culture — String (default: "en-US")
-    /// &#10;Specifies the culture info used by the NumericTextBox widget.
+    /// &#10;Specifies the culture info used by the widget.
     /// &#10;
     /// &#10;decimals — Number (default: null)
     /// &#10;Specifies the number precision. If not set precision defined by current culture is used.
@@ -4227,13 +4480,13 @@ $.fn.kendoNumericTextBox = function(options) {
     /// &#10;Specifies the smallest value the user can enter.
     /// &#10;
     /// &#10;placeholder — String (default: "")
-    /// &#10;Specifies the text displayed when the input is empty.
+    /// &#10;The hint displayed by the widget when it is empty. Not set by default.
     /// &#10;
     /// &#10;spinners — Boolean (default: true)
-    /// &#10;Specifies whether the up/down spin buttons should be rendered
+    /// &#10;Specifies whether the up and down spin buttons should be rendered
     /// &#10;
     /// &#10;step — Number (default: 1)
-    /// &#10;Specifies the increment/decrement step.
+    /// &#10;Specifies the value used to increment or decrement widget value.
     /// &#10;
     /// &#10;upArrowText — String (default: "Increase value")
     /// &#10;Specifies the text of the tooltip on the up arrow.
@@ -4281,7 +4534,7 @@ kendo.ui.Pager.prototype = {
 
     refresh: function() {
         /// <summary>
-        /// Updates all values of pager elements so that these values fit the values of DataSource. This method is automaticaly called after DataSource change event is fired.
+        /// Updates all values of pager elements so that these values fit the values of DataSource. This method is automatically called after DataSource change event is fired.
         /// </summary>
 
     },
@@ -4335,7 +4588,7 @@ $.fn.kendoPager = function(options) {
     /// &#10;Instance of kendo DataSource. See the kendo.data.DataSource.This option is mandatory because the Pager is tightly connected with DataSource. The pager is UI widget for managing paging over the DataSource. The Pager gets values like page size or total count of items from DataSource.
     /// &#10;
     /// &#10;selectTemplate — String 
-    /// &#10;The template for selectbox with predefined page sizes.
+    /// &#10;The template for selected page number link.
     /// &#10;
     /// &#10;linkTemplate — String 
     /// &#10;The template for page number links.
@@ -4350,7 +4603,7 @@ $.fn.kendoPager = function(options) {
     /// &#10;Defines if numeric portion of the pager will be shown.
     /// &#10;
     /// &#10;pageSizes — Boolean|Array (default: false)
-    /// &#10;Displays a list with predefined page sizes. An array of values to be displayed can be provided. If pageSize option is provided for DataSource then this pageSize value will be automaticaly selected in created selectbox.
+    /// &#10;Displays a list with predefined page sizes. An array of values to be displayed can be provided. If pageSize option is provided for DataSource then this pageSize value will be automatically selected in created selectbox.
     /// &#10;
     /// &#10;previousNext — Boolean (default: true)
     /// &#10;Defines if buttons for navigating to the first, last, previous and next pages will be shown.
@@ -4359,7 +4612,7 @@ $.fn.kendoPager = function(options) {
     /// &#10;Defines if a refresh button will be displayed. Click on that button will call DataSource read() method to get actual data.
     /// &#10;
     /// &#10;messages — Object 
-    /// &#10;Defines texts shown within the pager.
+    /// &#10;Defines texts shown within the pager. Use this option to customize or localize the pager messages.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -4377,10 +4630,10 @@ kendo.ui.PanelBar.prototype = {
 
     append: function(item,referenceItem) {
         /// <summary>
-        /// Appends an item to the PanelBar.
+        /// Appends an item/s to the PanelBar.
         /// </summary>
         /// <param name="item" type="Selector" >Target item, specified as the JSON representation of an object. You can pass item text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
-        /// <param name="referenceItem" type="Selector" >A reference item to append the new item in</param>
+        /// <param name="referenceItem" type="Selector" >A reference item to append the new item in the PanelBar, can be omitted.</param>
         /// <returns type="kendo.ui.PanelBar">Returns the PanelBar object to support chaining.</returns>
 
     },
@@ -4421,7 +4674,7 @@ kendo.ui.PanelBar.prototype = {
         /// Expands the specified item(s) of a PanelBar.
         /// </summary>
         /// <param name="element" type="Selector" >The PanelBar item(s) to be expanded, expressed as a selector.</param>
-        /// <param name="useAnimation" type="Boolean" >_optional, default: _Temporariliy enables (true) or disables (false) any visual animation(s) when expanding items.</param>
+        /// <param name="useAnimation" type="Boolean" >_optional, default: _Temporarily enables (true) or disables (false) any visual animation(s) when expanding items.</param>
         /// <returns type="kendo.ui.PanelBar">Returns the PanelBar object to support chaining.</returns>
 
     },
@@ -4507,16 +4760,109 @@ $.fn.kendoPanelBar = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Boolean 
-    /// &#10;A collection of visual animations used when PanelBar items are exapnd or collapsed through
+    /// &#10;A collection of visual animations used when PanelBar items are expand or collapsed through
 /// &#10;user interactions. Setting this option to false will disable all animations.
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;A collection of visual animations used when PanelBar items are exapnd or collapsed through
+    /// &#10;A collection of visual animations used when PanelBar items are expand or collapsed through
 /// &#10;user interactions. Setting this option to false will disable all animations.
     /// &#10;
     /// &#10;expandMode — String (default: "multiple")
     /// &#10;Specifies how the PanelBar items are displayed when opened and closed. The following values
 /// &#10;are available:
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
+kendo.ui.ProgressBar = function() { };
+
+kendo.ui.ProgressBar.prototype = {
+
+
+
+
+    enable: function(enable) {
+        /// <summary>
+        /// Enables/Disables the ProgressBar widget.
+        /// </summary>
+        /// <param name="enable" type="Boolean" >The argument, which defines whether to enable/disable the ProgressBar. If no argument is passed, the widget will be enabled.</param>
+
+    },
+
+
+    value: function(value) {
+        /// <summary>
+        /// Gets or sets the value of the ProgressBar. It accepts a number, a string or false as a parameter. Setting the value to false will set the state of the ProgressBar to indeterminate. If no parameter is passed, it returns the underlying value.
+        /// </summary>
+        /// <param name="value" type="Number" >The value to be set.</param>
+        /// <returns type="Number">the value of the widget.</returns>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoProgressBar = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.ui.ProgressBar widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.ui.ProgressBar">The kendo.ui.ProgressBar instance (if present).</returns>
+};
+
+$.fn.kendoProgressBar = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.ui.ProgressBar widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;animation — Object 
+    /// &#10;Configures the progress animation. Currently only the duration of the animation could be set.
+    /// &#10;
+    /// &#10;chunkCount — Number (default: 5)
+    /// &#10;Specifies the number of chunks.
+    /// &#10;
+    /// &#10;enable — Boolean (default: true)
+    /// &#10;If set to false the widget will be disabled. It will still allow changing the value. The widget is enabled by default.
+    /// &#10;
+    /// &#10;max — Number (default: 100)
+    /// &#10;The maximum value of the ProgressBar.
+    /// &#10;
+    /// &#10;min — Number (default: 0)
+    /// &#10;The minimum value of the ProgressBar.
+    /// &#10;
+    /// &#10;orientation — String (default: "horizontal")
+    /// &#10;The orientation of the ProgressBar. Possible values are horizontal and vertical.
+    /// &#10;
+    /// &#10;reverse — Boolean (default: false)
+    /// &#10;Specifies if the progress direction will be reversed.
+    /// &#10;
+    /// &#10;showStatus — Boolean (default: true)
+    /// &#10;Specifies if the progress status will be shown.
+    /// &#10;
+    /// &#10;type — String (default: "value")
+    /// &#10;Specifies the type of the ProgressBar. The supported types are value, percent and chunk.
+    /// &#10;
+    /// &#10;value — Number 
+    /// &#10;The underlying value of the ProgressBar.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -4706,6 +5052,27 @@ kendo.ui.Scheduler.prototype = {
     },
 
 
+    slotByPosition: function(xPosition,yPosition) {
+        /// <summary>
+        /// Get the time slot from given horizontal (x) and vertical (y) position.
+        /// </summary>
+        /// <param name="xPosition" type="Number" >The horizontal position.</param>
+        /// <param name="yPosition" type="Number" >The vertical position.</param>
+        /// <returns type="Object">The time slot.</returns>
+
+    },
+
+
+    slotByElement: function(element) {
+        /// <summary>
+        /// Get the time slot from given element.
+        /// </summary>
+        /// <param name="element" type="Object" ></param>
+        /// <returns type="Object">The time slot.</returns>
+
+    },
+
+
     view: function(type) {
         /// <summary>
         /// Gets or sets the current scheduler view.
@@ -4752,6 +5119,10 @@ $.fn.kendoScheduler = function(options) {
     /// &#10;allDaySlot — Boolean (default: true)
     /// &#10;If set to true the scheduler will display a slot for "all day" events.
     /// &#10;
+    /// &#10;autoBind — Boolean (default: true)
+    /// &#10;If set to false the widget will not bind to the data source during initialization. In this case data binding will occur when the change event of the
+/// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
+    /// &#10;
     /// &#10;dataSource — Object|Array 
     /// &#10;The data source of the widget which contains the scheduler events. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.SchedulerDataSource
 /// &#10;instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.SchedulerDataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.SchedulerDataSource instance the widget will use that instance and will not initialize a new one.
@@ -4774,6 +5145,12 @@ $.fn.kendoScheduler = function(options) {
     /// &#10;eventTemplate — String|Function 
     /// &#10;The template used to render the scheduler events.The fields which can be used in the template are:
     /// &#10;
+    /// &#10;footer — Boolean 
+    /// &#10;If set to false the footer of the scheduler would not be displayed.
+    /// &#10;
+    /// &#10;footer — Object 
+    /// &#10;If set to false the footer of the scheduler would not be displayed.
+    /// &#10;
     /// &#10;group — Object 
     /// &#10;The configuration of the scheduler resource(s) grouping.
     /// &#10;
@@ -4786,15 +5163,36 @@ $.fn.kendoScheduler = function(options) {
     /// &#10;majorTimeHeaderTemplate — String|Function 
     /// &#10;The template used to render the major ticks.By default the scheduler renders the time using the current culture time format.The fields which can be used in the template are:
     /// &#10;
+    /// &#10;max — Date (default: 31/12/2099)
+    /// &#10;Constraints the maximum date which can be selected via the scheduler navigation.
+    /// &#10;
+    /// &#10;messages — Object 
+    /// &#10;The configuration of the scheduler messages. Use this option to customize or localize the scheduler messages.
+    /// &#10;
+    /// &#10;min — Date (default: 1/1/1900)
+    /// &#10;Constraints the minimum date which can be selected via the scheduler navigation.
+    /// &#10;
     /// &#10;minorTickCount — Number (default: 2)
     /// &#10;The number of time slots to display per major tick.
     /// &#10;
     /// &#10;minorTimeHeaderTemplate — String|Function 
     /// &#10;The template used to render the minor ticks.By default the scheduler renders a "&nbsp;".The fields which can be used in the template are:
     /// &#10;
+    /// &#10;mobile — Boolean|String (default: false)
+    /// &#10;If set to true and the scheduler is viewed on mobile browser it will use adaptive rendering.Can be set to a string phone or tablet which will force the widget to use adaptive rendering regardless of browser type.
+    /// &#10;
     /// &#10;resources — Array 
     /// &#10;The configuration of the scheduler resource(s). A scheduler resource is optional metadata that can be associated
 /// &#10;with a scheduler event.
+    /// &#10;
+    /// &#10;selectable — Boolean (default: false)
+    /// &#10;If set to true the user would be able to select scheduler cells and events. By default selection is disabled.
+    /// &#10;
+    /// &#10;showWorkHours — Boolean (default: false)
+    /// &#10;If set to true the view will be initially shown in business hours mode. By default view is displyed in full day mode.
+    /// &#10;
+    /// &#10;snap — Boolean (default: true)
+    /// &#10;If set to true the scheduler will snap events to the nearest slot during dragging (resizing or moving). Set it to false to allow free moving and resizing of events.
     /// &#10;
     /// &#10;startTime — Date 
     /// &#10;The start time of the week and day views. The scheduler will display events starting after the startTime.
@@ -4810,6 +5208,18 @@ $.fn.kendoScheduler = function(options) {
     /// &#10;
     /// &#10;width — Number|String 
     /// &#10;The width of the widget. Numeric values are treated as pixels.
+    /// &#10;
+    /// &#10;workDayStart — Date 
+    /// &#10;Sets the start of the work day when the  "Show business hours" button is clicked.
+    /// &#10;
+    /// &#10;workDayEnd — Date 
+    /// &#10;Sets the end of the work day when the  "Show business hours" button is clicked.
+    /// &#10;
+    /// &#10;workWeekStart — Number (default: 1)
+    /// &#10;The start of working week (index based).
+    /// &#10;
+    /// &#10;workWeekEnd — Number (default: 5)
+    /// &#10;The end of working week (index based).
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -4937,17 +5347,27 @@ kendo.ui.Splitter.prototype = {
         /// <summary>
         /// Loads the content of a pane from a local or remote URL.
         /// </summary>
-        /// <param name="pane" type="Object" >The targetted pane whose content is to be loaded via a URL.</param>
+        /// <param name="pane" type="Object" >The targeted pane whose content is to be loaded via a URL.</param>
         /// <param name="url" type="String" >A local or remote URL from which the content of the pane is to be loaded.</param>
         /// <param name="data" type="Object" >Any data that is necessary to be sent to the server.</param>
 
     },
 
 
+    append: function(config) {
+        /// <summary>
+        /// Appends a new pane. The method returns the pane element, so it can be populated with arbitrary content, if contentUrl is not set.
+/// Invoking this method will force the widget to redraw and it will trigger the resize event.
+        /// </summary>
+        /// <param name="config" type="Object" >The new pane configuration</param>
+
+    },
+
+
     collapse: function(pane) {
         /// <summary>
-        /// Collapses a specified pane. Invoking this method will force the Splitter to redraw and it
-/// will trigger layoutChange and resize events. Note: Invoking the method will not trigger a collapse event.
+        /// Collapses a specified pane. Invoking this method will force the widget to redraw and it will trigger the resize event.
+/// Note: Invoking the method will not trigger a collapse event.
         /// </summary>
         /// <param name="pane" type="Object" >The pane to be collapsed.</param>
 
@@ -4956,7 +5376,7 @@ kendo.ui.Splitter.prototype = {
 
     destroy: function() {
         /// <summary>
-        /// Prepares the Splitter for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
 
     },
@@ -4964,20 +5384,41 @@ kendo.ui.Splitter.prototype = {
 
     expand: function(pane) {
         /// <summary>
-        /// Expands a specified pane. Invoking this method will force the Splitter to redraw and it
-/// will trigger layoutChange and resize events. Note: Invoking the method will not trigger an expand event.
+        /// Expands a specified pane. Invoking this method will force the widget to redraw and it will trigger the resize event.
+/// Note: Invoking the method will not trigger an expand event.
         /// </summary>
         /// <param name="pane" type="Object" >The pane to be expanded.</param>
 
     },
 
 
+    insertAfter: function(config,referencePane) {
+        /// <summary>
+        /// Inserts a new pane after the specified one. The method returns the pane element, so it can be populated with arbitrary content, if contentUrl is not set.
+/// Invoking this method will force the widget to redraw and it will trigger the resize event.
+        /// </summary>
+        /// <param name="config" type="Object" >The new pane configuration.</param>
+        /// <param name="referencePane" type="Object" >The existing pane after which the new one will be inserted.</param>
+
+    },
+
+
+    insertBefore: function(config,referencePane) {
+        /// <summary>
+        /// Inserts a new pane before the specified one. The method returns the pane element, so it can be populated with arbitrary content, if contentUrl is not set.
+/// Invoking this method will force the widget to redraw and it will trigger the resize event.
+        /// </summary>
+        /// <param name="config" type="Object" >The new pane configuration.</param>
+        /// <param name="referencePane" type="Object" >The existing pane before which the new one will be inserted.</param>
+
+    },
+
+
     max: function(pane,value) {
         /// <summary>
-        /// Sets the maximum size of a pane. Setting this value will not cause the Splitter to
-/// redraw, nor will it trigger any events.
+        /// Sets the maximum size of a pane. Setting this value will not cause the widget to redraw, nor will it trigger any events.
         /// </summary>
-        /// <param name="pane" type="Object" >The pane being targetted for a new minimum size configuration value.</param>
+        /// <param name="pane" type="Object" >The pane being targeted for a new minimum size configuration value.</param>
         /// <param name="value" type="String" >The maximum size value of the pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%").</param>
 
     },
@@ -4985,19 +5426,27 @@ kendo.ui.Splitter.prototype = {
 
     min: function(pane,value) {
         /// <summary>
-        /// Sets the minimum size of a pane. Setting this value will not cause the Splitter to
-/// redraw, nor will it trigger any events.
+        /// Sets the minimum size of a pane. Setting this value will not cause the widget to redraw, nor will it trigger any events.
         /// </summary>
-        /// <param name="pane" type="Object" >The pane being targetted for a new minimum size configuration value.</param>
+        /// <param name="pane" type="Object" >The pane being targeted for a new minimum size configuration value.</param>
         /// <param name="value" type="String" >The minimum size value of the pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%").</param>
+
+    },
+
+
+    remove: function(pane) {
+        /// <summary>
+        /// Removes one or more panes. The method returns the Splitter instance.
+/// Invoking this method will force the widget to redraw and it will trigger the resize event.
+        /// </summary>
+        /// <param name="pane" type="Object" >The pane(s) to be removed.</param>
 
     },
 
 
     size: function(pane,value) {
         /// <summary>
-        /// Set the size of the pane. Setting this value will cause the Splitter to redraw and it will
-/// trigger layoutChange and resize events.
+        /// Set the size of the pane. Setting this value will cause the widget to redraw and it will trigger the resize event.
         /// </summary>
         /// <param name="pane" type="Object" >The pane to be resized.</param>
         /// <param name="value" type="String" >The new size of the pane defined as pixels (i.e. "200px") or as a percentage (i.e. "50%"). Note: This value must not exceed panes.max or be less then panes.min.</param>
@@ -5007,12 +5456,12 @@ kendo.ui.Splitter.prototype = {
 
     toggle: function(pane,expand) {
         /// <summary>
-        /// Toggles the state of a specified pane (i.e. collapsed or expanded). Invoking this method will force the
-/// Splitter to redraw and it will trigger layoutChange and resize events. Note: Invoking the
-/// method will not trigger collapse or expand events.
+        /// Toggles the state of a specified pane (i.e. collapsed or expanded).
+/// Invoking this method will force the widget to redraw and it will trigger the resize event.
+/// Note: Invoking the method will not trigger collapse or expand events.
         /// </summary>
         /// <param name="pane" type="Object" >The pane to be collapsed.</param>
-        /// <param name="expand" type="Boolean" >(Optional) Represents the desired state of the specified pane; to be expanded (true) or collapsed (false). If undefined, toggle() will collapse the pane if it is expanded or will expand the pane if it is collapsed.</param>
+        /// <param name="expand" type="Boolean" >Represents the desired state of the specified pane; to be expanded (true) or collapsed (false). If undefined, toggle() will collapse the pane if it is expanded or will expand the pane if it is collapsed.</param>
 
     },
 
@@ -5048,7 +5497,7 @@ $.fn.kendoSplitter = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;orientation — String (default: "horizontal")
-    /// &#10;Specifies the orientation of the Splitter.
+    /// &#10;Specifies the orientation of the widget. Supported values are "horizontal" and "vertical".
     /// &#10;
     /// &#10;panes — Array 
     /// &#10;An array of pane definitions.
@@ -5067,11 +5516,20 @@ kendo.ui.TabStrip.prototype = {
 
 
 
+    activateTab: function(item) {
+        /// <summary>
+        /// Activates a tab specified as a selector. Note: Invoking this method will not trigger any events.
+        /// </summary>
+        /// <param name="item" type="jQuery" >The target tab, specified as a selector, to be activated.</param>
+
+    },
+
+
     append: function(tab) {
         /// <summary>
         /// Appends a tab to the collection of tabs in a TabStrip.
         /// </summary>
-        /// <param name="tab" type="Selector" >Target tab, specified as a JSON object. You can pass tab text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
+        /// <param name="tab" type="Object" >Target tab, specified as a JSON object. You can pass tab text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -5102,7 +5560,7 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Deactivates a tab specified as a selector. Note: Invoking this method will not trigger any events.
         /// </summary>
-        /// <param name="item" type="Selector" >The target tab, specified as a selector, to be deactivated.</param>
+        /// <param name="item" type="jQuery" >The target tab, specified as a selector, to be deactivated.</param>
 
     },
 
@@ -5119,7 +5577,7 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Disables a tab(s) of a TabStrip.
         /// </summary>
-        /// <param name="element" type="Selector" >The target tab(s), specified as a selector, to be disabled.</param>
+        /// <param name="element" type="Object" >The target tab(s), specified as a selector, to be disabled.</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -5129,7 +5587,7 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Disables (false) or enables (true) a tab(s) of a TabStrip.
         /// </summary>
-        /// <param name="element" type="Selector" >The target tab(s), specified as a selector, to be enabled (true) or disabled (false).</param>
+        /// <param name="element" type="Object" >The target tab(s), specified as a selector, to be enabled (true) or disabled (false).</param>
         /// <param name="enable" type="Boolean" >Desired state of the tab(s) specified by the selector; enabled (true) or disabled (false).</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
@@ -5140,8 +5598,8 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Inserts a newly-created tab after a specified tab.
         /// </summary>
-        /// <param name="item" type="Selector" >Target tab, specified as a JSON object. You can pass tab text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
-        /// <param name="referenceTab" type="Selector" >A reference tab to insert the new item after.</param>
+        /// <param name="item" type="Object" >Target tab, specified as a JSON object. You can pass tab text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
+        /// <param name="referenceTab" type="Object" >A reference tab to insert the new item after.</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -5151,8 +5609,8 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Inserts a newly-created tab before a specified tab.
         /// </summary>
-        /// <param name="item" type="Selector" >Target tab, specified as a JSON object. You can pass tab text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
-        /// <param name="referenceTab" type="Selector" >A reference tab to insert the new item before</param>
+        /// <param name="item" type="Object" >Target tab, specified as a JSON object. You can pass tab text, content or contentUrl here. Can handle an HTML string or array of such strings or JSON.</param>
+        /// <param name="referenceTab" type="Object" >A reference tab to insert the new item before</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -5162,7 +5620,7 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Gets the list of DOM elements that represent the tabs.
         /// </summary>
-        /// <returns type="HTMLCollection">the tabs as jQuery objects.</returns>
+        /// <returns type="HTMLCollection">the tabs as an HTML collection of elements.</returns>
 
     },
 
@@ -5171,7 +5629,7 @@ kendo.ui.TabStrip.prototype = {
         /// <summary>
         /// Reloads TabStrip tab(s) via AJAX.
         /// </summary>
-        /// <param name="element" type="Selector" >The target tab(s), specified as a selector or jQuery object, to be reloaded via AJAX.</param>
+        /// <param name="element" type="Object" >The target tab(s), specified as a selector or jQuery object, to be reloaded via AJAX.</param>
         /// <returns type="kendo.ui.TabStrip">Returns the TabStrip object to support chaining.</returns>
 
     },
@@ -5299,7 +5757,7 @@ kendo.ui.TimePicker.prototype = {
 
     readonly: function(readonly) {
         /// <summary>
-        /// Controls whether the widget is editable or readonly.
+        /// Toggles the readonly state of the widget. When the widget is readonly it doesn't allow user input.
         /// </summary>
         /// <param name="readonly" type="Boolean" >The argument, which defines whether the timepicker should be readonly or editable.</param>
 
@@ -5375,13 +5833,13 @@ $.fn.kendoTimePicker = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;animation — Object 
-    /// &#10;Animations to be used for opening/closing the popup. Setting to false will turn of the animation.
+    /// &#10;Configures the opening and closing animations of the popup. Setting the animation option to false will disable the opening and closing animations. As a result the popup will open and close instantly.
     /// &#10;
     /// &#10;culture — String (default: "en-US")
     /// &#10;Specifies the culture info used by the widget.
     /// &#10;
     /// &#10;dates — Array 
-    /// &#10;Specifies a list of dates, which are shown in the time drop-down list. If not set, the DateTimePicker will auto-generate the available times.
+    /// &#10;Specifies a list of dates, which are shown in the time drop-down list. If not set, the TimePicker will auto-generate the available times.
     /// &#10;
     /// &#10;format — String (default: "h:mm tt")
     /// &#10;Specifies the format, which is used to format the value of the TimePicker displayed in the input. The format also will be used to parse the input.
@@ -5532,13 +5990,14 @@ kendo.ui.TreeView.prototype = {
 
 
 
-    append: function(nodeData,parentNode) {
+    append: function(nodeData,parentNode,success) {
         /// <summary>
-        /// Appends a node to a group of a TreeView. This method may also be used to reorder the nodes of a
-/// TreeView.
+        /// Appends a node to any level of the treeview. This method may also be used to reorder nodes.
         /// </summary>
-        /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be appended.</param>
+        /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be appended. If the argument is a plain JavaScript object, a new item will be created. If the argument is a jQuery element that holds a node, the treeview node will be moved. If the argument is an array of objects, each item of the array will be appended.</param>
         /// <param name="parentNode" type="jQuery" >The node that will contain the newly appended node. If not specified, the new node will be appended to the root group of the TreeView.</param>
+        /// <param name="success" type="Function" >A success callback that will be called once the new node has been appended. Useful in the case of remote binding where an item is appended to an unfetched node. The callback is called once the siblings have been fetched.</param>
+        /// <returns type="jQuery">The inserted <li> element, wrapped in a jQuery object,or null if the new model has not been inserted immediately.</returns>
 
     },
 
@@ -5547,16 +6006,16 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Collapses nodes.
         /// </summary>
-        /// <param name="nodes" type="Object" >The nodes that are to be collapsed.</param>
+        /// <param name="nodes" type="Object" >The nodes that will be collapsed.</param>
 
     },
 
 
     dataItem: function(node) {
         /// <summary>
-        /// Returns the model dataItem that corresponds to a TreeView node
+        /// Returns the data item to which the specified node is bound.
         /// </summary>
-        /// <param name="node" type="Object" >The element or selector that specifies a node.</param>
+        /// <param name="node" type="Object" >A string, DOM element or jQuery object which represents the node. A string is treated as a jQuery selector.</param>
         /// <returns type="kendo.data.Node">The model of the item that was passed as a parameter.</returns>
 
     },
@@ -5564,7 +6023,7 @@ kendo.ui.TreeView.prototype = {
 
     destroy: function() {
         /// <summary>
-        /// Prepares the TreeView for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
         /// </summary>
 
     },
@@ -5592,7 +6051,7 @@ kendo.ui.TreeView.prototype = {
 
     expand: function(nodes) {
         /// <summary>
-        /// Expands nodes.
+        /// Expands collapsed nodes.
         /// </summary>
         /// <param name="nodes" type="Object" >The nodes that are to be expanded.</param>
 
@@ -5601,7 +6060,7 @@ kendo.ui.TreeView.prototype = {
 
     findByText: function(text) {
         /// <summary>
-        /// Searches a TreeView for a node that has specific text.
+        /// Searches for a node that has specific text.
         /// </summary>
         /// <param name="text" type="String" >The text that is being searched for.</param>
         /// <returns type="jQuery">All nodes that have the text.</returns>
@@ -5611,8 +6070,9 @@ kendo.ui.TreeView.prototype = {
 
     findByUid: function(text) {
         /// <summary>
-        /// Searches a TreeView for a node with the given unique identifier.
+        /// Searches for a node with the given unique identifier.
 /// Applicable when the widget is bound to a HierarchicalDataSource.
+/// If you want to find a node by its id, use the dataSource.get() method and supply its uid to the findByUid method.
         /// </summary>
         /// <param name="text" type="String" >The text that is being searched for.</param>
         /// <returns type="jQuery">All nodes that have the text.</returns>
@@ -5622,19 +6082,18 @@ kendo.ui.TreeView.prototype = {
 
     insertAfter: function(nodeData,referenceNode) {
         /// <summary>
-        /// Inserts a node after a specified node in a TreeView. This method may also be used to reorder the nodes of a
-/// TreeView.
+        /// Inserts a node after a specified node.
+/// This method may also be used to reorder nodes.
         /// </summary>
         /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be inserted.</param>
-        /// <param name="referenceNode" type="jQuery" >The node that will be preceed the newly-appended node.</param>
+        /// <param name="referenceNode" type="jQuery" >The node that will precede the newly-appended node.</param>
 
     },
 
 
     insertBefore: function(nodeData,referenceNode) {
         /// <summary>
-        /// Inserts a node before another node. This method may also be used to reorder the nodes of a
-/// TreeView.
+        /// Inserts a node before another node. This method may also be used to reorder nodes.
         /// </summary>
         /// <param name="nodeData" type="Object" >A JSON-formatted string or selector that specifies the node to be inserted.</param>
         /// <param name="referenceNode" type="jQuery" >The node that follows the inserted node.</param>
@@ -5654,7 +6113,7 @@ kendo.ui.TreeView.prototype = {
 
     remove: function(node) {
         /// <summary>
-        /// Removes a node from a TreeView.
+        /// Removes a node from the widget.
         /// </summary>
         /// <param name="node" type="Object" >The node that is to be removed.</param>
 
@@ -5663,19 +6122,19 @@ kendo.ui.TreeView.prototype = {
 
     select: function(node) {
         /// <summary>
-        /// Gets or sets the selected node of a TreeView.
+        /// Gets or sets the selected node.
         /// </summary>
-        /// <param name="node" type="Object" >If provided, the node of a TreeView that should be selected.</param>
-        /// <returns type="jQuery">The selected node of a TreeView.</returns>
+        /// <param name="node" type="Object" >If provided, the node that should be selected.</param>
+        /// <returns type="jQuery">The currently selected node.</returns>
 
     },
 
 
     setDataSource: function(dataSource) {
         /// <summary>
-        /// Sets the dataSource of an existing TreeView and rebinds it.
+        /// Sets and binds a dataSource to the widget.
         /// </summary>
-        /// <param name="dataSource" type="kendo.data.HierarchicalDataSource" ></param>
+        /// <param name="dataSource" type="kendo.data.HierarchicalDataSource" >The new dataSource that the widget will bind to</param>
 
     },
 
@@ -5684,7 +6143,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Gets or sets the text of a node in a TreeView.
         /// </summary>
-        /// <param name="node" type="String" >The node of which the text is being retrieved.</param>
+        /// <param name="node" type="Object" >The node of which the text is being retrieved or set.</param>
         /// <param name="newText" type="String" >Optional. When passed, sets the node text to the specified string</param>
         /// <returns type="String">The text of a node.</returns>
 
@@ -5695,7 +6154,7 @@ kendo.ui.TreeView.prototype = {
         /// <summary>
         /// Toggles the node of a TreeView between its expanded and collapsed states.
         /// </summary>
-        /// <param name="node" type="String" >The node that should be toggled.</param>
+        /// <param name="node" type="Object" >The node that should be toggled.</param>
 
     },
 
@@ -5739,6 +6198,10 @@ $.fn.kendoTreeView = function(options) {
 
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
+    /// &#10;animation — Boolean 
+    /// &#10;A collection of visual animations used when items are expanded or collapsed through user interaction.
+/// &#10;Setting this option to false will disable all animations.
+    /// &#10;
     /// &#10;animation — Object 
     /// &#10;A collection of visual animations used when items are expanded or collapsed through user interaction.
 /// &#10;Setting this option to false will disable all animations.
@@ -5748,42 +6211,38 @@ $.fn.kendoTreeView = function(options) {
 /// &#10;data source is fired. By default the widget will bind to the data source specified in the configuration.
     /// &#10;
     /// &#10;checkboxes — Boolean 
-    /// &#10;If true or an object, renders checkboxes within each treeview item.
+    /// &#10;If true or an object, renders checkboxes beside each node.
     /// &#10;
     /// &#10;checkboxes — Object 
-    /// &#10;If true or an object, renders checkboxes within each treeview item.
+    /// &#10;If true or an object, renders checkboxes beside each node.
     /// &#10;
     /// &#10;dataImageUrlField — String (default: null)
-    /// &#10;Sets the field of the data item that provides
-/// &#10;the image URL of the treeview nodes.
+    /// &#10;Sets the field of the data item that provides the image URL of the treeview nodes.
     /// &#10;
-    /// &#10;dataSource — Array 
-    /// &#10;The data that the TreeView will be bound to.
+    /// &#10;dataSource — Object|Array 
+    /// &#10;The data source of the widget which is used render nodes. Can be a JavaScript object which represents a valid data source configuration, a JavaScript array or an existing kendo.data.HierarchicalDataSource instance.If the dataSource option is set to a JavaScript object or array the widget will initialize a new kendo.data.HierarchicalDataSource instance using that value as data source configuration.If the dataSource option is an existing kendo.data.HierarchicalDataSource instance the widget will use that instance and will not initialize a new one.
     /// &#10;
     /// &#10;dataSpriteCssClassField — String (default: null)
-    /// &#10;Sets the field of the data item that provides
-/// &#10;the sprite CSS class of the treeview nodes.
+    /// &#10;Sets the field of the data item that provides the sprite CSS class of the nodes.
+/// &#10;If an array, each level uses the field that is at the same index in the array, or the last item in the array.
     /// &#10;
     /// &#10;dataTextField — String|Array (default: null)
-    /// &#10;Sets the field of the data item that provides the text content of the treeview nodes.
+    /// &#10;Sets the field of the data item that provides the text content of the nodes.
 /// &#10;If an array, each level uses the field that is at the same index in the array, or the last item in the array.
     /// &#10;
     /// &#10;dataUrlField — String (default: null)
-    /// &#10;Sets the field of the data item that provides
-/// &#10;the link URL of the treeview nodes.
+    /// &#10;Sets the field of the data item that provides the link URL of the nodes.
     /// &#10;
     /// &#10;dragAndDrop — Boolean (default: false)
-    /// &#10;Disables (false) or enables (true) drag-and-drop on the nodes of a
-/// &#10;TreeView.
+    /// &#10;Disables (false) or enables (true) drag-and-drop of the nodes.
     /// &#10;
     /// &#10;loadOnDemand — Boolean (default: true)
-    /// &#10;Indicates whether the child datasources should be fetched
-/// &#10;lazily, when parent groups get expanded. Setting this to false causes all child dataSources to
-/// &#10;be loaded at initialization time. Note: when initializing a TreeView from array (rather than from a
-/// &#10;HierarchicalDataSource instance), the default value of this option is false.
+    /// &#10;Indicates whether the child datasources should be fetched lazily when parent groups get expanded.
+/// &#10;Setting this to false causes all child dataSources to be loaded at initialization time.
+/// &#10;Note: when initializing the widget from an array (rather than from a HierarchicalDataSource instance), this option defaults to false, rather than true.
     /// &#10;
     /// &#10;template — String|Function 
-    /// &#10;Template for rendering of the nodes of the treeview.
+    /// &#10;Template for rendering each node.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -5997,8 +6456,7 @@ kendo.ui.Widget.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
-/// kendo.Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
 
     },
@@ -6014,7 +6472,7 @@ kendo.ui.Widget.prototype = {
 
     one: function() {
         /// <summary>
-        /// Attaches a handler to an event. The handler is executed only once. More info can be found in the one section of the
+        /// Attaches a handler to an event. The handler is executed only once. Examples and more info can be found in the one section of the
 /// kendo.Observable API reference.
         /// </summary>
 
@@ -6072,9 +6530,9 @@ kendo.ui.Window.prototype = {
 
     center: function() {
         /// <summary>
-        /// Centers a Window within the viewport.
+        /// Centers the window within the viewport.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6083,24 +6541,24 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Closes a Window.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
 
     content: function(content) {
         /// <summary>
-        /// Gets or set the content of a Window.
+        /// Gets or set the content of a window.
         /// </summary>
-        /// <param name="content" type="String" >_optional, default: _The content of the Window.</param>
-        /// <returns type="kendo.ui.Window">If content is provided, this method will return the (Kendo UI) Window object to support chaining. Otherwise,it will return the current content of the (Kendo UI) Window.</returns>
+        /// <param name="content" type="String" >The content of the Window.</param>
+        /// <returns type="kendo.ui.Window">If the content parameter is provided, this method will return the widget object to support chaining. Otherwise, it will return the current content of the widget.</returns>
 
     },
 
 
     destroy: function() {
         /// <summary>
-        /// Destroys the window and its modal overlay, if necessary. Removes the Window HTML elements from the DOM.
+        /// Destroys the window and its modal overlay, if necessary. Removes the widget HTML elements from the DOM.
         /// </summary>
 
     },
@@ -6110,7 +6568,7 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Maximizes a Window to the entire viewing area of the user agent. Triggers the resize event.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6119,7 +6577,7 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Maximizes a Window to its title bar.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6128,7 +6586,7 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Opens a Window.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6145,9 +6603,10 @@ kendo.ui.Window.prototype = {
     refresh: function(options) {
         /// <summary>
         /// Refreshes the content of a Window from a remote URL or the initially defined content template.
+/// Note that passing data and requests different than GET cannot be sent to an iframe at this time, as they tequire a form with a target attribute.
         /// </summary>
         /// <param name="options" type="String" >Options for requesting data from the server. If omitted, the window uses the content property that was supplied when the window was created. Any options specified here are passed to jQuery.ajax().</param>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6156,15 +6615,16 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Restores a maximized or minimized Window to its previous state. Triggers the resize event.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
 
-    setOptions: function() {
+    setOptions: function(options) {
         /// <summary>
         /// Allows the window to be configured with new options.
         /// </summary>
+        /// <param name="options" type="Object" >The configuration options to be set.</param>
 
     },
 
@@ -6173,8 +6633,8 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Gets or set the title of a Window.
         /// </summary>
-        /// <param name="text" type="String" >_optional, default: _The title of the Window.</param>
-        /// <returns type="kendo.ui.Window">If a title is provided, this method will return the (Kendo UI) Window object to support chaining. Otherwise,it will return the current title of the (Kendo UI) Window.</returns>
+        /// <param name="text" type="String" >The title of the Window.</param>
+        /// <returns type="kendo.ui.Window">If a title is provided, this method will return the window object to support chaining. Otherwise, it will return the current title of the window.</returns>
 
     },
 
@@ -6183,7 +6643,7 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Brings forward a Window to the top of the z-index.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6192,7 +6652,7 @@ kendo.ui.Window.prototype = {
         /// <summary>
         /// Toggles a Window between a maximized and restored state. Triggers the resize event.
         /// </summary>
-        /// <returns type="kendo.ui.Window">Returns the (Kendo UI) Window object to support chaining.</returns>
+        /// <returns type="kendo.ui.Window">Returns the window object to support chaining.</returns>
 
     },
 
@@ -6258,8 +6718,7 @@ $.fn.kendoWindow = function(options) {
 /// &#10;versions, so it is advisable to always use the iframe configuration option.
     /// &#10;
     /// &#10;draggable — Boolean (default: true)
-    /// &#10;Enables (true) or disables (false) the ability for users to move/drag a
-/// &#10;Window.
+    /// &#10;Enables (true) or disables (false) the ability for users to move/drag the widget.
     /// &#10;
     /// &#10;iframe — Boolean 
     /// &#10;Explicitly states whether content iframe should be created.
@@ -6286,8 +6745,7 @@ $.fn.kendoWindow = function(options) {
     /// &#10;A collection of one or two members, which define the initial Window's top and/or left position on the page.
     /// &#10;
     /// &#10;resizable — Boolean (default: true)
-    /// &#10;Enables (true) or disables (false) the ability for users to resize a
-/// &#10;Window.
+    /// &#10;Enables (true) or disables (false) the ability for users to resize a Window.
     /// &#10;
     /// &#10;title — String|Boolean (default: "")
     /// &#10;The text in the window title bar. If false, the window will be displayed without a title bar. Note that this will prevent the window from being dragged, and the window titlebar buttons will not be shown.

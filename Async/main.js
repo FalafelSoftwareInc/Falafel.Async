@@ -45,6 +45,7 @@
             bxslider: 'libs/bxslider/js/jquery.bxslider.min',
             cookie: 'libs/jquery-cookie/js/jquery-cookie',
             equalize: 'libs/equalize/js/equalize.min',
+            favico: 'libs/favico/js/favico.min',
 			fullcalendar: 'libs/fullcalendar/js/fullcalendar.min',
             hijri: 'libs/hijricalendar/js/hijricalendar.mod',
             html5shiv: 'libs/html5shiv/js/html5shiv.min',

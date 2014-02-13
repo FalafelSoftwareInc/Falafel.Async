@@ -48,6 +48,69 @@ return wrapper;
 
 
 intellisense.annotate(kendo, {
+    Color: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.Color</summary>
+        /// </signature>
+    }
+});
+
+kendo.Color = (function() {
+var original = kendo.Color;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    diff: function() {
+        /// <signature>
+        /// <summary>
+        /// Computes the relative luminance between two colors.
+        /// </summary>
+        /// <returns type="Number">The relative luminance.</returns>
+        /// </signature>
+    },
+    equals: function() {
+        /// <signature>
+        /// <summary>
+        /// Compares two color objects for equality.
+        /// </summary>
+        /// <returns type="Boolean">returns true if the two colors are the same. Otherwise, false</returns>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+intellisense.annotate(kendo, {
     Layout: function() {
         /// <signature>
         /// <summary>Constructor of kendo.Layout</summary>
@@ -149,7 +212,7 @@ intellisense.annotate(instance, {
         /// Remove a previously attached event handler.
         /// </summary>
         /// <param name="eventName" type="String" >The name of the event. If not specified all handlers of all events will be removed.</param>
-        /// <param name="handler" type="Function" >The handler which should no loger be executed. If not specified all handlers listening to that event will be removed.</param>
+        /// <param name="handler" type="Function" >The handler which should no longer be executed. If not specified all handlers listening to that event will be removed.</param>
         /// </signature>
     }
 
@@ -188,18 +251,11 @@ intellisense.annotate(instance, {
         /// </summary>
         /// </signature>
     },
-    Example: function() {
-        /// <signature>
-        /// <summary>
-        /// 
-        /// </summary>
-        /// </signature>
-    },
     route: function(route,callback) {
         /// <signature>
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -281,7 +337,7 @@ intellisense.annotate(instance, {
         /// Renders the view contents. Accepts a jQuery selector (or jQuery object) to which the contents will be appended.
 /// Alternatively, the render method can be called without parameters in order to retrieve the View element for manual insertion/further manipulation.
         /// </summary>
-        /// <param name="container" type="jQuery" >(Optional) the element in which the view element will be appended.</param>
+        /// <param name="container" type="jQuery" >(optional) the element in which the view element will be appended.</param>
         /// <returns type="jQuery">the view element.</returns>
         /// </signature>
     },
@@ -332,6 +388,13 @@ var original = kendo.data.Binder;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    refresh: function() {
+        /// <signature>
+        /// <summary>
+        /// Invoked by the Kendo UI MVVM framework when the bound view model value is changed. The binder should update the UI (HTML element or Kendo UI widget) to reflect the view model change.
+        /// </summary>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -684,7 +747,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
         /// </signature>
     },
@@ -694,12 +757,13 @@ intellisense.annotate(instance, {
         /// Determines if the specified field is editable or not.
         /// </summary>
         /// <param name="field" type="String" >The field to check.</param>
+        /// <returns type="Boolean">true if the field is editable; false otherwise.</returns>
         /// </signature>
     },
     get: function() {
         /// <signature>
         /// <summary>
-        /// Gets the value of the specified field. Inherited from ObservableObject. More info can be found in the get section of the
+        /// Gets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the get section of the
 /// ObservableObject API reference.
         /// </summary>
         /// </signature>
@@ -708,14 +772,15 @@ intellisense.annotate(instance, {
         /// <signature>
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
+        /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
         /// </signature>
     },
     set: function() {
         /// <signature>
         /// <summary>
-        /// Sets the value of the specified field. Inherited from ObservableObject. More info can be found in the set section of the
+        /// Sets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the set section of the
 /// ObservableObject API reference.
         /// </summary>
         /// </signature>
@@ -723,7 +788,7 @@ intellisense.annotate(instance, {
     toJSON: function() {
         /// <signature>
         /// <summary>
-        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from ObservableObject. More info can be found in the toJSON section of the
+        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the toJSON section of the
 /// ObservableObject API reference.
         /// </summary>
         /// </signature>
@@ -769,7 +834,7 @@ intellisense.annotate(instance, {
     append: function(model) {
         /// <signature>
         /// <summary>
-        /// Appends a new item to the children datasource, and initializes the datasource, if necessary.
+        /// Appends a new item to the children data source, and initializes it if necessary.
         /// </summary>
         /// <param name="model" type="Object" >The data for the new item</param>
         /// </signature>
@@ -777,14 +842,15 @@ intellisense.annotate(instance, {
     level: function() {
         /// <signature>
         /// <summary>
-        /// Gets the current nesting level of the Node within the HierarchicalDataSource.
+        /// Gets the current nesting level of the node within the data source.
         /// </summary>
+        /// <returns type="Number">the zero based level of the node.</returns>
         /// </signature>
     },
     load: function() {
         /// <signature>
         /// <summary>
-        /// Loads the child nodes in the child datasource, supplying the id of the Node to the request.
+        /// Loads the child nodes in the child data source, supplying the id of the Node to the request.
         /// </summary>
         /// </signature>
     },
@@ -798,8 +864,9 @@ intellisense.annotate(instance, {
     parentNode: function() {
         /// <signature>
         /// <summary>
-        /// Gets the parent node of the Node, if any.
+        /// Gets the parent node.
         /// </summary>
+        /// <returns type="kendo.data.Node">the parent of the node; null if the node is a root node or doesn't have a parent.</returns>
         /// </signature>
     },
 
@@ -870,26 +937,26 @@ intellisense.annotate(instance, {
     parent: function() {
         /// <signature>
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableArray is not nested
-/// returns undefined.
+        /// Gets the parent of the array if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the array; undefined if the array is not nested and doesn't have a parent.</returns>
         /// </signature>
     },
     pop: function() {
         /// <signature>
         /// <summary>
-        /// Removes the last item from an array and returns that item. Equivalent of
-/// Array.prototype.pop.
+        /// Removes the last item from an array and returns that item. Equivalent of Array.prototype.pop.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
         /// </signature>
     },
     push: function() {
         /// <signature>
         /// <summary>
-        /// Appends the given items to the array and returns the new length of the array. Equivalent of
-/// Array.prototype.push.
+        /// Appends the given items to the array and returns the new length of the array. Equivalent of Array.prototype.push.
 /// The new items are wrapped as ObservableObject if they are complex objects.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
         /// </signature>
     },
     slice: function(begin,end) {
@@ -898,7 +965,6 @@ intellisense.annotate(instance, {
         /// Returns a one-level deep copy of a portion of an array. Equivalent of
 /// Array.prototype.slice.
 /// The result of the slice method is not an instance of ObvservableArray. It is a regular JavaScript Array object.
-/// > Important: The slice method does not modify the original ObservableArray.
         /// </summary>
         /// <param name="begin" type="Number" >Zero-based index at which to begin extraction.</param>
         /// <param name="end" type="Number" >Zero-based index at which to end extraction. If end is omitted, slice extracts to the end of the sequence.</param>
@@ -911,16 +977,16 @@ intellisense.annotate(instance, {
 /// Array.prototype.splice
         /// </summary>
         /// <param name="index" type="Number" >Index at which to start changing the array. If negative, will begin that many elements from the end.</param>
-        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If howMany is 0, no items are removed. In this case, you should specify at least one new item.</param>
-        /// <returns type="Array">An Array containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
+        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If set to 0, no items are removed. In this case, you should specify at least one new item.</param>
+        /// <returns type="Array">containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
         /// </signature>
     },
     shift: function() {
         /// <signature>
         /// <summary>
-        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of
-/// Array.prototype.shift.
+        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of Array.prototype.shift.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
         /// </signature>
     },
     toJSON: function() {
@@ -933,9 +999,9 @@ intellisense.annotate(instance, {
     unshift: function() {
         /// <signature>
         /// <summary>
-        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.
-/// Equivalent of Array.prototype.unshift.
+        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.  Equivalent of Array.prototype.unshift.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
         /// </signature>
     },
 
@@ -979,7 +1045,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the
 /// kendo.Observable API reference.
         /// </summary>
         /// </signature>
@@ -990,15 +1056,15 @@ intellisense.annotate(instance, {
         /// Gets the value of the specified field.
         /// </summary>
         /// <param name="name" type="String" >The name of the field whose value is going to be returned.</param>
-        /// <returns type="Object">The value of the specified field.</returns>
+        /// <returns type="Object">the value of the specified field.</returns>
         /// </signature>
     },
     parent: function() {
         /// <signature>
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableObject is not
-/// nested returns undefined;
+        /// Gets the parent of the object if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the object; undefined if the object is not nested and doesn't have a parent.</returns>
         /// </signature>
     },
     set: function(name,value) {
@@ -1015,7 +1081,7 @@ intellisense.annotate(instance, {
         /// <summary>
         /// Creates a plain JavaScript object which contains all fields of the ObservableObject.
         /// </summary>
-        /// <returns type="Object">An Object which contains only the fields of the ObservableObject.</returns>
+        /// <returns type="Object">which contains only the fields of the ObservableObject.</returns>
         /// </signature>
     },
 
@@ -1056,6 +1122,16 @@ var original = kendo.data.SchedulerDataSource;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    expand: function(start,end) {
+        /// <signature>
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1103,6 +1179,34 @@ var original = kendo.data.SchedulerEvent;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    clone: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+        /// </signature>
+    },
+    duration: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+        /// </signature>
+    },
+    expand: function(start,end,timeZoneId) {
+        /// <signature>
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -1322,6 +1426,14 @@ intellisense.annotate(instance, {
         /// Sets the data source of the widget.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
+        /// </signature>
+    },
+    setOptions: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Sets the widget options. Changes are cumulative.
+        /// </summary>
+        /// <param name="options" type="Object" >The chart settings to update.</param>
         /// </signature>
     },
     svg: function() {
@@ -1606,6 +1718,124 @@ intellisense.annotate(jQuery.fn, {
 });
 
 intellisense.annotate(kendo.dataviz.ui, {
+    Map: function() {
+        /// <signature>
+        /// <summary>Constructor of kendo.dataviz.ui.Map</summary>
+        /// </signature>
+    }
+});
+
+kendo.dataviz.ui.Map = (function() {
+var original = kendo.dataviz.ui.Map;
+var wrapper = function() {
+var instance = new original();
+intellisense.annotate(instance, {
+    destroy: function() {
+        /// <signature>
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+        /// </signature>
+    },
+
+    bind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+        /// </signature>
+    },
+
+    unbind: function(event, callback) {
+        /// <signature>
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+        /// </signature>
+    }
+
+});
+
+return instance;
+
+};
+
+intellisense.redirectDefinition(wrapper, original);
+
+return wrapper;
+
+})();
+
+
+jQuery.fn.kendoMap = function() {
+    this.data("kendoMap", new kendo.dataviz.ui.Map());
+
+    return this;
+};
+
+intellisense.annotate(jQuery.fn, {
+    getKendoMap: function() {
+        /// <signature>
+        /// <summary>
+        /// Returns a reference to the kendo.dataviz.ui.Map widget, instantiated on the selector.
+        /// </summary>
+        /// <returns type="kendo.dataviz.ui.Map">The kendo.dataviz.ui.Map instance (if present).</returns>
+        /// </signature>
+    },
+    kendoMap: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Instantiates a kendo.dataviz.ui.Map widget based the DOM elements that match the selector.
+        /// &#10;Accepts an object with the following configuration options:
+        /// &#10;
+        /// &#10;center — Array 
+        /// &#10;The map center. Coordinates are listed as [Latitude, Longitude].
+/// &#10;You can also use a kendo.dataviz.map.Location instance.
+        /// &#10;
+        /// &#10;controls — Object 
+        /// &#10;The configuration of built-in map controls.
+        /// &#10;
+        /// &#10;layerDefaults — Object 
+        /// &#10;The default configuration for map layers by type.
+        /// &#10;
+        /// &#10;layers — Array 
+        /// &#10;The configuration of the map layers.
+/// &#10;The layer type is determined by the value of the type field.
+        /// &#10;
+        /// &#10;markerDefaults — Object 
+        /// &#10;The default options for all markers.
+        /// &#10;
+        /// &#10;markers — Array 
+        /// &#10;The initial markers to display on the map.
+        /// &#10;
+        /// &#10;minZoom — Number (default: 2)
+        /// &#10;The minimum zoom level.
+        /// &#10;
+        /// &#10;maxZoom — Number (default: 19)
+        /// &#10;The maximum zoom level.
+        /// &#10;
+        /// &#10;minSize — Number (default: 256)
+        /// &#10;The size of the map in pixels at zoom level 0.
+        /// &#10;
+        /// &#10;theme — String (default: "default")
+        /// &#10;The map theme name.The built-in themes are:
+        /// &#10;
+        /// &#10;zoom — Number (default: 3)
+        /// &#10;The initial zoom level.Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).The map size is derived from the zoom level and minScale options: size = (2 ^ zoom) * minSize
+        /// &#10;
+        /// </summary>
+        /// <param name="options" type="Object">
+        /// The widget configuration options
+        /// </param>
+        /// </signature>
+    }
+});
+
+intellisense.annotate(kendo.dataviz.ui, {
     QRCode: function() {
         /// <signature>
         /// <summary>Constructor of kendo.dataviz.ui.QRCode</summary>
@@ -1872,12 +2102,6 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;Sets the preferred rendering engine.
 /// &#10;If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
         /// &#10;
-        /// &#10;rangeSize — Number 
-        /// &#10;The width of the range indicators.
-        /// &#10;
-        /// &#10;rangeDistance — Number 
-        /// &#10;The distance from the range indicators to the ticks.
-        /// &#10;
         /// &#10;scale — Object 
         /// &#10;Configures the scale.
         /// &#10;
@@ -1925,6 +2149,14 @@ intellisense.annotate(instance, {
         /// Sets the dataSource of an existing Chart and rebinds it.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+        /// </signature>
+    },
+    setOptions: function(options) {
+        /// <signature>
+        /// <summary>
+        /// Sets the widget options. Changes are cumulative.
+        /// </summary>
+        /// <param name="options" type="Object" >The chart settings to update.</param>
         /// </signature>
     },
     svg: function() {
@@ -2267,7 +2499,7 @@ intellisense.annotate(instance, {
     view: function() {
         /// <signature>
         /// <summary>
-        /// Returns the kendo.mobile.ui.View which contains the widget.
+        /// Returns the kendo.mobile.ui.View which contains the widget. If the widget is contained in a splitview, modalview, or drawer, the respective widget instance is returned.
         /// </summary>
         /// </signature>
     },
@@ -2347,6 +2579,13 @@ var original = kendo.ui.Draggable;
 var wrapper = function() {
 var instance = new original();
 intellisense.annotate(instance, {
+    cancelHold: function() {
+        /// <signature>
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+        /// </signature>
+    },
 
     bind: function(event, callback) {
         /// <signature>
@@ -2417,6 +2656,9 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;
         /// &#10;hint — Function 
         /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+        /// &#10;
+        /// &#10;holdToDrag — Boolean (default: false)
+        /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -2583,8 +2825,8 @@ intellisense.annotate(jQuery.fn, {
         /// &#10;group — String (default: "default")
         /// &#10;Used to group sets of draggable and drop targets. A draggable with the same group value as a drop target will be accepted by the drop target.
         /// &#10;
-        /// &#10;filter — String (default: ")
-        /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea.
+        /// &#10;filter — String (default: null)
+        /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea. Specifying the filter is mandatory.
         /// &#10;
         /// </summary>
         /// <param name="options" type="Object">
@@ -2728,8 +2970,7 @@ intellisense.annotate(instance, {
     bind: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
-/// kendo.Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
         /// </signature>
     },
@@ -2743,7 +2984,7 @@ intellisense.annotate(instance, {
     one: function() {
         /// <signature>
         /// <summary>
-        /// Attaches a handler to an event. The handler is executed only once. More info can be found in the one section of the
+        /// Attaches a handler to an event. The handler is executed only once. Examples and more info can be found in the one section of the
 /// kendo.Observable API reference.
         /// </summary>
         /// </signature>

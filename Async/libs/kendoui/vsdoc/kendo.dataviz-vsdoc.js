@@ -157,6 +157,68 @@ $.fn.kendoClass = function(options) {
 };
 
 
+kendo.Color = function() { };
+
+kendo.Color.prototype = {
+
+
+
+
+    diff: function() {
+        /// <summary>
+        /// Computes the relative luminance between two colors.
+        /// </summary>
+        /// <returns type="Number">The relative luminance.</returns>
+
+    },
+
+
+    equals: function() {
+        /// <summary>
+        /// Compares two color objects for equality.
+        /// </summary>
+        /// <returns type="Boolean">returns true if the two colors are the same. Otherwise, false</returns>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoColor = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.Color widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.Color">The kendo.Color instance (if present).</returns>
+};
+
+$.fn.kendoColor = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.Color widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
 kendo.Layout = function() { };
 
 kendo.Layout.prototype = {
@@ -253,7 +315,7 @@ kendo.Observable.prototype = {
         /// Remove a previously attached event handler.
         /// </summary>
         /// <param name="eventName" type="String" >The name of the event. If not specified all handlers of all events will be removed.</param>
-        /// <param name="handler" type="Function" >The handler which should no loger be executed. If not specified all handlers listening to that event will be removed.</param>
+        /// <param name="handler" type="Function" >The handler which should no longer be executed. If not specified all handlers listening to that event will be removed.</param>
 
     },
 
@@ -297,18 +359,10 @@ kendo.Router.prototype = {
     },
 
 
-    Example: function() {
-        /// <summary>
-        /// 
-        /// </summary>
-
-    },
-
-
     route: function(route,callback) {
         /// <summary>
         /// Specifies a callback for the given route. The route definition can contain bound parameters, optional segments, and route globbing.
-/// The parsed parts of the URL are passed as parameters to the route callback.
+/// The parsed parts of the URL are passed as parameters to the route callback. Query string parameters are parsed and passed as last argument of the callback function.
         /// </summary>
         /// <param name="route" type="String" >The route definition.</param>
         /// <param name="callback" type="Function" >The callback to be executed when the route is matched.</param>
@@ -391,7 +445,7 @@ kendo.View.prototype = {
         /// Renders the view contents. Accepts a jQuery selector (or jQuery object) to which the contents will be appended.
 /// Alternatively, the render method can be called without parameters in order to retrieve the View element for manual insertion/further manipulation.
         /// </summary>
-        /// <param name="container" type="jQuery" >(Optional) the element in which the view element will be appended.</param>
+        /// <param name="container" type="jQuery" >(optional) the element in which the view element will be appended.</param>
         /// <returns type="jQuery">the view element.</returns>
 
     },
@@ -445,6 +499,14 @@ kendo.data.Binder = function() { };
 kendo.data.Binder.prototype = {
 
 
+
+
+    refresh: function() {
+        /// <summary>
+        /// Invoked by the Kendo UI MVVM framework when the bound view model value is changed. The binder should update the UI (HTML element or Kendo UI widget) to reflect the view model change.
+        /// </summary>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -779,7 +841,7 @@ $.fn.kendoDataSource = function(options) {
     /// &#10;The number of data items per page.
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;The configuration used to parse the remote sevice response.
+    /// &#10;The configuration used to parse the remote service response.
     /// &#10;
     /// &#10;serverAggregates — Boolean (default: false)
     /// &#10;If set to true the data source will leave the aggregate calculation to the remote service. By default the data source calculates aggregates client-side.
@@ -851,7 +913,7 @@ $.fn.kendoHierarchicalDataSource = function(options) {
     /// &#10;Accepts an object with the following configuration options:
     /// &#10;
     /// &#10;schema — Object 
-    /// &#10;The schema configuration of the HierarchicalDataSource.
+    /// &#10;The schema configuration. See the DataSource.schema configuration for all available options.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -869,7 +931,7 @@ kendo.data.Model.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
 
     },
@@ -880,13 +942,14 @@ kendo.data.Model.prototype = {
         /// Determines if the specified field is editable or not.
         /// </summary>
         /// <param name="field" type="String" >The field to check.</param>
+        /// <returns type="Boolean">true if the field is editable; false otherwise.</returns>
 
     },
 
 
     get: function() {
         /// <summary>
-        /// Gets the value of the specified field. Inherited from ObservableObject. More info can be found in the get section of the
+        /// Gets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the get section of the
 /// ObservableObject API reference.
         /// </summary>
 
@@ -896,15 +959,16 @@ kendo.data.Model.prototype = {
     isNew: function() {
         /// <summary>
         /// Checks if the Model is new or not. The id field is used to determine if a model instance is new or existing one.
-/// If the value of the field specified is equal to the default value (specifed through the fields configuration) the model is considered as new.
+/// If the value of the field specified is equal to the default value (specified through the fields configuration) the model is considered as new.
         /// </summary>
+        /// <returns type="Boolean">true if the model is new; false otherwise.</returns>
 
     },
 
 
     set: function() {
         /// <summary>
-        /// Sets the value of the specified field. Inherited from ObservableObject. More info can be found in the set section of the
+        /// Sets the value of the specified field. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the set section of the
 /// ObservableObject API reference.
         /// </summary>
 
@@ -913,7 +977,7 @@ kendo.data.Model.prototype = {
 
     toJSON: function() {
         /// <summary>
-        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from ObservableObject. More info can be found in the toJSON section of the
+        /// Creates a plain JavaScript object which contains all fields of the Model. Inherited from kendo.data.ObservableObject. Examples and more info can be found in the toJSON section of the
 /// ObservableObject API reference.
         /// </summary>
 
@@ -959,7 +1023,7 @@ kendo.data.Node.prototype = {
 
     append: function(model) {
         /// <summary>
-        /// Appends a new item to the children datasource, and initializes the datasource, if necessary.
+        /// Appends a new item to the children data source, and initializes it if necessary.
         /// </summary>
         /// <param name="model" type="Object" >The data for the new item</param>
 
@@ -968,15 +1032,16 @@ kendo.data.Node.prototype = {
 
     level: function() {
         /// <summary>
-        /// Gets the current nesting level of the Node within the HierarchicalDataSource.
+        /// Gets the current nesting level of the node within the data source.
         /// </summary>
+        /// <returns type="Number">the zero based level of the node.</returns>
 
     },
 
 
     load: function() {
         /// <summary>
-        /// Loads the child nodes in the child datasource, supplying the id of the Node to the request.
+        /// Loads the child nodes in the child data source, supplying the id of the Node to the request.
         /// </summary>
 
     },
@@ -992,8 +1057,9 @@ kendo.data.Node.prototype = {
 
     parentNode: function() {
         /// <summary>
-        /// Gets the parent node of the Node, if any.
+        /// Gets the parent node.
         /// </summary>
+        /// <returns type="kendo.data.Node">the parent of the node; null if the node is a root node or doesn't have a parent.</returns>
 
     },
 
@@ -1064,28 +1130,28 @@ kendo.data.ObservableArray.prototype = {
 
     parent: function() {
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableArray is not nested
-/// returns undefined.
+        /// Gets the parent of the array if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the array; undefined if the array is not nested and doesn't have a parent.</returns>
 
     },
 
 
     pop: function() {
         /// <summary>
-        /// Removes the last item from an array and returns that item. Equivalent of
-/// Array.prototype.pop.
+        /// Removes the last item from an array and returns that item. Equivalent of Array.prototype.pop.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
 
     },
 
 
     push: function() {
         /// <summary>
-        /// Appends the given items to the array and returns the new length of the array. Equivalent of
-/// Array.prototype.push.
+        /// Appends the given items to the array and returns the new length of the array. Equivalent of Array.prototype.push.
 /// The new items are wrapped as ObservableObject if they are complex objects.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
 
     },
 
@@ -1095,7 +1161,6 @@ kendo.data.ObservableArray.prototype = {
         /// Returns a one-level deep copy of a portion of an array. Equivalent of
 /// Array.prototype.slice.
 /// The result of the slice method is not an instance of ObvservableArray. It is a regular JavaScript Array object.
-/// > Important: The slice method does not modify the original ObservableArray.
         /// </summary>
         /// <param name="begin" type="Number" >Zero-based index at which to begin extraction.</param>
         /// <param name="end" type="Number" >Zero-based index at which to end extraction. If end is omitted, slice extracts to the end of the sequence.</param>
@@ -1109,17 +1174,17 @@ kendo.data.ObservableArray.prototype = {
 /// Array.prototype.splice
         /// </summary>
         /// <param name="index" type="Number" >Index at which to start changing the array. If negative, will begin that many elements from the end.</param>
-        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If howMany is 0, no items are removed. In this case, you should specify at least one new item.</param>
-        /// <returns type="Array">An Array containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
+        /// <param name="howMany" type="Number" >An integer indicating the number of items to remove. If set to 0, no items are removed. In this case, you should specify at least one new item.</param>
+        /// <returns type="Array">containing the removed items. The result of the splice method is not an instance of ObvservableArray.</returns>
 
     },
 
 
     shift: function() {
         /// <summary>
-        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of
-/// Array.prototype.shift.
+        /// Removes the first item from an ObvservableArray and returns that item. Equivalent of Array.prototype.shift.
         /// </summary>
+        /// <returns type="Object">the item which was removed.</returns>
 
     },
 
@@ -1134,9 +1199,9 @@ kendo.data.ObservableArray.prototype = {
 
     unshift: function() {
         /// <summary>
-        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.
-/// Equivalent of Array.prototype.unshift.
+        /// Adds one or more items to the beginning of an ObservableArray and returns the new length.  Equivalent of Array.prototype.unshift.
         /// </summary>
+        /// <returns type="Number">the new length of the array.</returns>
 
     },
 
@@ -1180,7 +1245,7 @@ kendo.data.ObservableObject.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the
 /// kendo.Observable API reference.
         /// </summary>
 
@@ -1192,16 +1257,16 @@ kendo.data.ObservableObject.prototype = {
         /// Gets the value of the specified field.
         /// </summary>
         /// <param name="name" type="String" >The name of the field whose value is going to be returned.</param>
-        /// <returns type="Object">The value of the specified field.</returns>
+        /// <returns type="Object">the value of the specified field.</returns>
 
     },
 
 
     parent: function() {
         /// <summary>
-        /// Returns the parent ObservableObject. If the current ObservableObject is not
-/// nested returns undefined;
+        /// Gets the parent of the object if such parent exists.
         /// </summary>
+        /// <returns type="kendo.data.ObservableObject">the parent of the object; undefined if the object is not nested and doesn't have a parent.</returns>
 
     },
 
@@ -1220,7 +1285,7 @@ kendo.data.ObservableObject.prototype = {
         /// <summary>
         /// Creates a plain JavaScript object which contains all fields of the ObservableObject.
         /// </summary>
-        /// <returns type="Object">An Object which contains only the fields of the ObservableObject.</returns>
+        /// <returns type="Object">which contains only the fields of the ObservableObject.</returns>
 
     },
 
@@ -1260,6 +1325,17 @@ kendo.data.SchedulerDataSource = function() { };
 kendo.data.SchedulerDataSource.prototype = {
 
 
+
+
+    expand: function(start,end) {
+        /// <summary>
+        /// Expands all recurring events in the data and returns a list of events for a specific period.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the period.</param>
+        /// <param name="end" type="Date" >The end date of the period.</param>
+        /// <returns type="Array">the expanded list of scheduler events filtered by the specified start/end period.</returns>
+
+    },
 
     bind: function(event, callback) {
         /// <summary>
@@ -1308,6 +1384,37 @@ kendo.data.SchedulerEvent.prototype = {
 
 
 
+
+    clone: function(options) {
+        /// <summary>
+        /// Clones the scheduler event.
+        /// </summary>
+        /// <param name="options" type="Object" >Additional options passed to the SchedulerEvent constructor.</param>
+        /// <returns type="kendo.data.Scheduler">the cloned scheduler event.</returns>
+
+    },
+
+
+    duration: function() {
+        /// <summary>
+        /// Returns the scheduler event length in milliseconds.
+        /// </summary>
+        /// <returns type="Number">the length of the event.</returns>
+
+    },
+
+
+    expand: function(start,end,timeZoneId) {
+        /// <summary>
+        /// Expands the event for a specific period based on the recurrenceRule option.
+        /// </summary>
+        /// <param name="start" type="Date" >The start date of the occurrence period.</param>
+        /// <param name="end" type="Date" >The end date of the occurrence period.</param>
+        /// <param name="timeZoneId" type="String" >The time zone ID used to convert the recurrence rule dates.</param>
+        /// <returns type="Array">the list of the occurrences.</returns>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -1343,28 +1450,28 @@ $.fn.kendoSchedulerEvent = function(options) {
     /// &#10;The optional event description.
     /// &#10;
     /// &#10;end — Date 
-    /// &#10;The date at which the scheduler event ends.
+    /// &#10;The date at which the scheduler event ends. The end date is mandatory.
     /// &#10;
     /// &#10;endTimezone — String (default: undefined)
     /// &#10;The timezone of the end date. If not specified the timezone will be used.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
     /// &#10;
     /// &#10;id — String|Number|Object 
-    /// &#10;The unique identifier of the event.
+    /// &#10;The mandatory unique identifier of the event.
     /// &#10;
     /// &#10;isAllDay — Boolean (default: false)
-    /// &#10;If set to true the event is "all day".
+    /// &#10;If set to true the event is "all day". By default events are not all day.
     /// &#10;
     /// &#10;recurrenceException — String (default: undefined)
-    /// &#10;The recurrence exceptions. A list of colon separated dates formatted using the yyyyMMddTHHmmssZ format string.
+    /// &#10;The recurrence exceptions. A list of semicolon separated dates formatted using the yyyyMMddTHHmmssZ format string.
     /// &#10;
     /// &#10;recurrenceId — String|Number|Object (default: undefined)
-    /// &#10;The id of the recurrence parent event.
+    /// &#10;The id of the recurrence parent event. Required for events that are recurrence exceptions.
     /// &#10;
     /// &#10;recurrenceRule — String (default: undefined)
-    /// &#10;The recurrence rule describing the recurring pattern of the event.
+    /// &#10;The recurrence rule describing the recurring pattern of the event. The format follows the iCal specification.
     /// &#10;
     /// &#10;start — Date 
-    /// &#10;The date at which the scheduler event starts.
+    /// &#10;The date at which the scheduler event starts. The start date is mandatory.
     /// &#10;
     /// &#10;startTimezone — String (default: undefined)
     /// &#10;The timezone of the start date. If not specified the timezone will be used.The complete list of the supported timezones is available in the List of IANA time zones Wikipedia page.
@@ -1532,6 +1639,15 @@ kendo.dataviz.ui.Chart.prototype = {
         /// Sets the data source of the widget.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" >The data source to which the widget should be bound.</param>
+
+    },
+
+
+    setOptions: function(options) {
+        /// <summary>
+        /// Sets the widget options. Changes are cumulative.
+        /// </summary>
+        /// <param name="options" type="Object" >The chart settings to update.</param>
 
     },
 
@@ -1766,6 +1882,93 @@ $.fn.kendoLinearGauge = function(options) {
 };
 
 
+kendo.dataviz.ui.Map = function() { };
+
+kendo.dataviz.ui.Map.prototype = {
+
+
+
+
+    destroy: function() {
+        /// <summary>
+        /// Prepares the widget for safe removal from DOM. Detaches all event handlers and removes jQuery.data attributes to avoid memory leaks. Calls destroy method of any child Kendo widgets.
+        /// </summary>
+
+    },
+
+    bind: function(event, callback) {
+        /// <summary>
+        /// Binds to a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be executed when the event is triggered.</param>
+    },
+
+    unbind: function(event, callback) {
+        /// <summary>
+        /// Unbinds a callback from a widget event.
+        /// </summary>
+        /// <param name="event" type="String">The event name</param>
+        /// <param name="callback" type="Function">The callback to be removed.</param>
+    }
+
+};
+
+$.fn.getKendoMap = function() {
+    /// <summary>
+    /// Returns a reference to the kendo.dataviz.ui.Map widget, instantiated on the selector.
+    /// </summary>
+    /// <returns type="kendo.dataviz.ui.Map">The kendo.dataviz.ui.Map instance (if present).</returns>
+};
+
+$.fn.kendoMap = function(options) {
+    /// <summary>
+    /// Instantiates a kendo.dataviz.ui.Map widget based the DOM elements that match the selector.
+
+    /// &#10;Accepts an object with the following configuration options:
+    /// &#10;
+    /// &#10;center — Array 
+    /// &#10;The map center. Coordinates are listed as [Latitude, Longitude].
+/// &#10;You can also use a kendo.dataviz.map.Location instance.
+    /// &#10;
+    /// &#10;controls — Object 
+    /// &#10;The configuration of built-in map controls.
+    /// &#10;
+    /// &#10;layerDefaults — Object 
+    /// &#10;The default configuration for map layers by type.
+    /// &#10;
+    /// &#10;layers — Array 
+    /// &#10;The configuration of the map layers.
+/// &#10;The layer type is determined by the value of the type field.
+    /// &#10;
+    /// &#10;markerDefaults — Object 
+    /// &#10;The default options for all markers.
+    /// &#10;
+    /// &#10;markers — Array 
+    /// &#10;The initial markers to display on the map.
+    /// &#10;
+    /// &#10;minZoom — Number (default: 2)
+    /// &#10;The minimum zoom level.
+    /// &#10;
+    /// &#10;maxZoom — Number (default: 19)
+    /// &#10;The maximum zoom level.
+    /// &#10;
+    /// &#10;minSize — Number (default: 256)
+    /// &#10;The size of the map in pixels at zoom level 0.
+    /// &#10;
+    /// &#10;theme — String (default: "default")
+    /// &#10;The map theme name.The built-in themes are:
+    /// &#10;
+    /// &#10;zoom — Number (default: 3)
+    /// &#10;The initial zoom level.Typical web maps use zoom levels from 0 (whole world) to 19 (sub-meter features).The map size is derived from the zoom level and minScale options: size = (2 ^ zoom) * minSize
+    /// &#10;
+    /// </summary>
+    /// <param name="options" type="Object">
+    /// The widget configuration options
+    /// </param>
+};
+
+
 kendo.dataviz.ui.QRCode = function() { };
 
 kendo.dataviz.ui.QRCode.prototype = {
@@ -1981,12 +2184,6 @@ $.fn.kendoRadialGauge = function(options) {
     /// &#10;Sets the preferred rendering engine.
 /// &#10;If it is not supported by the browser, the Gauge will switch to the first available mode.The supported values are:
     /// &#10;
-    /// &#10;rangeSize — Number 
-    /// &#10;The width of the range indicators.
-    /// &#10;
-    /// &#10;rangeDistance — Number 
-    /// &#10;The distance from the range indicators to the ticks.
-    /// &#10;
     /// &#10;scale — Object 
     /// &#10;Configures the scale.
     /// &#10;
@@ -2028,6 +2225,15 @@ kendo.dataviz.ui.Sparkline.prototype = {
         /// Sets the dataSource of an existing Chart and rebinds it.
         /// </summary>
         /// <param name="dataSource" type="kendo.data.DataSource" ></param>
+
+    },
+
+
+    setOptions: function(options) {
+        /// <summary>
+        /// Sets the widget options. Changes are cumulative.
+        /// </summary>
+        /// <param name="options" type="Object" >The chart settings to update.</param>
 
     },
 
@@ -2315,7 +2521,7 @@ kendo.mobile.ui.Widget.prototype = {
 
     view: function() {
         /// <summary>
-        /// Returns the kendo.mobile.ui.View which contains the widget.
+        /// Returns the kendo.mobile.ui.View which contains the widget. If the widget is contained in a splitview, modalview, or drawer, the respective widget instance is returned.
         /// </summary>
 
     },
@@ -2364,6 +2570,14 @@ kendo.ui.Draggable.prototype = {
 
 
 
+
+    cancelHold: function() {
+        /// <summary>
+        /// Has effect only when holdToDrag is set to true. Cancels the activated state of the widget, caused by pressing and holding.
+        /// </summary>
+
+    },
+
     bind: function(event, callback) {
         /// <summary>
         /// Binds to a widget event.
@@ -2410,6 +2624,9 @@ $.fn.kendoDraggable = function(options) {
     /// &#10;
     /// &#10;hint — Function 
     /// &#10;Provides a way for customization of the drag indicator. If a function is supplied, it receives one argument - the draggable element's jQuery object.
+    /// &#10;
+    /// &#10;holdToDrag — Boolean (default: false)
+    /// &#10;Suitable for touch oriented user interface, in order to avoid collision with the touch scrolling gesture. When set to true, the widget will be activated after the user taps and holds the finger on the element for a short amount of time.The draggable will also be activated by pressing, holding and lifting the finger without any movement. Dragging it afterwards will initiate the drag immediately. The activated mode can be canceled by calling cancelHold.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2513,8 +2730,8 @@ $.fn.kendoDropTargetArea = function(options) {
     /// &#10;group — String (default: "default")
     /// &#10;Used to group sets of draggable and drop targets. A draggable with the same group value as a drop target will be accepted by the drop target.
     /// &#10;
-    /// &#10;filter — String (default: ")
-    /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea.
+    /// &#10;filter — String (default: null)
+    /// &#10;Selector to filter the drop targets in the area. Every matched element acts as a drop target and fires events on the DropTargetArea. Specifying the filter is mandatory.
     /// &#10;
     /// </summary>
     /// <param name="options" type="Object">
@@ -2622,8 +2839,7 @@ kendo.ui.Widget.prototype = {
 
     bind: function() {
         /// <summary>
-        /// Attaches a handler to an event. More info can be found in the bind section of the
-/// kendo.Observable API reference.
+        /// Attaches a handler to an event. Examples and more info can be found in the bind section of the kendo.Observable API reference.
         /// </summary>
 
     },
@@ -2639,7 +2855,7 @@ kendo.ui.Widget.prototype = {
 
     one: function() {
         /// <summary>
-        /// Attaches a handler to an event. The handler is executed only once. More info can be found in the one section of the
+        /// Attaches a handler to an event. The handler is executed only once. Examples and more info can be found in the one section of the
 /// kendo.Observable API reference.
         /// </summary>
 

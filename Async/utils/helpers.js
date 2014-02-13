@@ -99,7 +99,8 @@ define([
                 elem.setAttribute('rel', 'sidebar');
                 elem.click();
             } else {
-                alert('Unfortunately, this browser does not support the requested action,' + ' please bookmark this page manually.');
+                alert('Unfortunately, this browser does not support the requested action,'
+                	+ ' please bookmark this page manually.');
             }
         },
 
@@ -244,6 +245,11 @@ define([
             return selector instanceof $ ? selector : $(selector);
         },
 
+        //http://stackoverflow.com/questions/15458876/check-if-a-string-is-html-or-not
+        isHtml: function (value) {
+        	return /<[a-z][\s\S]*>/i.test(value);
+        },
+
         getCookie: function (key) {
             if ($.cookie) {
                 //GET COOKIE VALUE AND CONVERT TO JSON
@@ -328,6 +334,24 @@ define([
                 if ($.inArray(value, arr) >= 0)
                     arr.splice($.inArray(value, arr), 1);
             }
+        },
+
+        move: function (arr, from, to) {
+            //MOVE ELEMENT TO ANOTHER INDEX
+            //http://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another
+            arr.splice(to, 0, arr.splice(from, 1)[0]);
+        },
+
+        //DELETE ALL ITEMS IN AN ARRAY
+        //http://stackoverflow.com/questions/1232040/how-to-empty-an-array-in-javascript
+        clear: function (arr) {
+            if (!this.isNullOrEmpty(arr))
+                while (arr.length)
+                    arr.pop();
+        },
+
+        isEmptyArray: function (arr) {
+            return this.isNullOrEmpty(arr) || !arr.length;
         },
 
         //http://stackoverflow.com/a/11654596/235334
