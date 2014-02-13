@@ -234,7 +234,9 @@ define([
         },
 
         isNullOrEmpty: function (value) {
-            return _.isUndefined(value) || _.isNull(value) || _.isEmpty(value);
+            return typeof value === 'undefined'
+                || value === null
+                || value.length === 0;
         },
 
         getValueOrDefault: function (value, defaultValue) {
