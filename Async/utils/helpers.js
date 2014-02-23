@@ -153,23 +153,23 @@ define([
 
             //RETURN DEFERRED RSS ITEMS
             if (!this.isExternalUrl(url)) {
-                return $.get(this.toUrl(url)).then(function (data) {
+                return $.get(this.toUrl(url)).then(function (response) {
                     //PARSE RSS
                     var items = [];
-                    $(data).find('item').each(function (index) {
+                    $(response).find('item').each(function (index) {
                         var this$ = $(this);
-						var description = _.escapeHTML(_.stripTags(this$.find('description').text()));
+                        var description = _.escapeHTML(_.stripTags(this$.find('description').text()));
                         items.push({
                             title: options.maxTitleChars
-								? _.truncate(this$.find('title').text(), options.maxTitleChars)
-								: this$.find('title').text(),
+                                ? _.truncate(this$.find('title').text(), options.maxTitleChars)
+                                : this$.find('title').text(),
                             description: options.maxDescriptionChars
-								? _.truncate(description, options.maxDescriptionChars)
-								: description,
+                                ? _.truncate(description, options.maxDescriptionChars)
+                                : description,
                             link: this$.find('link').text(),
                             pubDate: moment(this$.find('pubDate').text(), options.parseFormat
-								|| 'ddd, DD, MMM YYYY hh:mm:ss Z')
-								.format(options.dateFormat || 'dddd, MMMM DD, YYYY'),
+                                || 'ddd, DD, MMM YYYY hh:mm:ss Z')
+                                .format(options.dateFormat || 'dddd, MMMM DD, YYYY'),
                             author: this$.find('author').text()
                         });
                         //STOP AT COUNTER IF APPLICABLE
@@ -181,32 +181,33 @@ define([
                 });
             } else {
                 //HANDLE CROSS-DOMAIN REQUESTS VIA GOOGLE / JSONP SERVICE
-                return $.getJSON('http://www.google.com/reader/public/javascript/feed/' + encodeURIComponent(url) + '?callback=?')
-					.then(function (data) {
-					    //PARSE RSS
-					    var items = [];
-					    if (data && data.items) {
-					        $.each(data.items, function (index) {
-					            items.push({
-					                title: options.maxTitleChars
-										? _.truncate(this.title, options.maxTitleChars)
-										: this.title,
-					                description: options.maxDescriptionChars
-										? _.truncate(_.stripTags(this.summary), options.maxDescriptionChars)
-										: _.stripTags(this.summary),
-					                link: this.alternate ? this.alternate.href : '',
-					                pubDate: moment(this.published * 1000)
-										.format(options.dateFormat || 'dddd, MMMM DD, YYYY'),
-					                author: this.author
-					            });
-					            //STOP AT COUNTER IF APPLICABLE
-					            if (options.maxItems && options.maxItems <= index + 1) return false;
-					        });
-					    }
+                return $.getJSON(document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url))
+                    .then(function (response) {
+                        //PARSE RSS
+                        var items = [];
+                        if (response && response.responseData && response.responseData.feed) {
+                            $.each(response.responseData.feed.entries, function (index) {
+                                items.push({
+                                    title: options.maxTitleChars
+                                        ? _.truncate(this.title, options.maxTitleChars)
+                                        : this.title,
+                                    description: options.maxDescriptionChars
+                                        ? _.truncate(_.stripTags(this.content), options.maxDescriptionChars)
+                                        : _.stripTags(this.content),
+                                    html: this.content,
+                                    link: this.link,
+                                    pubDate: moment(this.publishedDate)
+                                        .format(options.dateFormat || 'dddd, MMMM DD, YYYY'),
+                                    author: this.author
+                                });
+                                //STOP AT COUNTER IF APPLICABLE
+                                if (options.maxItems && options.maxItems <= index + 1) return false;
+                            });
+                        }
 
-					    //RETURN DEFERRED
-					    return items;
-					});
+                        //RETURN DEFERRED
+                        return items;
+                    });
             }
         },
 
