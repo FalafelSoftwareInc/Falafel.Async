@@ -158,7 +158,7 @@ define([
                     var items = [];
                     $(response).find('item').each(function (index) {
                         var this$ = $(this);
-                        var description = _.escapeHTML(_.stripTags(this$.find('description').text()));
+                        var description = _.stripTags(this$.find('description').text());
                         items.push({
                             title: options.maxTitleChars
                                 ? _.truncate(this$.find('title').text(), options.maxTitleChars)
